@@ -46,6 +46,8 @@ class LoginScreen extends StatelessWidget {
                                             bottom: BorderSide(
                                                 color: Colors.grey[100]))),
                                     child: TextField(
+                                      textAlign: TextAlign.center,
+                                          
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintText: "Email or Phone number",
@@ -56,6 +58,8 @@ class LoginScreen extends StatelessWidget {
                                   Container(
                                     padding: EdgeInsets.all(8.0),
                                     child: TextField(
+                                      textAlign: TextAlign.center,
+                                      obscureText: true,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintText: "Password",
