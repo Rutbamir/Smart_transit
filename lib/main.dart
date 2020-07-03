@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'screens/login_screen.dart';
+import 'screens/signup_screen.dart';
+import 'screens/home_screen.dart';
+import 'screens/welcome_screen.dart';
 
 void main() => runApp(MaterialApp(
       theme: ThemeData(
@@ -8,5 +11,11 @@ void main() => runApp(MaterialApp(
         accentColor: Colors.deepOrangeAccent,
       ),
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      initialRoute: WelcomeScreen.id,
+      routes: {
+        LoginScreen.id: (context) => LoginScreen(),
+        SignupScreen.id: (context) => SignupScreen(),
+        HomeScreen.id: (context) => HomeScreen(),
+        WelcomeScreen.id: (context) => WelcomeScreen()
+      },
     ));

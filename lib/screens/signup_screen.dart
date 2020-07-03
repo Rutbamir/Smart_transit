@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:login/screens/home_screen.dart';
 import 'package:login/Animation/FadeAnimation.dart';
+import 'home_screen.dart';
 
-class LoginScreen extends StatelessWidget {
-  static String id = 'login_screen';
-
+class SignupScreen extends StatelessWidget {
+  static String id = 'signup_screen';
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -15,7 +14,7 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Container(
-                    height: 400,
+                    height: 300,
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage('assets/bus2.jpg'),
@@ -67,12 +66,24 @@ class LoginScreen extends StatelessWidget {
                                           hintStyle: TextStyle(
                                               color: Colors.grey[400])),
                                     ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: TextField(
+                                      textAlign: TextAlign.center,
+                                      obscureText: true,
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: "Confirm Password",
+                                          hintStyle: TextStyle(
+                                              color: Colors.grey[400])),
+                                    ),
                                   )
                                 ],
                               ),
                             )),
                         SizedBox(
-                          height: 30,
+                          height: 50,
                         ),
                         FadeAnimation(
                             2,
@@ -85,22 +96,12 @@ class LoginScreen extends StatelessWidget {
                                 color: Colors.orange,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(18.0)),
-                                child: Text('Login'),
+                                child: Text('Sign Up'),
                                 onPressed: () {
                                   Navigator.pushNamed(context, HomeScreen.id);
                                 },
                               ),
                             ))),
-                        SizedBox(
-                          height: 70,
-                        ),
-                        FadeAnimation(
-                            1.5,
-                            Text(
-                              "Forgot Password?",
-                              style: TextStyle(
-                                  color: Color.fromRGBO(143, 148, 251, 1)),
-                            )),
                       ],
                     ),
                   )

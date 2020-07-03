@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
+  static String id = 'home_screen';
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
