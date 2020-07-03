@@ -1,6 +1,6 @@
-# login
+# omnibus
 
-A new Flutter application.
+a smart transit cross-platform application
 
 ## Getting Started
 
