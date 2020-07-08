@@ -9,15 +9,17 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-    @override
+  @override
   void initState() {
     super.initState();
     startTime();
   }
-    startTime() async {
+
+  startTime() async {
     var _duration = Duration(seconds: 2);
     return Timer(_duration, navigationPage);
   }
+
   void navigationPage() {
     Navigator.of(context).pushNamed(WelcomeScreen.id);
   }

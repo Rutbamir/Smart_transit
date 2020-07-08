@@ -13,7 +13,7 @@ void main() => runApp(
           accentColor: Colors.deepOrangeAccent,
         ),
         debugShowCheckedModeBanner: false,
-        initialRoute: SplashScreen.id,
+        initialRoute: HomeScreen.id,
         routes: {
           LoginScreen.id: (context) => LoginScreen(),
           SignupScreen.id: (context) => SignupScreen(),
