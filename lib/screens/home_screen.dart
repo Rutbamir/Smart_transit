@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:login/constants.dart';
+import 'package:login/screens/booking_screen.dart';
+import 'package:login/screens/setting_screen.dart';
+
+
 
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
@@ -43,12 +47,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: Text("My Bookings"),
                     leading: Icon(Icons.book),
                     onTap: () {
-                      print('functionality to be added');
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: (context) => BookingScreen()));
                     }),
                 ListTile(
                   title: Text("Settings"),
                   leading: Icon(Icons.settings),
-                ),
+                  onTap: () {
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => SettingScreen()));
+                  }),
                 ListTile(
                   title: Text("Log Out"),
                   leading: Icon(Icons.exit_to_app),
