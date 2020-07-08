@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:login/constants.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
@@ -24,22 +25,38 @@ class _HomeScreenState extends State<HomeScreen> {
         home: SafeArea(
           child: Scaffold(
             backgroundColor: Colors.white,
-            appBar: AppBar(
-              flexibleSpace: Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                  colors: <Color>[Colors.deepOrangeAccent, Colors.orangeAccent],
-                )),
-              ),
-              leading: IconButton(
-                icon: Icon(
-                  Icons.menu,
+            drawer: Drawer(
+                child: ListView(
+              children: <Widget>[
+                UserAccountsDrawerHeader(
+                  decoration: kgradientDecoration,
+                  accountName: Text('Someone'),
+                  accountEmail: Text('someone@gmail.com'),
+                  currentAccountPicture: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: ClipOval(
+                      child: Image.asset('assets/user.jpg'),
+                    ),
+                  ),
                 ),
-                onPressed: () {
-                  //functionality to be added
-                  print('menu button pressed');
-                },
-              ),
+                ListTile(
+                    title: Text("My Bookings"),
+                    leading: Icon(Icons.book),
+                    onTap: () {
+                      print('functionality to be added');
+                    }),
+                ListTile(
+                  title: Text("Settings"),
+                  leading: Icon(Icons.settings),
+                ),
+                ListTile(
+                  title: Text("Log Out"),
+                  leading: Icon(Icons.exit_to_app),
+                ),
+              ],
+            )),
+            appBar: AppBar(
+              flexibleSpace: Container(decoration: kgradientDecoration),
               actions: <Widget>[
                 IconButton(
                   icon: Icon(Icons.search),
