@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:login/constants.dart';
-import 'package:flutter_google_places/flutter_google_places.dart';
-import 'package:geocoder/geocoder.dart';
-import 'package:google_maps_webservice/places.dart';
-
-GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
 
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
@@ -63,11 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.search),
-              onPressed: () async {
+              onPressed: () {
                 //functionality to be added
-                Prediction prediction = await PlacesAutocomplete.show(
-                    context: context, apiKey: kGoogleApiKey);
-                displayPrediction(prediction);
+                print('functionality to be added');
               },
             ),
           ],
@@ -90,20 +83,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-  }
-
-  Future<Null> displayPrediction(Prediction p) async {
-    if (p != null) {
-      PlacesDetailsResponse detail =
-          await _places.getDetailsByPlaceId(p.placeId);
-
-      var placeId = p.placeId;
-      double lat = detail.result.geometry.location.lat;
-      double lng = detail.result.geometry.location.lng;
-
-      var address = await Geocoder.local.findAddressesFromQuery(p.description);
-      print(lat);
-      print(lng);
-    }
   }
 }
