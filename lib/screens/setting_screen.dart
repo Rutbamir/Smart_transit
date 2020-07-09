@@ -13,15 +13,6 @@ class _SettingScreenState extends State<SettingScreen> {
       appBar: AppBar(
         title: Text("Settings"),
         flexibleSpace: Container(decoration: kgradientDecoration),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              //functionality to be added
-              print('searching');
-            },
-          ),
-        ],
         backgroundColor: Color.fromRGBO(251, 92, 0, 1),
       ),
     );
