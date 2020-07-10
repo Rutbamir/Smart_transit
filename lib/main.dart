@@ -9,6 +9,8 @@ import 'screens/welcome_screen.dart';
 void main() => runApp(
       MaterialApp(
         theme: ThemeData(
+          primarySwatch: Colors.orange,
+          buttonColor: Colors.orange,
           primaryColor: Colors.orange,
           accentColor: Colors.deepOrangeAccent,
         ),
