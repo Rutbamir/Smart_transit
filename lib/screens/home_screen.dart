@@ -134,6 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             onPressed: () {
                               startAddressController.text = _currentAddress;
                               _startAddress = _currentAddress;
+                              print(_currentAddress);
                             },
                           ),
                           controller: startAddressController,
@@ -190,6 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         );
       });
+      await _getAddress();
     }).catchError((e) {
       print(e);
     });
