@@ -126,9 +126,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         MyTextWidget(
                           hint: 'Your Current Location',
                           initialValue: _currentAddress,
-                          prefixIcon: Icon(
-                            Icons.my_location,
-                            color: Colors.orange,
+                          prefixIcon: IconButton(
+                            icon: Icon(
+                              Icons.my_location,
+                              color: Colors.orange,
+                            ),
+                            onPressed: () {
+                              startAddressController.text = _currentAddress;
+                              _startAddress = _currentAddress;
+                            },
                           ),
                           controller: startAddressController,
                           locationCallback: (String value) {
@@ -179,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
           CameraUpdate.newCameraPosition(
             CameraPosition(
               target: LatLng(position.latitude, position.longitude),
-              zoom: 18.0,
+              zoom: 10.0,
             ),
           ),
         );

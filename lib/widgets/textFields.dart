@@ -9,7 +9,7 @@ class MyTextWidget extends StatelessWidget {
       this.locationCallback});
 
   final String hint;
-  final Icon prefixIcon;
+  final Widget prefixIcon;
   final TextEditingController controller;
   final String initialValue;
   final Function(String) locationCallback;
@@ -18,6 +18,7 @@ class MyTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       textAlign: TextAlign.center,
+      initialValue: initialValue,
       decoration: InputDecoration(
           border: InputBorder.none,
           prefixIcon: prefixIcon,
