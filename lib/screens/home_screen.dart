@@ -161,6 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Expanded(
                         child: MyTextWidget(
                           hint: 'Your Destination',
+                          //add location predictor
                           ontap: () async {
                             Prediction p = await PlacesAutocomplete.show(
                               context: context,
