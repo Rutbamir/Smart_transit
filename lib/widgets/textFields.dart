@@ -6,13 +6,15 @@ class MyTextWidget extends StatefulWidget {
       this.prefixIcon,
       this.controller,
       this.initialValue,
-      this.locationCallback});
+      this.locationCallback,
+      this.ontap});
 
   final String hint;
   final Widget prefixIcon;
   final TextEditingController controller;
   final String initialValue;
   final Function(String) locationCallback;
+  final Function ontap;
 
   @override
   _MyTextWidgetState createState() => _MyTextWidgetState();
@@ -22,6 +24,7 @@ class _MyTextWidgetState extends State<MyTextWidget> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTap: widget.ontap,
       textAlign: TextAlign.center,
       controller: widget.controller,
       decoration: InputDecoration(
