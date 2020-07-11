@@ -98,12 +98,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         onTap: () {
                           mapController.animateCamera(
-                              CameraUpdate.newCameraPosition(CameraPosition(
+                            CameraUpdate.newCameraPosition(
+                              CameraPosition(
                                   target: LatLng(
                                     _currentPosition.latitude,
                                     _currentPosition.longitude,
                                   ),
-                                  zoom: 18.0)));
+                                  zoom: 18.0),
+                            ),
+                          );
                         },
                       ),
                     ),
@@ -114,63 +117,62 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding:
                     const EdgeInsets.only(top: 60.0, right: 30.0, left: 30.0),
                 child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
-                    ),
-                    alignment: Alignment.topCenter,
-                    height: 115,
-                    width: width * 0.8,
-                    child: Column(
-                      children: <Widget>[
-                        Expanded(
-                          child: MyTextWidget(
-                            hint: 'Your Current Location',
-                            controller: startAddressController,
-                            prefixIcon: IconButton(
-                                icon: Icon(
-                                  Icons.my_location,
-                                  color: Colors.orange,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    startAddressController.text =
-                                        _currentAddress;
-                                    _startAddress = _currentAddress;
-                                  });
-                                }),
-                            locationCallback: (String value) {
-                              setState(() {
-                                _startAddress = value;
-                              });
-                            },
-                          ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                  ),
+                  alignment: Alignment.topCenter,
+                  height: 115,
+                  width: width * 0.8,
+                  child: Column(
+                    children: <Widget>[
+                      Expanded(
+                        child: MyTextWidget(
+                          hint: 'Your Current Location',
+                          controller: startAddressController,
+                          prefixIcon: IconButton(
+                              icon: Icon(
+                                Icons.my_location,
+                                color: Colors.orange,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  startAddressController.text = _currentAddress;
+                                  _startAddress = _currentAddress;
+                                });
+                              }),
+                          locationCallback: (String value) {
+                            setState(() {
+                              _startAddress = value;
+                            });
+                          },
                         ),
-                        Expanded(
-                          child: Divider(
-                            indent: 20,
-                            endIndent: 20,
+                      ),
+                      Expanded(
+                        child: Divider(
+                          indent: 20,
+                          endIndent: 20,
+                          color: Colors.orange,
+                        ),
+                      ),
+                      Expanded(
+                        child: MyTextWidget(
+                          hint: 'Your Destination',
+                          prefixIcon: Icon(
+                            Icons.flag,
                             color: Colors.orange,
                           ),
+                          controller: destinationAddressController,
+                          locationCallback: (String value) {
+                            setState(() {
+                              _destinationAddress = value;
+                            });
+                          },
                         ),
-                        Expanded(
-                          child: MyTextWidget(
-                            hint: 'Your Destination',
-                            initialValue: '',
-                            prefixIcon: Icon(
-                              Icons.flag,
-                              color: Colors.orange,
-                            ),
-                            controller: destinationAddressController,
-                            locationCallback: (String value) {
-                              setState(() {
-                                _destinationAddress = value;
-                              });
-                            },
-                          ),
-                        )
-                      ],
-                    )),
+                      )
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
