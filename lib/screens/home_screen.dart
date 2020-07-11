@@ -161,17 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Expanded(
                         child: MyTextWidget(
                           hint: 'Your Destination',
-                          //add location predictor
-                          ontap: () async {
-                            Prediction p = await PlacesAutocomplete.show(
-                              context: context,
-                              apiKey: kGoogleApiKey,
-                              language: "en",
-                              components: [
-                                Component(Component.country, 'in')
-                              ],
-                            );
-                          },
+
                           prefixIcon: Icon(
                             Icons.flag,
                             color: Colors.orange,
