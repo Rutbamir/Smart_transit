@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Position _currentPosition;
   String _currentAddress;
 
-  final startAddressController = TextEditingController();
+  TextEditingController startAddressController = TextEditingController();
   final destinationAddressController = TextEditingController();
 
   String _startAddress = '';
@@ -123,45 +123,51 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: width * 0.8,
                     child: Column(
                       children: <Widget>[
-                        MyTextWidget(
-                          hint: 'Your Current Location',
-                          initialValue: _currentAddress,
-                          prefixIcon: IconButton(
-                            icon: Icon(
-                              Icons.my_location,
-                              color: Colors.orange,
-                            ),
-                            onPressed: () {
-                              startAddressController.text = _currentAddress;
-                              _startAddress = _currentAddress;
-                              print(_currentAddress);
+                        Expanded(
+                          child: MyTextWidget(
+                            hint: 'Your Current Location',
+                            controller: startAddressController,
+                            prefixIcon: IconButton(
+                                icon: Icon(
+                                  Icons.my_location,
+                                  color: Colors.orange,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    startAddressController.text =
+                                        _currentAddress;
+                                    _startAddress = _currentAddress;
+                                  });
+                                }),
+                            locationCallback: (String value) {
+                              setState(() {
+                                _startAddress = value;
+                              });
                             },
                           ),
-                          controller: startAddressController,
-                          locationCallback: (String value) {
-                            setState(() {
-                              _startAddress = value;
-                            });
-                          },
                         ),
-                        Divider(
-                          indent: 20,
-                          endIndent: 20,
-                          color: Colors.orange,
-                        ),
-                        MyTextWidget(
-                          hint: 'Your Destination',
-                          initialValue: '',
-                          prefixIcon: Icon(
-                            Icons.flag,
+                        Expanded(
+                          child: Divider(
+                            indent: 20,
+                            endIndent: 20,
                             color: Colors.orange,
                           ),
-                          controller: destinationAddressController,
-                          locationCallback: (String value) {
-                            setState(() {
-                              _destinationAddress = value;
-                            });
-                          },
+                        ),
+                        Expanded(
+                          child: MyTextWidget(
+                            hint: 'Your Destination',
+                            initialValue: '',
+                            prefixIcon: Icon(
+                              Icons.flag,
+                              color: Colors.orange,
+                            ),
+                            controller: destinationAddressController,
+                            locationCallback: (String value) {
+                              setState(() {
+                                _destinationAddress = value;
+                              });
+                            },
+                          ),
                         )
                       ],
                     )),
