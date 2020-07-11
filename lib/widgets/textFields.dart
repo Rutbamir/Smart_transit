@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MyTextWidget extends StatelessWidget {
+class MyTextWidget extends StatefulWidget {
   MyTextWidget(
       {this.hint,
       this.prefixIcon,
@@ -15,17 +15,22 @@ class MyTextWidget extends StatelessWidget {
   final Function(String) locationCallback;
 
   @override
+  _MyTextWidgetState createState() => _MyTextWidgetState();
+}
+
+class _MyTextWidgetState extends State<MyTextWidget> {
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
       textAlign: TextAlign.center,
-      initialValue: initialValue,
+      controller: widget.controller,
       decoration: InputDecoration(
           border: InputBorder.none,
-          prefixIcon: prefixIcon,
-          hintText: hint,
+          prefixIcon: widget.prefixIcon,
+          hintText: widget.hint,
           hintStyle: TextStyle(color: Colors.grey[400])),
       onChanged: (value) {
-        locationCallback(value);
+        widget.locationCallback(value);
       },
     );
   }
