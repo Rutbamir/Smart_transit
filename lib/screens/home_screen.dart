@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_webservice/places.dart';
+import 'package:login/constants.dart';
 import 'package:login/widgets/drawer.dart';
 import 'package:login/widgets/textFields.dart';
 
@@ -158,6 +161,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       Expanded(
                         child: MyTextWidget(
                           hint: 'Your Destination',
+                          ontap: () async {
+                            Prediction p = await PlacesAutocomplete.show(
+                              context: context,
+                              apiKey: kGoogleApiKey,
+                              language: "en",
+                              components: [
+                                Component(Component.country, 'in')
+                              ],
+                            );
+                          },
                           prefixIcon: Icon(
                             Icons.flag,
                             color: Colors.orange,
