@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'list_data.dart';
 
 class PlacesListSearch extends SearchDelegate<PlacesList> {
+  final TextEditingController controller;
+  PlacesListSearch(this.controller);
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -62,7 +64,8 @@ class PlacesListSearch extends SearchDelegate<PlacesList> {
               final PlacesList listPlaces = myList[index];
               return ListTile(
                 onTap: () {
-                  showResults(context);
+                  controller.text = listPlaces.locality;
+                  close(context, null);
                 },
                 title: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
