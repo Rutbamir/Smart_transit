@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String _currentAddress;
 
   TextEditingController startAddressController = TextEditingController();
-  final destinationAddressController = TextEditingController();
+  TextEditingController destinationAddressController = TextEditingController();
 
   String _startAddress = '';
   String _destinationAddress = '';
@@ -166,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ontap: () {
                           showSearch(
                             context: context,
-                            delegate: PlacesListSearch(),
+                            delegate: PlacesListSearch(destinationAddressController),
                           );
                         },
                         prefixIcon: Icon(
