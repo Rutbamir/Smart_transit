@@ -128,52 +128,46 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: width * 0.8,
                   child: Column(
                     children: <Widget>[
-                      Expanded(
-                        child: MyTextWidget(
-                          hint: 'Your Current Location',
-                          controller: startAddressController,
-                          prefixIcon: IconButton(
-                              icon: Icon(
-                                Icons.my_location,
-                                color: Colors.orange,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  startAddressController.text = _currentAddress;
-                                  _startAddress = _currentAddress;
-                                  print(_currentAddress);
-                                });
-                              }),
-                          locationCallback: (String value) {
-                            setState(() {
-                              _startAddress = value;
-                            });
-                          },
-                        ),
+                      MyTextWidget(
+                        hint: 'Your Current Location',
+                        controller: startAddressController,
+                        prefixIcon: IconButton(
+                            icon: Icon(
+                              Icons.my_location,
+                              color: Colors.orange,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                startAddressController.text = _currentAddress;
+                                _startAddress = _currentAddress;
+                                print(_currentAddress);
+                              });
+                            }),
+                        locationCallback: (String value) {
+                          setState(() {
+                            _startAddress = value;
+                          });
+                        },
                       ),
-                      Expanded(
-                        child: Divider(
-                          indent: 20,
-                          endIndent: 20,
+                      Divider(
+                        indent: 20,
+                        endIndent: 20,
+                        color: Colors.orange,
+                      ),
+                      MyTextWidget(
+                        hint: 'Your Destination',
+                        //add location predictor
+                        ontap: () {},
+                        prefixIcon: Icon(
+                          Icons.flag,
                           color: Colors.orange,
                         ),
-                      ),
-                      Expanded(
-                        child: MyTextWidget(
-                          hint: 'Your Destination',
-                          //add location predictor
-                          ontap: () {},
-                          prefixIcon: Icon(
-                            Icons.flag,
-                            color: Colors.orange,
-                          ),
-                          controller: destinationAddressController,
-                          locationCallback: (String value) {
-                            setState(() {
-                              _destinationAddress = value;
-                            });
-                          },
-                        ),
+                        controller: destinationAddressController,
+                        locationCallback: (String value) {
+                          setState(() {
+                            _destinationAddress = value;
+                          });
+                        },
                       )
                     ],
                   ),
