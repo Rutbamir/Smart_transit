@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_google_places/flutter_google_places.dart';
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_webservice/places.dart';
-import 'package:login/constants.dart';
+
 import 'package:login/widgets/drawer.dart';
 import 'package:login/widgets/textFields.dart';
 
@@ -107,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     _currentPosition.latitude,
                                     _currentPosition.longitude,
                                   ),
-                                  zoom: 18.0),
+                                  zoom: 16.0),
                             ),
                           );
                         },
@@ -142,6 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 setState(() {
                                   startAddressController.text = _currentAddress;
                                   _startAddress = _currentAddress;
+                                  print(_currentAddress);
                                 });
                               }),
                           locationCallback: (String value) {
@@ -162,14 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: MyTextWidget(
                           hint: 'Your Destination',
                           //add location predictor
-                          ontap: () async {
-                            Prediction p = await PlacesAutocomplete.show(
-                              context: context,
-                              apiKey: kGoogleApiKey,
-                              language: "en",
-                              components: [Component(Component.country, 'in')],
-                            );
-                          },
+                          ontap: () {},
                           prefixIcon: Icon(
                             Icons.flag,
                             color: Colors.orange,
@@ -206,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
           CameraUpdate.newCameraPosition(
             CameraPosition(
               target: LatLng(position.latitude, position.longitude),
-              zoom: 10.0,
+              zoom: 13.0,
             ),
           ),
         );
@@ -220,13 +213,13 @@ class _HomeScreenState extends State<HomeScreen> {
   //method for retrieving the address
   _getAddress() async {
     try {
-      List<Placemark> p = await _geolocator.placemarkFromCoordinates(
+      var address = await _geolocator.placemarkFromCoordinates(
           _currentPosition.latitude, _currentPosition.longitude);
 
-      Placemark place = p[0];
+      var first = address.first;
 
       setState(() {
-        _currentAddress = "${place.name}, ${place.locality}, ${place.country}";
+        _currentAddress = "${first.subLocality}, ${first.locality}";
 
         startAddressController.text = _currentAddress;
 
