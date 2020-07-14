@@ -6,6 +6,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:login/widgets/drawer.dart';
 import 'package:login/widgets/textFields.dart';
 
+import 'places_delegate.dart';
+
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
   @override
@@ -102,11 +104,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           mapController.animateCamera(
                             CameraUpdate.newCameraPosition(
                               CameraPosition(
-                                  target: LatLng(
-                                    _currentPosition.latitude,
-                                    _currentPosition.longitude,
-                                  ),
-                                  zoom: 16.0),
+                                target: LatLng(
+                                  _currentPosition.latitude,
+                                  _currentPosition.longitude,
+                                ),
+                                zoom: 16.0,
+                              ),
                             ),
                           );
                         },
@@ -132,17 +135,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         hint: 'Your Current Location',
                         controller: startAddressController,
                         prefixIcon: IconButton(
-                            icon: Icon(
-                              Icons.my_location,
-                              color: Colors.orange,
-                            ),
-                            onPressed: () {
-                              setState(() {
+                          icon: Icon(
+                            Icons.my_location,
+                            color: Colors.orange,
+                          ),
+                          onPressed: () {
+                            setState(
+                              () {
                                 startAddressController.text = _currentAddress;
                                 _startAddress = _currentAddress;
                                 print(_currentAddress);
-                              });
-                            }),
+                              },
+                            );
+                          },
+                        ),
                         locationCallback: (String value) {
                           setState(() {
                             _startAddress = value;
@@ -157,16 +163,23 @@ class _HomeScreenState extends State<HomeScreen> {
                       MyTextWidget(
                         hint: 'Your Destination',
                         //add location predictor
-                        ontap: () {},
+                        ontap: () {
+                          showSearch(
+                            context: context,
+                            delegate: PlacesListSearch(),
+                          );
+                        },
                         prefixIcon: Icon(
                           Icons.flag,
                           color: Colors.orange,
                         ),
                         controller: destinationAddressController,
                         locationCallback: (String value) {
-                          setState(() {
-                            _destinationAddress = value;
-                          });
+                          setState(
+                            () {
+                              _destinationAddress = value;
+                            },
+                          );
                         },
                       )
                     ],
@@ -224,3 +237,4 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 }
+
