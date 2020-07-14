@@ -8,7 +8,9 @@ class MyDrawer extends StatelessWidget {
         child: ListView(
       children: <Widget>[
         UserAccountsDrawerHeader(
-          decoration: kgradientDecoration,
+          decoration: BoxDecoration(
+            color: Colors.white,
+          ),
           accountName: Text('Someone'),
           accountEmail: Text('someone@gmail.com'),
           currentAccountPicture: CircleAvatar(
@@ -17,6 +19,11 @@ class MyDrawer extends StatelessWidget {
               child: Image.asset('assets/user.jpg'),
             ),
           ),
+        ),
+        Divider(
+          color: Colors.orange[900],
+          indent: 30.0,
+          endIndent: 30.0,
         ),
         ListTile(
             title: Text("My Bookings"),
