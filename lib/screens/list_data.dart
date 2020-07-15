@@ -8,16 +8,40 @@ class PlacesList {
 List<PlacesList> loadPlaces() {
   var places = <PlacesList>[
     PlacesList(
-      locality: 'Badu Bagh, Khanyar',
+      locality: 'Khanyar',
       district: 'Srinagar',
     ),
     PlacesList(
-      locality: 'Munawarabad, Ikhwan Chowk',
+      locality: 'Munawarabad',
       district: 'Srinagar',
     ),
     PlacesList(
-      locality: 'IUST',
-      district: 'naar-e-jahannum',
+      locality: 'Batamaloo',
+      district: 'Srinagar',
+    ),
+    PlacesList(
+      locality: 'Lal Chowk',
+      district: 'Srinagar',
+    ),
+    PlacesList(
+      locality: 'Dalgate',
+      district: 'Srinagar',
+    ),
+    PlacesList(
+      locality: 'Sonwar',
+      district: 'Srinagar',
+    ),
+    PlacesList(
+      locality: 'Rainawari',
+      district: 'Srinagar',
+    ),
+    PlacesList(
+      locality: 'Raj Bagh',
+      district: 'Srinagar',
+    ),
+    PlacesList(
+      locality: 'Lal Bazar',
+      district: 'Srinagar',
     ),
   ];
   return places;
