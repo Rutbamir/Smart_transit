@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
-import 'package:login/widgets/drawer.dart';
-import 'package:login/widgets/textFields.dart';
+import 'package:Smart_transit/widgets/drawer.dart';
+import '../widgets/textFields.dart';
 
 import 'places_delegate.dart';
 

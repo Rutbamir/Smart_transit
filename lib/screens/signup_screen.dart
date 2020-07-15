@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:login/Animation/FadeAnimation.dart';
+import '../Animation/FadeAnimation.dart';
 import 'home_screen.dart';
 
 class SignupScreen extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:login/screens/home_screen.dart';
-import 'package:login/Animation/FadeAnimation.dart';
+import 'home_screen.dart';
+import '../Animation/FadeAnimation.dart';
 
 class LoginScreen extends StatelessWidget {
   static String id = 'login_screen';
