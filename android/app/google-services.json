@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "834810975758",
+    "firebase_url": "https://smarttransit-64fa1.firebaseio.com",
+    "project_id": "smarttransit-64fa1",
+    "storage_bucket": "smarttransit-64fa1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834810975758:android:f7cc8c41828f94bd924e5f",
+        "android_client_info": {
+          "package_name": "com.example.Smart_transit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "834810975758-4pbkr5usql20kl82ptijsff1bt6iav88.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB24DN6lv9EHJT4PEKFgJP0kBez6Jxzz9s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "834810975758-4pbkr5usql20kl82ptijsff1bt6iav88.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
