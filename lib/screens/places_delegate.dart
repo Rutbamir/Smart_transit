@@ -10,6 +10,7 @@ class PlacesListSearch extends SearchDelegate<PlacesList> {
       IconButton(
         icon: Icon(
           Icons.clear,
+          color: Colors.deepOrangeAccent,
         ),
         onPressed: () {
           query = '';
@@ -23,6 +24,7 @@ class PlacesListSearch extends SearchDelegate<PlacesList> {
     return IconButton(
       icon: Icon(
         Icons.arrow_back,
+        color: Colors.deepOrangeAccent,
       ),
       onPressed: () {
         close(context, null);
@@ -52,10 +54,14 @@ class PlacesListSearch extends SearchDelegate<PlacesList> {
             )
             .toList();
     return myList.isEmpty
-        ? Text(
-            'No Results Found...',
-            style: TextStyle(
-              fontSize: 20.0,
+        ? Center(
+            child: Text(
+              'No Results Found !',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.blue[900],
+                fontSize: 20.0,
+              ),
             ),
           )
         : ListView.builder(
@@ -64,26 +70,30 @@ class PlacesListSearch extends SearchDelegate<PlacesList> {
               final PlacesList listPlaces = myList[index];
               return ListTile(
                 onTap: () {
-                  controller.text = listPlaces.locality;
+                  controller.text =
+                      "${listPlaces.locality}, ${listPlaces.district}";
                   close(context, null);
                 },
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      listPlaces.locality,
-                      style: TextStyle(
-                        fontSize: 20.0,
+                title: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        listPlaces.locality,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                        ),
                       ),
-                    ),
-                    Text(
-                      listPlaces.district,
-                      style: TextStyle(
-                        color: Colors.grey,
+                      Text(
+                        listPlaces.district,
+                        style: TextStyle(
+                          color: Colors.grey,
+                        ),
                       ),
-                    ),
-                    Divider(),
-                  ],
+                      Divider(),
+                    ],
+                  ),
                 ),
               );
             },
