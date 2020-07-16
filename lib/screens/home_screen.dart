@@ -32,7 +32,15 @@ class _HomeScreenState extends State<HomeScreen> {
   String _startAddress = '';
   String _destinationAddress = '';
 
-  //Set<Marker> markers = {};
+  // this set will hold my markers
+  Set<Marker> _markers = {};
+// this will hold the generated polylines
+  Set<Polyline> _polylines = {};
+// this will hold each polyline coordinate as Lat and Lng pairs
+  List<LatLng> polylineCoordinates = [];
+// this is the key object - the PolylinePoints
+// which generates every polyline between start and finish
+  PolylinePoints polylinePoints = PolylinePoints();
 
   @override
   void initState() {
@@ -57,15 +65,19 @@ class _HomeScreenState extends State<HomeScreen> {
             children: <Widget>[
               // the main map
               GoogleMap(
-                  onMapCreated: (GoogleMapController controller) {
-                    mapController = controller;
-                  },
-                  myLocationEnabled: true,
-                  mapType: MapType.normal,
-                  myLocationButtonEnabled: false,
-                  zoomGesturesEnabled: true,
-                  zoomControlsEnabled: false,
-                  initialCameraPosition: _initialLocation),
+                markers: _markers != null ? Set<Marker>.from(_markers) : null,
+                onMapCreated: (GoogleMapController controller) {
+                  mapController = controller;
+                  // setPolyLines();
+                },
+                myLocationEnabled: true,
+                mapType: MapType.normal,
+                myLocationButtonEnabled: false,
+                zoomGesturesEnabled: true,
+                zoomControlsEnabled: false,
+                initialCameraPosition: _initialLocation,
+                polylines: _polylines,
+              ),
 
               //Drawer icon
               Padding(
@@ -256,6 +268,48 @@ class _HomeScreenState extends State<HomeScreen> {
         Position destinationCoordinates = destinationPlacemark[0].position;
         print(startCoordinates);
         print(destinationCoordinates);
+        // Start Location Marker
+        Marker startMarker = Marker(
+          markerId: MarkerId('$startCoordinates'),
+          position: LatLng(
+            startCoordinates.latitude,
+            startCoordinates.longitude,
+          ),
+          infoWindow: InfoWindow(
+            title: 'Start',
+            snippet: _startAddress,
+          ),
+          icon: BitmapDescriptor.defaultMarker,
+        );
+
+// Destination Location Marker
+        Marker destinationMarker = Marker(
+          markerId: MarkerId('$destinationCoordinates'),
+          position: LatLng(
+            destinationCoordinates.latitude,
+            destinationCoordinates.longitude,
+          ),
+          infoWindow: InfoWindow(
+            title: 'Destination',
+            snippet: _destinationAddress,
+          ),
+          icon: BitmapDescriptor.defaultMarker,
+        );
+        // Add the markers to the list
+        _markers.add(startMarker);
+        _markers.add(destinationMarker);
+        Position _northeastCoordinates;
+        Position _southwestCoordinates;
+
+        // Calculating to check that
+        // southwest coordinate <= northeast coordinate
+        if (startCoordinates.latitude <= destinationCoordinates.latitude) {
+          _southwestCoordinates = startCoordinates;
+          _northeastCoordinates = destinationCoordinates;
+        } else {
+          _southwestCoordinates = destinationCoordinates;
+          _northeastCoordinates = startCoordinates;
+        }
       }
     } catch (e) {
       print(e);
