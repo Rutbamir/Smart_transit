@@ -32,14 +32,12 @@ class _HomeScreenState extends State<HomeScreen> {
   String _startAddress = '';
   String _destinationAddress = '';
 
-  // this set will hold my markers
   Set<Marker> _markers = {};
-// this will hold the generated polylines
+
   Set<Polyline> _polylines = {};
 // this will hold each polyline coordinate as Lat and Lng pairs
   List<LatLng> polylineCoordinates = [];
-// this is the key object - the PolylinePoints
-// which generates every polyline between start and finish
+// this is the key object - the PolylinePoints which generates every polyline between start and finish
   PolylinePoints polylinePoints = PolylinePoints();
 
   @override

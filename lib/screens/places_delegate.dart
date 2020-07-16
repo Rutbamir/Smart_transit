@@ -54,13 +54,13 @@ class PlacesListSearch extends SearchDelegate<PlacesList> {
             )
             .toList();
     return myList.isEmpty
-        ? Center(
-            child: Text(
-              'No Results Found !',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.blue[900],
-                fontSize: 20.0,
+        ? Container(
+            color: Color.fromRGBO(255, 255, 255, 1),
+            child: Center(
+              child: Image.asset(
+                'assets/empty.jpg',
+                width: 300,
+                height: 300,
               ),
             ),
           )
