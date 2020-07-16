@@ -252,9 +252,8 @@ class _HomeScreenState extends State<HomeScreen> {
       List<Placemark> destinationPlacemark =
           await _geolocator.placemarkFromAddress(_destinationAddress);
 
-// Retrieving coordinates
-      // Position startCoordinates = startPlacemark[0].position;
-      // Position destinationCoordinates = destinationPlacemark[0].position;
+      // Retrieving coordinates
+
       if (startPlacemark != null && destinationPlacemark != null) {
         // Use the retrieved coordinates of the current position,
         // instead of the address if the start position is user's
@@ -268,6 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Position destinationCoordinates = destinationPlacemark[0].position;
         print(startCoordinates);
         print(destinationCoordinates);
+
         // Start Location Marker
         Marker startMarker = Marker(
           markerId: MarkerId('$startCoordinates'),
@@ -295,9 +295,12 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           icon: BitmapDescriptor.defaultMarker,
         );
+
         // Add the markers to the list
         _markers.add(startMarker);
         _markers.add(destinationMarker);
+
+        //define two position variables for map orientation
         Position _northeastCoordinates;
         Position _southwestCoordinates;
 
@@ -310,6 +313,22 @@ class _HomeScreenState extends State<HomeScreen> {
           _southwestCoordinates = destinationCoordinates;
           _northeastCoordinates = startCoordinates;
         }
+        // Accommodate the two locations within the camera view of the map
+        mapController.animateCamera(
+          CameraUpdate.newLatLngBounds(
+            LatLngBounds(
+              northeast: LatLng(
+                _northeastCoordinates.latitude,
+                _northeastCoordinates.longitude,
+              ),
+              southwest: LatLng(
+                _southwestCoordinates.latitude,
+                _southwestCoordinates.longitude,
+              ),
+            ),
+            80.0,
+          ),
+        );
       }
     } catch (e) {
       print(e);
