@@ -240,8 +240,20 @@ class _HomeScreenState extends State<HomeScreen> {
           await _geolocator.placemarkFromAddress(_destinationAddress);
 
 // Retrieving coordinates
-      Position startCoordinates = startPlacemark[0].position;
-      Position destinationCoordinates = destinationPlacemark[0].position;
+      // Position startCoordinates = startPlacemark[0].position;
+      // Position destinationCoordinates = destinationPlacemark[0].position;
+      if (startPlacemark != null && destinationPlacemark != null) {
+        // Use the retrieved coordinates of the current position,
+        // instead of the address if the start position is user's
+        // current position, as it results in better accuracy.
+        Position startCoordinates = _startAddress == _currentAddress
+            ? Position(
+                latitude: _currentPosition.latitude,
+                longitude: _currentPosition.longitude,
+              )
+            : startPlacemark[0].position;
+        Position destinationCoordinates = destinationPlacemark[0].position;
+      }
     } catch (e) {
       print(e);
     }
