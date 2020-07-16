@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const kGoogleApiKey = 'AIzaSyCoxEQwuxZ3LzdaY94LyA_rL85WMVgl5uM';
+const kGoogleApiKey = 'AIzaSyAf76N_-Fku1xYtqMLju9hrTf0Xb0xRjEc';
 
 const kgradientDecoration = BoxDecoration(
   gradient: LinearGradient(
