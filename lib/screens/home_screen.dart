@@ -324,7 +324,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 _southwestCoordinates.longitude,
               ),
             ),
-            80.0,
+            100.0,
           ),
         );
       }
