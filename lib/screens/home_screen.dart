@@ -169,6 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           _destinationAddress =
                               destinationAddressController.text;
                           print(_destinationAddress);
+                          geocode();
                         },
                         prefixIcon: Icon(
                           Icons.flag,
@@ -253,6 +254,8 @@ class _HomeScreenState extends State<HomeScreen> {
               )
             : startPlacemark[0].position;
         Position destinationCoordinates = destinationPlacemark[0].position;
+        print(startCoordinates);
+        print(destinationCoordinates);
       }
     } catch (e) {
       print(e);
