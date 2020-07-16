@@ -5,7 +5,7 @@ import 'package:geolocator/geolocator.dart';
 
 import 'package:Smart_transit/widgets/drawer.dart';
 import '../widgets/textFields.dart';
-
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'places_delegate.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -226,6 +226,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
         _startAddress = _currentAddress;
       });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  // Getting the placemarks
+  Future<dynamic> geocode() async {
+    try {
+      List<Placemark> startPlacemark =
+          await _geolocator.placemarkFromAddress(_startAddress);
+      List<Placemark> destinationPlacemark =
+          await _geolocator.placemarkFromAddress(_destinationAddress);
+
+// Retrieving coordinates
+      Position startCoordinates = startPlacemark[0].position;
+      Position destinationCoordinates = destinationPlacemark[0].position;
     } catch (e) {
       print(e);
     }
