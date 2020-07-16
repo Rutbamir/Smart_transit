@@ -6,14 +6,13 @@ class MyTextWidget extends StatefulWidget {
       this.prefixIcon,
       this.controller,
       this.initialValue,
-      this.locationCallback,
       this.ontap});
 
   final String hint;
   final Widget prefixIcon;
   final TextEditingController controller;
   final String initialValue;
-  final Function(String) locationCallback;
+
   final Function ontap;
 
   @override
@@ -32,9 +31,6 @@ class _MyTextWidgetState extends State<MyTextWidget> {
           prefixIcon: widget.prefixIcon,
           hintText: widget.hint,
           hintStyle: TextStyle(color: Colors.grey[400])),
-      onChanged: (value) {
-        widget.locationCallback(value);
-      },
     );
   }
 }

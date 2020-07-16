@@ -72,6 +72,7 @@ class PlacesListSearch extends SearchDelegate<PlacesList> {
                 onTap: () {
                   controller.text =
                       "${listPlaces.locality}, ${listPlaces.district}";
+
                   close(context, null);
                 },
                 title: Padding(

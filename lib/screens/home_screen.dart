@@ -32,6 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
   String _startAddress = '';
   String _destinationAddress = '';
 
+  //Set<Marker> markers = {};
+
   @override
   void initState() {
     super.initState();
@@ -149,11 +151,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             );
                           },
                         ),
-                        locationCallback: (String value) {
-                          setState(() {
-                            _startAddress = value;
-                          });
-                        },
                       ),
                       Divider(
                         indent: 20,
@@ -166,21 +163,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         ontap: () {
                           showSearch(
                             context: context,
-                            delegate: PlacesListSearch(destinationAddressController),
+                            delegate:
+                                PlacesListSearch(destinationAddressController),
                           );
+                          _destinationAddress =
+                              destinationAddressController.text;
+                          print(_destinationAddress);
                         },
                         prefixIcon: Icon(
                           Icons.flag,
                           color: Colors.orange,
                         ),
                         controller: destinationAddressController,
-                        locationCallback: (String value) {
-                          setState(
-                            () {
-                              _destinationAddress = value;
-                            },
-                          );
-                        },
                       )
                     ],
                   ),
@@ -237,4 +231,3 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 }
-
