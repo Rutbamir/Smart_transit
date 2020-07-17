@@ -280,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
           icon: BitmapDescriptor.defaultMarker,
         );
 
-// Destination Location Marker
+        // Destination Location Marker
         Marker destinationMarker = Marker(
           markerId: MarkerId('$destinationCoordinates'),
           position: LatLng(
@@ -297,69 +297,7 @@ class _HomeScreenState extends State<HomeScreen> {
         // Add the markers to the list
         _markers.add(startMarker);
         _markers.add(destinationMarker);
-
-        //define two position variables for map orientation
-        Position _northeastCoordinates;
-        Position _southwestCoordinates;
-
-        // Calculating to check that
-        // southwest coordinate <= northeast coordinate
-        if (startCoordinates.latitude <= destinationCoordinates.latitude) {
-          _southwestCoordinates = startCoordinates;
-          _northeastCoordinates = destinationCoordinates;
-        } else {
-          _southwestCoordinates = destinationCoordinates;
-          _northeastCoordinates = startCoordinates;
-        }
-        // Accommodate the two locations within the camera view of the map
-        mapController.animateCamera(
-          CameraUpdate.newLatLngBounds(
-            LatLngBounds(
-              northeast: LatLng(
-                _northeastCoordinates.latitude,
-                _northeastCoordinates.longitude,
-              ),
-              southwest: LatLng(
-                _southwestCoordinates.latitude,
-                _southwestCoordinates.longitude,
-              ),
-            ),
-            100.0, //padding
-          ),
-        );
-        await createPolylines(startCoordinates, destinationCoordinates);
       }
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  // creates polylines
-  createPolylines(Position start, Position destination) async {
-    try {
-      polylinePoints = PolylinePoints();
-      PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        kGoogleApiKey,
-        PointLatLng(start.latitude, start.longitude),
-        PointLatLng(destination.latitude, destination.longitude),
-        travelMode: TravelMode.transit,
-      );
-      if (result.points.isNotEmpty) {
-        result.points.forEach((PointLatLng point) {
-          polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-        });
-      }
-
-      setState(() {
-        PolylineId id = PolylineId('poly');
-        Polyline polyline = Polyline(
-          polylineId: id,
-          color: Colors.lightBlueAccent,
-          points: polylineCoordinates,
-          width: 3,
-        );
-        polylines[id] = polyline;
-      });
     } catch (e) {
       print(e);
     }
