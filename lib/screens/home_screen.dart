@@ -1,10 +1,5 @@
 import 'dart:math';
-<<<<<<< HEAD
-
-import 'bottomSheet.dart';
-=======
 import 'package:Smart_transit/constants.dart';
->>>>>>> b245879252afb3f380f8d6d2063a0473c27a5b2f
 import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -13,6 +8,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:Smart_transit/widgets/drawer.dart';
 import '../widgets/textFields.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'bottomSheet.dart';
 import 'places_delegate.dart';
 
 class HomeScreen extends StatefulWidget {
