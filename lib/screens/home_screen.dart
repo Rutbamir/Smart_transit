@@ -302,16 +302,25 @@ class _HomeScreenState extends State<HomeScreen> {
         _markers.add(destinationMarker);
         double totalDistance = 0.0;
 
+        double lat1 = startCoordinates.latitude / 57.29577951;
+        double lat2 = destinationCoordinates.latitude / 57.29577951;
+
+        double long1 = startCoordinates.longitude / 57.29577951;
+        double long2 = destinationCoordinates.longitude / 57.29577951;
+
+        totalDistance = _coordinateDistance(lat1, long1, lat2, long2);
+
+
         // Calculating the total distance by adding the distance
         // between small segments
-        for (int i = 0; i < polylineCoordinates.length - 1; i++) {
-          totalDistance += _coordinateDistance(
-            polylineCoordinates[i].latitude,
-            polylineCoordinates[i].longitude,
-            polylineCoordinates[i + 1].latitude,
-            polylineCoordinates[i + 1].longitude,
-          );
-        }
+        // for (int i = 0; i < polylineCoordinates.length - 1; i++) {
+        //   totalDistance += _coordinateDistance(
+        //     polylineCoordinates[i].latitude,
+        //     polylineCoordinates[i].longitude,
+        //     polylineCoordinates[i + 1].latitude,
+        //     polylineCoordinates[i + 1].longitude,
+        //   );
+        // }
 
         setState(() {
           _placeDistance = totalDistance.toStringAsFixed(2);
@@ -324,11 +333,21 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   double _coordinateDistance(lat1, lon1, lat2, lon2) {
-    var p = 0.017453292519943295;
-    var c = cos;
-    var a = 0.5 -
-        c((lat2 - lat1) * p) / 2 +
-        c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
-    return 12742 * asin(sqrt(a));
+
+    double dlong = lon2 - lon1;
+    double dlat = lat2 - lat1; 
+    // var p = 0.017453292519943295;
+    // var c = cos;
+    // var a = 0.5 -
+    //     c((lat2 - lat1) * p) / 2 +
+    //     c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
+    double ans = pow(sin(dlat / 2), 2) +  
+                          cos(lat1) * cos(lat2) *  
+                          pow(sin(dlong / 2), 2); 
+    // return 12742 * asin(sqrt(a));
+    ans = 2 * asin(sqrt(ans));
+    double r = 6371;
+    ans = ans * r;
+    return ans;
   }
 }
