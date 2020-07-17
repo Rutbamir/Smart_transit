@@ -309,8 +309,7 @@ class _HomeScreenState extends State<HomeScreen> {
         double long2 = destinationCoordinates.longitude / 57.29577951;
 
         totalDistance = _coordinateDistance(lat1, long1, lat2, long2);
-
-
+//IMP DON'T DELETE
         // Calculating the total distance by adding the distance
         // between small segments
         // for (int i = 0; i < polylineCoordinates.length - 1; i++) {
@@ -333,17 +332,18 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   double _coordinateDistance(lat1, lon1, lat2, lon2) {
-
     double dlong = lon2 - lon1;
-    double dlat = lat2 - lat1; 
+    double dlat = lat2 - lat1;
+
+//IMP DON'T DELETE
     // var p = 0.017453292519943295;
     // var c = cos;
     // var a = 0.5 -
     //     c((lat2 - lat1) * p) / 2 +
     //     c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
-    double ans = pow(sin(dlat / 2), 2) +  
-                          cos(lat1) * cos(lat2) *  
-                          pow(sin(dlong / 2), 2); 
+    double ans =
+        pow(sin(dlat / 2), 2) + cos(lat1) * cos(lat2) * pow(sin(dlong / 2), 2);
+//IMP DON'T DELETE   
     // return 12742 * asin(sqrt(a));
     ans = 2 * asin(sqrt(ans));
     double r = 6371;
