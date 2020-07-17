@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:Smart_transit/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -32,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String _startAddress = '';
   String _destinationAddress = '';
+  String _placeDistance;
 
   Set<Marker> _markers = {};
 
@@ -297,9 +300,35 @@ class _HomeScreenState extends State<HomeScreen> {
         // Add the markers to the list
         _markers.add(startMarker);
         _markers.add(destinationMarker);
+        double totalDistance = 0.0;
+
+        // Calculating the total distance by adding the distance
+        // between small segments
+        for (int i = 0; i < polylineCoordinates.length - 1; i++) {
+          totalDistance += _coordinateDistance(
+            polylineCoordinates[i].latitude,
+            polylineCoordinates[i].longitude,
+            polylineCoordinates[i + 1].latitude,
+            polylineCoordinates[i + 1].longitude,
+          );
+        }
+
+        setState(() {
+          _placeDistance = totalDistance.toStringAsFixed(2);
+          print('DISTANCE: $_placeDistance km');
+        });
       }
     } catch (e) {
       print(e);
     }
+  }
+
+  double _coordinateDistance(lat1, lon1, lat2, lon2) {
+    var p = 0.017453292519943295;
+    var c = cos;
+    var a = 0.5 -
+        c((lat2 - lat1) * p) / 2 +
+        c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
+    return 12742 * asin(sqrt(a));
   }
 }
