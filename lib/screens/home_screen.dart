@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:Smart_transit/constants.dart';
+import 'bottomSheet.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -142,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.white,
                   ),
                   alignment: Alignment.topCenter,
-                  height: 115,
+                  height: 160,
                   width: width * 0.8,
                   child: Column(
                     children: <Widget>[
@@ -179,17 +179,28 @@ class _HomeScreenState extends State<HomeScreen> {
                             delegate:
                                 PlacesListSearch(destinationAddressController),
                           );
-                          _destinationAddress =
-                              destinationAddressController.text;
-                          print(_destinationAddress);
-                          geocode();
                         },
                         prefixIcon: Icon(
                           Icons.flag,
                           color: Colors.orange,
                         ),
                         controller: destinationAddressController,
-                      )
+                      ),
+                      IconButton(
+                          icon:
+                              Icon(Icons.directions_bus, color: Colors.orange),
+                          onPressed: () {
+                            _destinationAddress =
+                                destinationAddressController.text;
+                            print(_destinationAddress);
+                            geocode();
+
+                            //bottomsheet
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (context) => AddBottomSheet(),
+                            );
+                          }),
                     ],
                   ),
                 ),
@@ -343,7 +354,7 @@ class _HomeScreenState extends State<HomeScreen> {
     //     c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
     double ans =
         pow(sin(dlat / 2), 2) + cos(lat1) * cos(lat2) * pow(sin(dlong / 2), 2);
-//IMP DON'T DELETE   
+//IMP DON'T DELETE
     // return 12742 * asin(sqrt(a));
     ans = 2 * asin(sqrt(ans));
     double r = 6371;
