@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:Smart_transit/constants.dart';
 import 'package:flutter/material.dart';
 
