@@ -1,6 +1,7 @@
 import 'package:Smart_transit/addresses.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'bottomSheet.dart';
 import 'home_screen.dart';
 import 'dart:core';
 import 'dart:math';
@@ -65,15 +66,49 @@ class _TicketScreenState extends State<TicketScreen> {
                   )),
               height: 500,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(GetAddress.startAddress),
-                  Text(GetAddress.destinationAddress),
                   Expanded(
-                    flex: 2,
-                    child: Text(dateMonthYear(),
-                        style: TextStyle(
-                          fontSize: 30.0,
-                        )),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            'Your journey is from',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            '${GetAddress.startAddress} to ${GetAddress.destinationAddress}',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Dated: ',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                          ),
+                        ),
+                        Text(
+                          dateMonthYear(),
+                          style: TextStyle(
+                            fontSize: 25.0,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   Divider(
                     color: Colors.grey[400],
@@ -81,19 +116,36 @@ class _TicketScreenState extends State<TicketScreen> {
                   Expanded(
                     flex: 2,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Text('Bus Service',
                             style: TextStyle(
-                              fontSize: 15.0,
+                              fontSize: 25.0,
                               fontWeight: FontWeight.bold,
                             )),
                         SizedBox(
                           height: 20.0,
                         ),
-                        Text('Omnibus',
-                            style: TextStyle(
-                              fontSize: 15.0,
-                            )),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              'Omnibus',
+                              style: TextStyle(
+                                fontSize: 20.0,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 40.0,
+                            ),
+                            Text(
+                              'Your ticket price is ${cost.toStringAsFixed(2)}',
+                              style: TextStyle(
+                                fontSize: 20.0,
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -108,18 +160,25 @@ class _TicketScreenState extends State<TicketScreen> {
                       ),
                     ),
                   ),
-                  Text(ticketCode),
+                  Text(
+                    ticketCode,
+                  ),
                 ],
               ),
             ),
             Padding(
-              padding:
-                  const EdgeInsets.only(top: 30.0, right: 20.0, left: 20.0),
-              child: Text('Please show above QR code while boarding the bus.',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15.0,
-                  )),
+              padding: const EdgeInsets.only(
+                top: 30.0,
+                right: 20.0,
+                left: 20.0,
+              ),
+              child: Text(
+                'Please show above QR code while boarding the bus.',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 15.0,
+                ),
+              ),
             ),
           ],
         ),
