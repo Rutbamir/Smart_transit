@@ -84,10 +84,6 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
                       ),
                     ),
                     onPressed: () {
-                      setState(() {
-                        cost = GetAddress.distance * 5;
-                      });
-
                       Navigator.pushNamed(
                         context,
                         TicketScreen.id,
