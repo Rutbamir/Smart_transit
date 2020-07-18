@@ -69,46 +69,41 @@ class _TicketScreenState extends State<TicketScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Expanded(
+                    flex: 2,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            'Your journey is from',
-                            style: TextStyle(
-                              fontSize: 18.0,
-                            ),
+                        Text(
+                          'Your journey is from',
+                          style: TextStyle(
+                            fontSize: 18.0,
                           ),
                         ),
-                        Expanded(
-                          child: Text(
-                            '${GetAddress.startAddress} to ${GetAddress.destinationAddress}',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                            ),
+                        Text(
+                          '${GetAddress.startAddress} to ${GetAddress.destinationAddress}',
+                          style: TextStyle(
+                            fontSize: 20.0,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'Dated: ',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                          ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'Dated: ',
+                        style: TextStyle(
+                          fontSize: 20.0,
                         ),
-                        Text(
-                          dateMonthYear(),
-                          style: TextStyle(
-                            fontSize: 25.0,
-                          ),
+                      ),
+                      Text(
+                        dateMonthYear(),
+                        style: TextStyle(
+                          fontSize: 25.0,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   Divider(
                     color: Colors.grey[400],

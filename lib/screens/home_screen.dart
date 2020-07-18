@@ -16,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   CameraPosition _initialLocation =
       CameraPosition(target: LatLng(34.115829, 74.859138));
@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
         height: height,
         width: width,
         child: Scaffold(
-          key: _drawerKey,
+          key: _scaffoldKey,
           drawer: MyDrawer(),
           backgroundColor: Colors.white,
           body: Stack(
@@ -102,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: Colors.blue[900],
                     ),
                     onPressed: () {
-                      _drawerKey.currentState.openDrawer();
+                      _scaffoldKey.currentState.openDrawer();
                     },
                   ),
                 ),
@@ -208,16 +208,21 @@ class _HomeScreenState extends State<HomeScreen> {
                             geocode();
 
                             //bottomsheet
-                            showModalBottomSheet(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(20.0),
-                                  topLeft: Radius.circular(20.0),
-                                ),
-                              ),
-                              context: context,
-                              builder: (context) => AddBottomSheet(),
-                            );
+                            // showBottomSheet(
+                            //   shape: RoundedRectangleBorder(
+                            //     borderRadius: BorderRadius.only(
+                            //       topRight: Radius.circular(20.0),
+                            //       topLeft: Radius.circular(20.0),
+                            //     ),
+                            //   ),
+                            //   context: context,
+                            //   builder: (context) => AddBottomSheet(),
+                            // );
+
+                            _scaffoldKey.currentState
+                                .showBottomSheet<Null>((BuildContext context) {
+                              return AddBottomSheet();
+                            });
                           }),
                     ],
                   ),

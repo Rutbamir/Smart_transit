@@ -6,7 +6,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 double cost;
 
 class AddBottomSheet extends StatefulWidget {
-  @override
   _AddBottomSheetState createState() => _AddBottomSheetState();
 }
 
@@ -14,6 +13,7 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       height: 180,
       child: Container(
         decoration: BoxDecoration(
