@@ -1,6 +1,7 @@
 import 'package:Smart_transit/screens/ticketScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:Smart_transit/addresses.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 double cost;
 
@@ -33,15 +34,26 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
           padding: const EdgeInsets.only(
             left: 18.0,
             top: 10.0,
-            bottom: 10.0,
+            bottom: 18.0,
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             // crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Expanded(
+                flex: 3,
+                child: SvgPicture.asset(
+                  'assets/minus-sign.svg',
+                  color: Colors.grey[300],
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Expanded(
+                flex: 3,
                 child: Text(
-                  'Icon goes here/new font good?',
+                  'Distace: ${GetAddress.distance.toStringAsFixed(2)} km',
                   style: TextStyle(
                     fontSize: 15.0,
                     color: Colors.grey[600],
@@ -49,15 +61,16 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
                 ),
               ),
               Expanded(
+                flex: 3,
                 child: Text(
-                  'Your total distace is ${GetAddress.distance.toStringAsFixed(2)} km',
+                  'Cost: Rs ${cost.toStringAsFixed(2)}/-',
                   style: TextStyle(
-                    fontSize: 15.0,
-                    color: Colors.grey[600],
+                    fontSize: 25.0,
                   ),
                 ),
               ),
               Expanded(
+                flex: 6,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: RaisedButton(
@@ -71,7 +84,7 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
                       ),
                     ),
                     onPressed: () {
-                        cost = GetAddress.distance * 5;
+                      cost = GetAddress.distance * 5;
 
                       Navigator.pushNamed(
                         context,
