@@ -27,6 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Position _currentPosition;
   String _currentAddress;
 
+  Position _startCoordinates;
+  Position _destinationCoordinates;
+
   TextEditingController startAddressController = TextEditingController();
   TextEditingController destinationAddressController = TextEditingController();
 
@@ -182,6 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       MyTextWidget(
                         hint: 'Your Destination',
+                        controller: destinationAddressController,
                         //add location predictor
                         ontap: () {
                           showSearch(
@@ -189,23 +193,23 @@ class _HomeScreenState extends State<HomeScreen> {
                             delegate:
                                 PlacesListSearch(destinationAddressController),
                           );
+                          _destinationAddress =
+                              destinationAddressController.text;
+                          GetAddress.destinationAddress =
+                              destinationAddressController.text;
+                          print(_destinationAddress);
                         },
                         prefixIcon: Icon(
                           Icons.flag,
                           color: Colors.orange,
                         ),
-                        controller: destinationAddressController,
                       ),
                       IconButton(
                           icon:
                               Icon(Icons.directions_bus, color: Colors.orange),
                           onPressed: () {
-                            _destinationAddress =
-                                destinationAddressController.text;
-                            GetAddress.destinationAddress =
-                                destinationAddressController.text;
-                            print(_destinationAddress);
                             geocode();
+                            setDistanceandCost();
 
                             //shows bottomsheet
                             setState(() {
@@ -285,22 +289,22 @@ class _HomeScreenState extends State<HomeScreen> {
         // Use the retrieved coordinates of the current position,
         // instead of the address if the start position is user's
         // current position, as it results in better accuracy.
-        Position startCoordinates = _startAddress == _currentAddress
+        _startCoordinates = _startAddress == _currentAddress
             ? Position(
                 latitude: _currentPosition.latitude,
                 longitude: _currentPosition.longitude,
               )
             : startPlacemark[0].position;
-        Position destinationCoordinates = destinationPlacemark[0].position;
-        print(startCoordinates);
-        print(destinationCoordinates);
+        _destinationCoordinates = destinationPlacemark[0].position;
+        print(_startCoordinates);
+        print(_destinationCoordinates);
 
         // Start Location Marker
         Marker startMarker = Marker(
-            markerId: MarkerId('$startCoordinates'),
+            markerId: MarkerId('$_startCoordinates'),
             position: LatLng(
-              startCoordinates.latitude,
-              startCoordinates.longitude,
+              _startCoordinates.latitude,
+              _startCoordinates.longitude,
             ),
             infoWindow: InfoWindow(
               title: 'Start',
@@ -310,10 +314,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
         // Destination Location Marker
         Marker destinationMarker = Marker(
-          markerId: MarkerId('$destinationCoordinates'),
+          markerId: MarkerId('$_destinationCoordinates'),
           position: LatLng(
-            destinationCoordinates.latitude,
-            destinationCoordinates.longitude,
+            _destinationCoordinates.latitude,
+            _destinationCoordinates.longitude,
           ),
           infoWindow: InfoWindow(
             title: 'Destination',
@@ -325,15 +329,7 @@ class _HomeScreenState extends State<HomeScreen> {
         // Add the markers to the list
         _markers.add(startMarker);
         _markers.add(destinationMarker);
-        double totalDistance = 0.0;
 
-        double lat1 = startCoordinates.latitude / 57.29577951;
-        double lat2 = destinationCoordinates.latitude / 57.29577951;
-
-        double long1 = startCoordinates.longitude / 57.29577951;
-        double long2 = destinationCoordinates.longitude / 57.29577951;
-
-        totalDistance = _coordinateDistance(lat1, long1, lat2, long2);
 //IMP DON'T DELETE
         // Calculating the total distance by adding the distance
         // between small segments
@@ -346,35 +342,48 @@ class _HomeScreenState extends State<HomeScreen> {
         //   );
         // }
 
-        setState(() {
-          _placeDistance = totalDistance.toStringAsFixed(2);
-          print('DISTANCE: $_placeDistance km');
-          GetAddress.distance = totalDistance;
-          cost = GetAddress.distance * 5;
-        });
       }
     } catch (e) {
       print(e);
     }
   }
 
-  double _coordinateDistance(lat1, lon1, lat2, lon2) {
-    double dlong = lon2 - lon1;
-    double dlat = lat2 - lat1;
+  void setDistanceandCost() {
+    double totalDistance = 0.0;
+
+    double _coordinateDistance(lat1, lon1, lat2, lon2) {
+      double dlong = lon2 - lon1;
+      double dlat = lat2 - lat1;
 
 //IMP DON'T DELETE
-    // var p = 0.017453292519943295;
-    // var c = cos;
-    // var a = 0.5 -
-    //     c((lat2 - lat1) * p) / 2 +
-    //     c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
-    double ans =
-        pow(sin(dlat / 2), 2) + cos(lat1) * cos(lat2) * pow(sin(dlong / 2), 2);
+      // var p = 0.017453292519943295;
+      // var c = cos;
+      // var a = 0.5 -
+      //     c((lat2 - lat1) * p) / 2 +
+      //     c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
+      double ans = pow(sin(dlat / 2), 2) +
+          cos(lat1) * cos(lat2) * pow(sin(dlong / 2), 2);
 //IMP DON'T DELETE
-    // return 12742 * asin(sqrt(a));
-    ans = 2 * asin(sqrt(ans));
-    double r = 6371;
-    ans = ans * r;
-    return ans;
+      // return 12742 * asin(sqrt(a));
+      ans = 2 * asin(sqrt(ans));
+      double r = 6371;
+      ans = ans * r;
+      return ans;
+    }
+
+    double lat1 = _startCoordinates.latitude / 57.29577951;
+    double lat2 = _destinationCoordinates.latitude / 57.29577951;
+
+    double long1 = _startCoordinates.longitude / 57.29577951;
+    double long2 = _destinationCoordinates.longitude / 57.29577951;
+
+    totalDistance = _coordinateDistance(lat1, long1, lat2, long2);
+
+    setState(() {
+      _placeDistance = totalDistance.toStringAsFixed(2);
+      print('DISTANCE: $_placeDistance km');
+      GetAddress.distance = totalDistance;
+      cost = GetAddress.distance * 5;
+    });
   }
 }
