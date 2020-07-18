@@ -44,10 +44,30 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Map<PolylineId, Polyline> polylines = {};
 
+  BitmapDescriptor sourceIcon;
+  BitmapDescriptor destinationIcon;
+
   @override
   void initState() {
     super.initState();
     _getCurrentLocation();
+
+    setCustomMarkers();
+  }
+
+  void setCustomMarkers() async {
+    sourceIcon = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(
+        devicePixelRatio: 2.5,
+      ),
+      'assets/marker.png',
+    );
+    destinationIcon = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(
+        devicePixelRatio: 2.5,
+      ),
+      'assets/marker.png',
+    );
   }
 
   @override
@@ -67,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: <Widget>[
               // the main map
               GoogleMap(
-                markers: _markers != null ? Set<Marker>.from(_markers) : null,
+                markers: _markers,
                 onMapCreated: (GoogleMapController controller) {
                   mapController = controller;
                 },
@@ -282,17 +302,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
         // Start Location Marker
         Marker startMarker = Marker(
-          markerId: MarkerId('$startCoordinates'),
-          position: LatLng(
-            startCoordinates.latitude,
-            startCoordinates.longitude,
-          ),
-          infoWindow: InfoWindow(
-            title: 'Start',
-            snippet: _startAddress,
-          ),
-          icon: BitmapDescriptor.defaultMarker,
-        );
+            markerId: MarkerId('$startCoordinates'),
+            position: LatLng(
+              startCoordinates.latitude,
+              startCoordinates.longitude,
+            ),
+            infoWindow: InfoWindow(
+              title: 'Start',
+              snippet: _startAddress,
+            ),
+            icon: sourceIcon);
 
         // Destination Location Marker
         Marker destinationMarker = Marker(
@@ -305,7 +324,7 @@ class _HomeScreenState extends State<HomeScreen> {
             title: 'Destination',
             snippet: _destinationAddress,
           ),
-          icon: BitmapDescriptor.defaultMarker,
+          icon: destinationIcon,
         );
 
         // Add the markers to the list
