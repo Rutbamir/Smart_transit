@@ -203,10 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           icon:
                               Icon(Icons.directions_bus, color: Colors.orange),
                           onPressed: () async {
-                            geocode();
-                            await Future.delayed(
-                                const Duration(seconds: 2), () {});
-                            // setDistanceandCost();
+                            await geocode();
 
                             //shows bottomsheet
                             setState(() {
