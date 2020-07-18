@@ -193,11 +193,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             delegate:
                                 PlacesListSearch(destinationAddressController),
                           );
-                          _destinationAddress =
-                              destinationAddressController.text;
-                          GetAddress.destinationAddress =
-                              destinationAddressController.text;
-                          print(_destinationAddress);
                         },
                         prefixIcon: Icon(
                           Icons.flag,
@@ -207,9 +202,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       IconButton(
                           icon:
                               Icon(Icons.directions_bus, color: Colors.orange),
-                          onPressed: () {
+                          onPressed: () async {
                             geocode();
-                            setDistanceandCost();
+                            await Future.delayed(
+                                const Duration(seconds: 1), () {});
+                            // setDistanceandCost();
 
                             //shows bottomsheet
                             setState(() {
@@ -278,6 +275,9 @@ class _HomeScreenState extends State<HomeScreen> {
   // Getting the placemarks
   Future<dynamic> geocode() async {
     try {
+      _destinationAddress = destinationAddressController.text;
+      GetAddress.destinationAddress = destinationAddressController.text;
+      print(_destinationAddress);
       List<Placemark> startPlacemark =
           await _geolocator.placemarkFromAddress(_startAddress);
       List<Placemark> destinationPlacemark =
@@ -298,6 +298,8 @@ class _HomeScreenState extends State<HomeScreen> {
         _destinationCoordinates = destinationPlacemark[0].position;
         print(_startCoordinates);
         print(_destinationCoordinates);
+
+        setDistanceandCost();
 
         // Start Location Marker
         Marker startMarker = Marker(
@@ -381,9 +383,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
     setState(() {
       _placeDistance = totalDistance.toStringAsFixed(2);
-      print('DISTANCE: $_placeDistance km');
       GetAddress.distance = totalDistance;
+      print('DISTANCE: ${GetAddress.distance} km');
       cost = GetAddress.distance * 5;
+      print('cost: $cost');
     });
   }
 }
