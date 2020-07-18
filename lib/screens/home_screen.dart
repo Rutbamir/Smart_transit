@@ -217,6 +217,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
                             //bottomsheet
                             showModalBottomSheet(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(20.0),
+                                  topLeft: Radius.circular(20.0),
+                                ),
+                              ),
                               context: context,
                               builder: (context) => AddBottomSheet(),
                             );

@@ -13,6 +13,7 @@ void main() => runApp(
           buttonColor: Colors.orange,
           primaryColor: Colors.orange,
           accentColor: Colors.deepOrangeAccent,
+          fontFamily: 'Product Sans',
         ),
         debugShowCheckedModeBanner: false,
         initialRoute: HomeScreen.id,
