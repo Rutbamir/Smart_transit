@@ -2,7 +2,14 @@ import 'package:Smart_transit/screens/ticketScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:Smart_transit/addresses.dart';
 
-class AddBottomSheet extends StatelessWidget {
+double cost;
+
+class AddBottomSheet extends StatefulWidget {
+  @override
+  _AddBottomSheetState createState() => _AddBottomSheetState();
+}
+
+class _AddBottomSheetState extends State<AddBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,6 +33,7 @@ class AddBottomSheet extends StatelessWidget {
           padding: const EdgeInsets.only(
             left: 18.0,
             top: 10.0,
+            bottom: 10.0,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -42,16 +50,37 @@ class AddBottomSheet extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  'Here are your ticket details',
+                  'Your total distace is ${GetAddress.distance.toStringAsFixed(2)} km',
                   style: TextStyle(
                     fontSize: 15.0,
                     color: Colors.grey[600],
                   ),
                 ),
               ),
-              Expanded(child: RaisedButton(onPressed: () {
-                Navigator.pushNamed(context, TicketScreen.id);
-              })),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      'Book your ride',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                      ),
+                    ),
+                    onPressed: () {
+                        cost = GetAddress.distance * 5;
+
+                      Navigator.pushNamed(
+                        context,
+                        TicketScreen.id,
+                      );
+                    },
+                  ),
+                ),
+              ),
             ],
           ),
         ),
