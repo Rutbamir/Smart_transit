@@ -207,21 +207,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             print(_destinationAddress);
                             geocode();
 
-                            //bottomsheet
-                            // showBottomSheet(
-                            //   shape: RoundedRectangleBorder(
-                            //     borderRadius: BorderRadius.only(
-                            //       topRight: Radius.circular(20.0),
-                            //       topLeft: Radius.circular(20.0),
-                            //     ),
-                            //   ),
-                            //   context: context,
-                            //   builder: (context) => AddBottomSheet(),
-                            // );
-
-                            _scaffoldKey.currentState
-                                .showBottomSheet<Null>((BuildContext context) {
-                              return AddBottomSheet();
+                            //shows bottomsheet
+                            setState(() {
+                              _scaffoldKey.currentState.showBottomSheet<Null>(
+                                  (BuildContext context) {
+                                return AddBottomSheet();
+                              });
                             });
                           }),
                     ],
