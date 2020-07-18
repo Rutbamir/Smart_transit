@@ -354,6 +354,7 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           _placeDistance = totalDistance.toStringAsFixed(2);
           print('DISTANCE: $_placeDistance km');
+         GetAddress.distance = totalDistance;
         });
       }
     } catch (e) {
