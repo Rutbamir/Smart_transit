@@ -30,6 +30,7 @@ dependencies:
   firebase_core: ^0.4.5
   firebase_auth: ^0.16.1
   cloud_firestore: ^0.13.7
+  qr_flutter: ^3.2.0
   
  
 

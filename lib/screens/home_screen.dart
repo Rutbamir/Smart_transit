@@ -1,13 +1,11 @@
 import 'dart:math';
-import 'package:Smart_transit/constants.dart';
 import 'package:flutter/material.dart';
-
+import 'package:Smart_transit/addresses.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:Smart_transit/widgets/drawer.dart';
 import '../widgets/textFields.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'bottomSheet.dart';
 import 'places_delegate.dart';
 
@@ -37,12 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
   String _placeDistance;
 
   Set<Marker> _markers = {};
-
-  PolylinePoints polylinePoints;
-// this will hold each polyline coordinate as Lat and Lng pairs
-  List<LatLng> polylineCoordinates = [];
-
-  Map<PolylineId, Polyline> polylines = {};
 
   BitmapDescriptor sourceIcon;
   BitmapDescriptor destinationIcon;
@@ -97,7 +89,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 zoomGesturesEnabled: true,
                 zoomControlsEnabled: false,
                 initialCameraPosition: _initialLocation,
-                polylines: Set<Polyline>.of(polylines.values),
               ),
 
               //Drawer icon
@@ -212,6 +203,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             _destinationAddress =
                                 destinationAddressController.text;
+                            GetAddress.destinationAddress =
+                                destinationAddressController.text;
                             print(_destinationAddress);
                             geocode();
 
@@ -274,8 +267,9 @@ class _HomeScreenState extends State<HomeScreen> {
         _currentAddress = "${first.subLocality}, ${first.locality}";
 
         startAddressController.text = _currentAddress;
-
         _startAddress = _currentAddress;
+
+        GetAddress.startAddress = _currentAddress;
       });
     } catch (e) {
       print(e);

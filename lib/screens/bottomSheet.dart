@@ -1,4 +1,6 @@
+import 'package:Smart_transit/screens/ticketScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:Smart_transit/addresses.dart';
 
 class AddBottomSheet extends StatelessWidget {
   @override
@@ -47,15 +49,9 @@ class AddBottomSheet extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(
-                child: Text(
-                  'dummy2',
-                  style: TextStyle(
-                    fontSize: 15.0,
-                    color: Colors.grey[600],
-                  ),
-                ),
-              ),
+              Expanded(child: RaisedButton(onPressed: () {
+                Navigator.pushNamed(context, TicketScreen.id);
+              })),
             ],
           ),
         ),

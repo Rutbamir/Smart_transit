@@ -1,3 +1,4 @@
+import 'package:Smart_transit/screens/ticketScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'screens/login_screen.dart';
@@ -23,6 +24,7 @@ void main() => runApp(
           HomeScreen.id: (context) => HomeScreen(),
           WelcomeScreen.id: (context) => WelcomeScreen(),
           SplashScreen.id: (context) => SplashScreen(),
+          TicketScreen.id: (context) => TicketScreen(),
         },
       ),
     );
