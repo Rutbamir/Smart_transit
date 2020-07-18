@@ -118,16 +118,14 @@ class _TicketScreenState extends State<TicketScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Text('Bus Service',
-                            style: TextStyle(
-                              fontSize: 25.0,
-                              fontWeight: FontWeight.bold,
-                            )),
-                        SizedBox(
-                          height: 20.0,
+                        Text(
+                          'Bus Service',
+                          style: TextStyle(
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        Column(
                           children: <Widget>[
                             Text(
                               'Omnibus',
@@ -135,21 +133,23 @@ class _TicketScreenState extends State<TicketScreen> {
                                 fontSize: 20.0,
                               ),
                             ),
-                            SizedBox(
-                              width: 40.0,
-                            ),
-                            Text(
-                              'Your ticket price is ${cost.toStringAsFixed(2)}',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                              ),
-                            ),
                           ],
+                        ),
+                        Divider(
+                          color: Colors.grey[400],
+                        ),
+                        SizedBox(
+                          width: 40.0,
+                        ),
+                        Text(
+                          'Your ticket price is Rs ${cost.toStringAsFixed(2)}/-',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                          ),
                         ),
                       ],
                     ),
                   ),
-                  Divider(),
                   Expanded(
                     flex: 3,
                     child: Container(
