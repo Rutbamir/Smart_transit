@@ -54,128 +54,130 @@ class _TicketScreenState extends State<TicketScreen> {
             },
           ),
         ),
-        body: Column(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.all(20.0),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(30.0),
-                    bottomRight: Radius.circular(30.0),
-                  )),
-              height: 500,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.all(20.0),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(30.0),
+                      bottomRight: Radius.circular(30.0),
+                    )),
+                height: 500,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Text(
+                            'Your journey is from',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          Text(
+                            '${GetAddress.startAddress} to ${GetAddress.destinationAddress}',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          'Your journey is from',
-                          style: TextStyle(
-                            fontSize: 18.0,
-                          ),
-                        ),
-                        Text(
-                          '${GetAddress.startAddress} to ${GetAddress.destinationAddress}',
+                          'Dated: ',
                           style: TextStyle(
                             fontSize: 20.0,
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Dated: ',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                        ),
-                      ),
-                      Text(
-                        dateMonthYear(),
-                        style: TextStyle(
-                          fontSize: 25.0,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Divider(
-                    color: Colors.grey[400],
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
                         Text(
-                          'Bus Service',
+                          dateMonthYear(),
                           style: TextStyle(
                             fontSize: 25.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Column(
-                          children: <Widget>[
-                            Text(
-                              'Omnibus',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Divider(
-                          color: Colors.grey[400],
-                        ),
-                        SizedBox(
-                          width: 40.0,
-                        ),
-                        Text(
-                          'Your ticket price is Rs ${cost.toStringAsFixed(2)}/-',
-                          style: TextStyle(
-                            fontSize: 20.0,
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Container(
-                      width: 150.0,
-                      height: 150.0,
-                      child: QrImage(
-                        data: randomString(10),
+                    Divider(
+                      color: Colors.grey[400],
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Text(
+                            'Bus Service',
+                            style: TextStyle(
+                              fontSize: 25.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Column(
+                            children: <Widget>[
+                              Text(
+                                'Omnibus',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Divider(
+                            color: Colors.grey[400],
+                          ),
+                          SizedBox(
+                            width: 40.0,
+                          ),
+                          Text(
+                            'Your ticket price is Rs ${cost.toStringAsFixed(2)}/-',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                  Text(
-                    ticketCode,
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 30.0,
-                right: 20.0,
-                left: 20.0,
-              ),
-              child: Text(
-                'Please show above QR code while boarding the bus.',
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 15.0,
+                    Expanded(
+                      flex: 3,
+                      child: Container(
+                        width: 150.0,
+                        height: 150.0,
+                        child: QrImage(
+                          data: randomString(10),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      ticketCode,
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 30.0,
+                  right: 20.0,
+                  left: 20.0,
+                ),
+                child: Text(
+                  'Please show above QR code while boarding the bus.',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 15.0,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -205,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () async {
                             geocode();
                             await Future.delayed(
-                                const Duration(seconds: 1), () {});
+                                const Duration(seconds: 2), () {});
                             // setDistanceandCost();
 
                             //shows bottomsheet
