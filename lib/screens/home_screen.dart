@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:Smart_transit/addresses.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:Smart_transit/widgets/drawer.dart';
 import '../widgets/textFields.dart';
 import 'bottomSheet.dart';
@@ -97,10 +97,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Container(
                   alignment: Alignment.topLeft,
                   child: IconButton(
-                    icon: Icon(
-                      Icons.menu,
-                      color: Colors.blue[800],
-                      size: 30.0,
+                    icon: SvgPicture.asset(
+                      'assets/menu.svg',
+                      color: Colors.blue[900],
                     ),
                     onPressed: () {
                       _drawerKey.currentState.openDrawer();
@@ -354,7 +353,7 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           _placeDistance = totalDistance.toStringAsFixed(2);
           print('DISTANCE: $_placeDistance km');
-         GetAddress.distance = totalDistance;
+          GetAddress.distance = totalDistance;
         });
       }
     } catch (e) {
