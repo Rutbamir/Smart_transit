@@ -43,7 +43,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 child: RaisedButton(
                   elevation: 5.0,
                   textColor: Colors.white,
-                  color: Colors.orange,
+                  color: Color(0xff4cbbb9),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),
                   ),
@@ -63,7 +63,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 height: 50,
                 child: RaisedButton(
                   textColor: Colors.white,
-                  color: Colors.orangeAccent[700],
+                  color: Color(0xff77d8d8),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),
                   ),
