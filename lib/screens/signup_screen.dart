@@ -93,7 +93,7 @@ class SignupScreen extends StatelessWidget {
                               height: 50,
                               child: RaisedButton(
                                 textColor: Colors.white,
-                                color: Colors.orange,
+                                color: Colors.blue[600],
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(18.0)),
                                 child: Text('Sign Up'),

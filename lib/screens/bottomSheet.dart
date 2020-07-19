@@ -81,6 +81,7 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
                       'Book your ride',
                       style: TextStyle(
                         fontSize: 16.0,
+                        color: Colors.white,
                       ),
                     ),
                     onPressed: () {

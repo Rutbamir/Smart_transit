@@ -102,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: IconButton(
                     icon: SvgPicture.asset(
                       'assets/menu.svg',
-                      color: Colors.blue[900],
+                      color: Colors.black,
                     ),
                     onPressed: () {
                       _scaffoldKey.currentState.openDrawer();
@@ -165,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         prefixIcon: IconButton(
                           icon: Icon(
                             Icons.my_location,
-                            color: Colors.orange,
+                            color: Colors.black,
                           ),
                           onPressed: () {
                             setState(
@@ -181,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Divider(
                         indent: 20,
                         endIndent: 20,
-                        color: Colors.orange,
+                        color: Colors.blue[600],
                       ),
                       MyTextWidget(
                         hint: 'Your Destination',
@@ -196,12 +196,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                         prefixIcon: Icon(
                           Icons.flag,
-                          color: Colors.orange,
+                          color: Colors.black,
                         ),
                       ),
                       IconButton(
-                          icon:
-                              Icon(Icons.directions_bus, color: Colors.orange),
+                          icon: Icon(
+                            Icons.directions_bus,
+                          ),
                           onPressed: () async {
                             await geocode();
 
