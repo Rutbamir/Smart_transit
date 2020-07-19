@@ -32,6 +32,7 @@ dependencies:
   cloud_firestore: ^0.13.7
   qr_flutter: ^3.2.0
   flutter_svg: ^0.17.4
+  flare_flutter: ^2.0.5
   
  
 

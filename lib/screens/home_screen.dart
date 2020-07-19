@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:Smart_transit/addresses.dart';
+import 'package:Smart_transit/get_data.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -231,6 +231,9 @@ class _HomeScreenState extends State<HomeScreen> {
         .then((Position position) async {
       setState(() {
         _currentPosition = position;
+        GetData.currentLatitude = _currentPosition.latitude;
+        GetData.currentLongitude = _currentPosition.longitude;
+
         print('CURRENT POSITION: $_currentPosition');
 
         mapController.animateCamera(
@@ -262,7 +265,7 @@ class _HomeScreenState extends State<HomeScreen> {
         startAddressController.text = _currentAddress;
         _startAddress = _currentAddress;
 
-        GetAddress.startAddress = _currentAddress;
+        GetData.startAddress = _currentAddress;
       });
     } catch (e) {
       print(e);
@@ -273,7 +276,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<dynamic> geocode() async {
     try {
       _destinationAddress = destinationAddressController.text;
-      GetAddress.destinationAddress = destinationAddressController.text;
+      GetData.destinationAddress = destinationAddressController.text;
       print(_destinationAddress);
       List<Placemark> startPlacemark =
           await _geolocator.placemarkFromAddress(_startAddress);
@@ -380,9 +383,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     setState(() {
       _placeDistance = totalDistance.toStringAsFixed(2);
-      GetAddress.distance = totalDistance;
-      print('DISTANCE: ${GetAddress.distance} km');
-      cost = GetAddress.distance * 5;
+      GetData.distance = totalDistance;
+      print('DISTANCE: ${GetData.distance} km');
+      cost = GetData.distance * 5;
       print('cost: $cost');
     });
   }

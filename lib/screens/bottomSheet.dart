@@ -1,6 +1,6 @@
 import 'package:Smart_transit/screens/ticketScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:Smart_transit/addresses.dart';
+import 'package:Smart_transit/get_data.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 double cost;
@@ -53,7 +53,7 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
               Expanded(
                 flex: 3,
                 child: Text(
-                  'Distace: ${GetAddress.distance.toStringAsFixed(2)} km',
+                  'Distace: ${GetData.distance.toStringAsFixed(2)} km',
                   style: TextStyle(
                     fontSize: 15.0,
                     color: Colors.grey[600],
