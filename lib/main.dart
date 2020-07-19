@@ -10,14 +10,13 @@ import 'screens/welcome_screen.dart';
 void main() => runApp(
       MaterialApp(
         theme: ThemeData(
-          primarySwatch: Colors.orange,
-          buttonColor: Colors.orange,
-          primaryColor: Colors.orange,
-          accentColor: Colors.deepOrangeAccent,
+          // buttonColor: Colors.orange,
+          primaryColor: Color(0xff0779e4),
+          accentColor: Color(0xffeff3c6),
           fontFamily: 'Product Sans',
         ),
         debugShowCheckedModeBanner: false,
-        initialRoute: HomeScreen.id,
+        initialRoute: SplashScreen.id,
         routes: {
           LoginScreen.id: (context) => LoginScreen(),
           SignupScreen.id: (context) => SignupScreen(),
