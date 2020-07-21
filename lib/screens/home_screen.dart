@@ -164,41 +164,55 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.only(top: 60.0, right: 30.0, left: 30.0),
+                padding: const EdgeInsets.only(
+                  top: 60.0,
+                  right: 30.0,
+                  left: 30.0,
+                ),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 20,
+                        color: Colors.grey[400],
+                        offset: Offset(2, 2),
+                        spreadRadius: 2,
+                      ),
+                    ],
                   ),
                   alignment: Alignment.topCenter,
-                  height: 160,
+                  height: 180,
                   width: width * 0.8,
                   child: Column(
                     children: <Widget>[
-                      MyTextWidget(
-                        hint: 'Your Current Location',
-                        controller: startAddressController,
-                        prefixIcon: IconButton(
-                          icon: Icon(
-                            Icons.my_location,
-                            color: Colors.black,
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16.0),
+                        child: MyTextWidget(
+                          hint: 'Your Current Location',
+                          controller: startAddressController,
+                          prefixIcon: IconButton(
+                            icon: Icon(
+                              Icons.my_location,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {
+                              setState(
+                                () {
+                                  startAddressController.text = _currentAddress;
+                                  _startAddress = _currentAddress;
+                                  print(_currentAddress);
+                                },
+                              );
+                            },
                           ),
-                          onPressed: () {
-                            setState(
-                              () {
-                                startAddressController.text = _currentAddress;
-                                _startAddress = _currentAddress;
-                                print(_currentAddress);
-                              },
-                            );
-                          },
                         ),
                       ),
                       Divider(
-                        indent: 20,
-                        endIndent: 20,
-                        color: Colors.blue[600],
+                        indent: 50,
+                        endIndent: 50,
+                        color: Colors.grey[400],
                       ),
                       MyTextWidget(
                         hint: 'Your Destination',
