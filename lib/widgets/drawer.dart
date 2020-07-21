@@ -37,6 +37,7 @@ class MyDrawer extends StatelessWidget {
         ListTile(
           title: Text("Log Out"),
           leading: Icon(Icons.exit_to_app),
+          //add logout
         ),
       ],
     ));
