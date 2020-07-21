@@ -1,8 +1,13 @@
+import 'package:Smart_transit/screens/welcome_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MyDrawer extends StatelessWidget {
-  @override
+  MyDrawer({this.authkey});
+  final authkey;
+
   Widget build(BuildContext context) {
+    FirebaseAuth _auth = authkey;
     return Drawer(
         child: ListView(
       children: <Widget>[
