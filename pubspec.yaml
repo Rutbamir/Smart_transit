@@ -33,6 +33,7 @@ dependencies:
   qr_flutter: ^3.2.0
   flutter_svg: ^0.17.4
   flare_flutter: ^2.0.5
+  google_fonts: ^1.1.0
   
  
 
@@ -70,10 +71,9 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-    - family: Product Sans
-      fonts:
-        - asset: assets/fonts/ProductSans-Regular.ttf
+  # fonts:
+  #   - family: Product Sans
+  #       - asset: assets/fonts/ProductSans-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
