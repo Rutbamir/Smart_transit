@@ -73,23 +73,27 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
                 flex: 6,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      'Book your ride',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.white,
+                  child: Container(
+                    width: 250,
+                    child: RaisedButton(
+                      elevation: 5.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
                       ),
+                      child: Text(
+                        'Book your ride',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.white,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          TicketScreen.id,
+                        );
+                      },
                     ),
-                    onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        TicketScreen.id,
-                      );
-                    },
                   ),
                 ),
               ),
