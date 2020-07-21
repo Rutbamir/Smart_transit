@@ -80,31 +80,17 @@ class LoginScreen extends StatelessWidget {
                       FadeAnimation(
                         2,
                         Container(
-                          child: ButtonTheme(
-                            minWidth: 400,
-                            height: 50,
-                            child: RaisedButton(
-                              textColor: Colors.white,
-                              color: Colors.lightBlueAccent,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0)),
-                              child: Text('Login'),
-                              onPressed: () {
-                                Navigator.pushNamed(context, HomeScreen.id);
-                              },
-                            ),
+                          width: 400,
+                          height: 50,
+                          child: RaisedButton(
+                            textColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0)),
+                            child: Text('Login'),
+                            onPressed: () {
+                              Navigator.pushNamed(context, HomeScreen.id);
+                            },
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 70,
-                      ),
-                      FadeAnimation(
-                        1.5,
-                        Text(
-                          "Forgot Password?",
-                          style: TextStyle(
-                              color: Color.fromRGBO(143, 148, 251, 1)),
                         ),
                       ),
                     ],
