@@ -13,10 +13,16 @@ import 'animationn.dart';
 void main() => runApp(
       MaterialApp(
         theme: ThemeData(
-            buttonTheme: ButtonThemeData(buttonColor: Colors.lightBlueAccent),
-            primaryColor: Colors.lightBlueAccent,
-            accentColor: Colors.blue[600],
-            textTheme: GoogleFonts.montserratTextTheme()),
+          buttonTheme: ButtonThemeData(buttonColor: Colors.lightBlueAccent),
+          primaryColor: Colors.lightBlueAccent,
+          accentColor: Colors.blue[600],
+          scaffoldBackgroundColor: Colors.white,
+          canvasColor: Colors.white,
+          textTheme: GoogleFonts.montserratTextTheme(),
+          appBarTheme: AppBarTheme(
+            elevation: 0,
+          ),
+        ),
         debugShowCheckedModeBanner: false,
         initialRoute: WelcomeScreen.id,
         routes: {

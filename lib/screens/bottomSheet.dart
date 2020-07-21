@@ -20,7 +20,7 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
           boxShadow: [
             BoxShadow(
               blurRadius: 10,
-              color: Colors.grey[600],
+              color: Colors.grey[400],
               spreadRadius: 5,
             ),
           ],
@@ -76,7 +76,7 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
                   child: Container(
                     width: 250,
                     child: RaisedButton(
-                      elevation: 5.0,
+                      elevation: 2.0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),

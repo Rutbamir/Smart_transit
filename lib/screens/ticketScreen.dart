@@ -3,6 +3,7 @@ import 'package:Smart_transit/constants.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'bottomSheet.dart';
 import 'dart:core';
@@ -121,7 +122,11 @@ class _TicketScreenState extends State<TicketScreen> {
           appBar: AppBar(
             backgroundColor: Colors.white,
             centerTitle: true,
-            title: Text('Ticket'),
+            textTheme: Theme.of(context).textTheme,
+            title: Text(
+              'Ticket',
+              style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+            ),
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
@@ -133,13 +138,20 @@ class _TicketScreenState extends State<TicketScreen> {
             child: Column(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.all(20.0),
                   decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(30.0),
-                        bottomRight: Radius.circular(30.0),
-                      )),
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 10,
+                        color: Colors.grey[400],
+                        spreadRadius: 5,
+                      ),
+                    ],
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(30.0),
+                      bottomRight: Radius.circular(30.0),
+                    ),
+                  ),
                   height: 500,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -233,8 +245,10 @@ class _TicketScreenState extends State<TicketScreen> {
                           ),
                         ),
                       ),
-                      Text(
-                        ticketCode,
+                      Expanded(
+                        child: Text(
+                          ticketCode,
+                        ),
                       ),
                     ],
                   ),
