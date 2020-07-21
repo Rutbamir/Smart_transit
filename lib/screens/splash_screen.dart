@@ -13,12 +13,18 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of eeb14f3... auth fix
     // FirebaseAuth.instance.currentUser().then((currentUser) => {
     //   if (currentUser == null) {
     //     Navigator.PushEvent
     //   }
     // },
+<<<<<<< HEAD
+>>>>>>> parent of eeb14f3... auth fix
+=======
 >>>>>>> parent of eeb14f3... auth fix
     startTime();
   }
