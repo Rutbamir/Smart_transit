@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'home_screen.dart';
 import 'login_screen.dart';
 import 'signup_screen.dart';
 
@@ -9,6 +11,18 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+
+    if (_auth.currentUser() == null) {
+      Navigator.pushNamed(context, WelcomeScreen.id);
+    } else {
+      Navigator.pushNamed(context, HomeScreen.id);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

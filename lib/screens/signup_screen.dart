@@ -40,25 +40,25 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     Padding(
                       padding: EdgeInsets.all(30.0),
-                      child: Column(
-                        children: <Widget>[
-                          FadeAnimation(
-                              1.8,
-                              Container(
-                                padding: EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color:
-                                              Color.fromRGBO(143, 148, 251, .2),
-                                          blurRadius: 20.0,
-                                          offset: Offset(0, 10))
-                                    ]),
-                                child: Form(
-                                  key: _signUpKey,
-                                  autovalidate: _autoValidate,
+                      child: Form(
+                        key: _signUpKey,
+                        autovalidate: _autoValidate,
+                        child: Column(
+                          children: <Widget>[
+                            FadeAnimation(
+                                1.8,
+                                Container(
+                                  padding: EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Color.fromRGBO(
+                                                143, 148, 251, .2),
+                                            blurRadius: 20.0,
+                                            offset: Offset(0, 10))
+                                      ]),
                                   child: Column(
                                     children: <Widget>[
                                       Container(
@@ -124,29 +124,30 @@ class _SignupScreenState extends State<SignupScreen> {
                                       )
                                     ],
                                   ),
-                                ),
-                              )),
-                          SizedBox(
-                            height: 50,
-                          ),
-                          FadeAnimation(
-                            2,
-                            Container(
-                              width: 400,
+                                )),
+                            SizedBox(
                               height: 50,
-                              child: RaisedButton(
-                                textColor: Colors.white,
-                                color: Colors.blue[600],
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18.0)),
-                                child: Text('Sign Up'),
-                                onPressed: () {
-                                  _validateLoginInput();
-                                },
-                              ),
                             ),
-                          )
-                        ],
+                            FadeAnimation(
+                              2,
+                              Container(
+                                width: 400,
+                                height: 50,
+                                child: RaisedButton(
+                                  textColor: Colors.white,
+                                  color: Colors.blue[600],
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(18.0)),
+                                  child: Text('Sign Up'),
+                                  onPressed: () {
+                                    _validateLoginInput();
+                                  },
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     )
                   ],
@@ -161,7 +162,7 @@ class _SignupScreenState extends State<SignupScreen> {
       form.save();
 
       try {
-        final user = await _auth.signInWithEmailAndPassword(
+        final user = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 
         Navigator.pushNamed(context, HomeScreen.id);

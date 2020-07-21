@@ -18,7 +18,7 @@ void main() => runApp(
             accentColor: Colors.blue[600],
             textTheme: GoogleFonts.montserratTextTheme()),
         debugShowCheckedModeBanner: false,
-        initialRoute: WelcomeScreen.id,
+        initialRoute: SplashScreen.id,
         routes: {
           LoginScreen.id: (context) => LoginScreen(),
           SignupScreen.id: (context) => SignupScreen(),
