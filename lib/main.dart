@@ -17,8 +17,7 @@ void main() => runApp(
           primaryColor: Colors.lightBlueAccent,
           accentColor: Colors.blue[600],
           scaffoldBackgroundColor: Colors.white,
-          //remove canvasColor if necessary
-          canvasColor: Colors.transparent,
+          canvasColor: Colors.white,
           textTheme: GoogleFonts.montserratTextTheme(),
           appBarTheme: AppBarTheme(
             elevation: 0,
