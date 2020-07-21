@@ -1,6 +1,10 @@
+import 'package:Smart_transit/models/auth.dart';
+import 'package:Smart_transit/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 class MyDrawer extends StatelessWidget {
+  final AuthService _auth = AuthService();
+
   Widget build(BuildContext context) {
     return Drawer(
         child: ListView(
@@ -37,6 +41,11 @@ class MyDrawer extends StatelessWidget {
           title: Text("Log Out"),
           leading: Icon(Icons.exit_to_app),
           //add logout
+          onTap: () async {
+            await _auth.signOut();
+            Navigator.pushNamedAndRemoveUntil(
+                context, WelcomeScreen.id, (route) => false);
+          },
         ),
       ],
     ));
