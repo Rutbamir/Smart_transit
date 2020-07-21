@@ -26,56 +26,58 @@ class _TicketScreenState extends State<TicketScreen> {
     //shows success alert dialog
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await showDialog<String>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) => new AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          content: Container(
-              height: 200,
-              width: 300,
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: Text('Ticket Issued. Enjoy!',
-                        style: TextStyle(
-                          fontSize: 25.0,
-                        )),
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) => WillPopScope(
+                onWillPop: () async => false,
+                child: AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
                   ),
-                  Expanded(
-                    flex: 6,
-                    child: FlareActor(
-                      'assets/success.flr',
-                      alignment: Alignment.center,
-                      animation: "Untitled",
+                  content: Container(
+                      height: 200,
+                      width: 300,
+                      child: Column(
+                        children: <Widget>[
+                          Expanded(
+                            flex: 1,
+                            child: Text('Ride Booked. Enjoy!',
+                                style: TextStyle(
+                                  fontSize: 25.0,
+                                )),
+                          ),
+                          Expanded(
+                            flex: 6,
+                            child: FlareActor(
+                              'assets/success.flr',
+                              alignment: Alignment.center,
+                              animation: "Untitled",
+                            ),
+                          ),
+                        ],
+                      )),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: new Text("View"),
+                      onPressed: () {
+                        //send ticket details to firestore
+                        _firestore
+                            .collection('tickets')
+                            .document(krandomNumber())
+                            .setData({
+                          'start': startPoint,
+                          'destination': destinationPoint,
+                          'qrcode': ticketCode,
+                          'current_lat': currentLatitude,
+                          'current_long': currentLongitude,
+                          'date': finalDate,
+                        });
+                        Navigator.of(context).pop();
+                      },
                     ),
-                  ),
-                ],
-              )),
-          actions: <Widget>[
-            FlatButton(
-              child: new Text("View"),
-              onPressed: () {
-                //send ticket details to firestore
-                _firestore
-                    .collection('tickets')
-                    .document(krandomNumber())
-                    .setData({
-                  'start': startPoint,
-                  'destination': destinationPoint,
-                  'qrcode': ticketCode,
-                  'current_lat': currentLatitude,
-                  'current_long': currentLongitude,
-                  'date': finalDate,
-                });
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        ),
-      );
+                  ],
+                ),
+              ));
     });
   }
 
@@ -155,6 +157,7 @@ class _TicketScreenState extends State<TicketScreen> {
                             ),
                             Text(
                               "$startPoint to $destinationPoint",
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 20.0,
                               ),
@@ -174,7 +177,8 @@ class _TicketScreenState extends State<TicketScreen> {
                           Text(
                             dateMonthYear(),
                             style: TextStyle(
-                              fontSize: 25.0,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0,
                             ),
                           ),
                         ],
@@ -243,6 +247,7 @@ class _TicketScreenState extends State<TicketScreen> {
                   ),
                   child: Text(
                     'Please show above QR code while boarding the bus.',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 15.0,
