@@ -1,3 +1,4 @@
+import 'package:Smart_transit/models/auth.dart';
 import 'package:flutter/material.dart';
 import '../Animation/FadeAnimation.dart';
 import 'home_screen.dart';
@@ -13,8 +14,8 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   final GlobalKey<FormState> _signUpKey = GlobalKey<FormState>();
 
+  final AuthService _auth = AuthService();
   bool _autoValidate = false;
-  final _auth = FirebaseAuth.instance;
 
   String email;
   String password;
@@ -29,36 +30,36 @@ class _SignupScreenState extends State<SignupScreen> {
             backgroundColor: Colors.white,
             body: SingleChildScrollView(
               child: Container(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      height: 300,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('assets/bus2.jpg'),
-                              fit: BoxFit.contain)),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(30.0),
-                      child: Column(
-                        children: <Widget>[
-                          FadeAnimation(
-                              1.8,
-                              Container(
-                                padding: EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color:
-                                              Color.fromRGBO(143, 148, 251, .2),
-                                          blurRadius: 20.0,
-                                          offset: Offset(0, 10))
-                                    ]),
-                                child: Form(
-                                  key: _signUpKey,
-                                  autovalidate: _autoValidate,
+                child: Form(
+                  key: _signUpKey,
+                  autovalidate: _autoValidate,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        height: 300,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage('assets/bus2.jpg'),
+                                fit: BoxFit.contain)),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(30.0),
+                        child: Column(
+                          children: <Widget>[
+                            FadeAnimation(
+                                1.8,
+                                Container(
+                                  padding: EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Color.fromRGBO(
+                                                143, 148, 251, .2),
+                                            blurRadius: 20.0,
+                                            offset: Offset(0, 10))
+                                      ]),
                                   child: Column(
                                     children: <Widget>[
                                       Container(
@@ -91,12 +92,12 @@ class _SignupScreenState extends State<SignupScreen> {
                                           obscureText: true,
                                           controller: passwordController,
                                           onSaved: (value) {
-                                            print(value);
                                             password = value.trim();
                                             print(password);
                                           },
-                                          validator: (value) =>
-                                              value.isEmpty ? "Required" : null,
+                                          validator: (value) => value.length < 6
+                                              ? 'Enter a password 6+ chars long'
+                                              : null,
                                           decoration: InputDecoration(
                                               border: InputBorder.none,
                                               hintText: "Password",
@@ -124,47 +125,49 @@ class _SignupScreenState extends State<SignupScreen> {
                                       )
                                     ],
                                   ),
-                                ),
-                              )),
-                          SizedBox(
-                            height: 50,
-                          ),
-                          FadeAnimation(
-                            2,
-                            Container(
-                              width: 400,
+                                )),
+                            SizedBox(
                               height: 50,
-                              child: RaisedButton(
-                                textColor: Colors.white,
-                                color: Colors.blue[600],
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18.0)),
-                                child: Text('Sign Up'),
-                                onPressed: () {
-                                  _validateLoginInput();
-                                },
-                              ),
                             ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
+                            FadeAnimation(
+                              2,
+                              Container(
+                                width: 400,
+                                height: 50,
+                                child: RaisedButton(
+                                  textColor: Colors.white,
+                                  color: Colors.blue[600],
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(18.0)),
+                                  child: Text('Sign Up'),
+                                  onPressed: () {
+                                    _validatesignUpInput();
+                                  },
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             )));
   }
 
-  void _validateLoginInput() async {
+  void _validatesignUpInput() async {
     final FormState form = _signUpKey.currentState;
     if (_signUpKey.currentState.validate()) {
       form.save();
 
       try {
-        final user = await _auth.signInWithEmailAndPassword(
-            email: email, password: password);
+        dynamic result =
+            await _auth.registerWithEmailAndPassword(email, password);
 
-        Navigator.pushNamed(context, HomeScreen.id);
+        Navigator.pushNamedAndRemoveUntil(
+            context, HomeScreen.id, (route) => false);
       } catch (e) {
         print(e);
       }

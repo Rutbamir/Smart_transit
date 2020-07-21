@@ -93,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
         width: width,
         child: Scaffold(
           key: _scaffoldKey,
-          drawer: MyDrawer(authkey: _auth),
+          drawer: MyDrawer(),
           backgroundColor: Colors.white,
           body: Stack(
             children: <Widget>[
