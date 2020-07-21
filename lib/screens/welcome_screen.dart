@@ -18,16 +18,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Container(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "Let's Get Started..",
-                    style: TextStyle(
-                      fontSize: 30.0,
-                    ),
-                  )),
-            ),
+                padding: const EdgeInsets.all(20.0),
+                child: Container(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "Let's Get Started..",
+                      style: TextStyle(
+                        fontSize: 30.0,
+                      ),
+                    ))),
             Container(
               height: 400,
               decoration: BoxDecoration(
@@ -36,42 +35,36 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
             ),
             Container(
-              alignment: Alignment.bottomCenter,
-              child: ButtonTheme(
-                minWidth: 250,
-                height: 50,
-                child: RaisedButton(
-                  elevation: 5.0,
-                  textColor: Colors.white,
-                  color: Colors.lightBlueAccent,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                  ),
-                  child: Text('Login'),
-                  onPressed: () {
-                    Navigator.pushNamed(context, LoginScreen.id);
-                  },
+              width: 250,
+              height: 50,
+              child: RaisedButton(
+                elevation: 5.0,
+                textColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
                 ),
+                child: Text('Login'),
+                onPressed: () {
+                  Navigator.pushNamed(context, LoginScreen.id);
+                },
               ),
             ),
             SizedBox(
               height: 25.0,
             ),
             Container(
-              child: ButtonTheme(
-                minWidth: 250,
-                height: 50,
-                child: RaisedButton(
-                  textColor: Colors.white,
-                  color: Colors.blue[600],
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                  ),
-                  child: Text('Sign Up'),
-                  onPressed: () {
-                    Navigator.pushNamed(context, SignupScreen.id);
-                  },
+              width: 250,
+              height: 50,
+              child: RaisedButton(
+                textColor: Colors.white,
+                color: Colors.blue[600],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
                 ),
+                child: Text('Sign Up'),
+                onPressed: () {
+                  Navigator.pushNamed(context, SignupScreen.id);
+                },
               ),
             ),
           ],
