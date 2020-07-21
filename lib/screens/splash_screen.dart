@@ -12,7 +12,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
     // FirebaseAuth.instance.currentUser().then((currentUser) => {
     //   if (currentUser == null) {
     //     Navigator.PushEvent
