@@ -42,11 +42,7 @@ class MyDrawer extends StatelessWidget {
         ListTile(
           title: Text("Log Out"),
           leading: Icon(Icons.exit_to_app),
-          onTap: () {
-            _auth.signOut();
-            Navigator.of(context).pushNamedAndRemoveUntil(
-                WelcomeScreen.id, (Route<dynamic> route) => false);
-          },
+          //add logout
         ),
       ],
     ));
