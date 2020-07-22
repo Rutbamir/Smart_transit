@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:Smart_transit/get_data.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,6 +9,7 @@ import 'package:Smart_transit/widgets/drawer.dart';
 import '../widgets/textFields.dart';
 import 'bottomSheet.dart';
 import 'places_delegate.dart';
+import 'package:Smart_transit/widgets/bottom_nav_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
@@ -68,6 +70,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.dark,
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarIconBrightness: Brightness.dark,
+        statusBarColor: Colors.white,
+      ),
+    );
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
 
@@ -76,6 +86,8 @@ class _HomeScreenState extends State<HomeScreen> {
         height: height,
         width: width,
         child: Scaffold(
+          extendBody: true,
+          bottomNavigationBar: BottomNavBar(),
           key: _scaffoldKey,
           drawer: MyDrawer(),
           backgroundColor: Colors.white,
