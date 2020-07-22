@@ -11,6 +11,7 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
+  Future<Object> navigation;
   Widget _child;
   @override
   Widget build(BuildContext context) {
@@ -62,20 +63,17 @@ class _BottomNavBarState extends State<BottomNavBar> {
     setState(() {
       switch (index) {
         case 0:
-        _child = WelcomeScreen();
-        Navigator.pushNamed(context, WelcomeScreen.id);
+        navigation = Navigator.pushNamed(context, WelcomeScreen.id);
           break;
         case 1:
         _child = HomeScreen();
-        // Navigator.pushNamed(context, HomeScreen.id);
           break;
         case 2:
         _child = TicketScreen();
-        Navigator.pushNamed(context, TicketScreen.id);
+        navigation = Navigator.pushNamed(context, WelcomeScreen.id);
           break;
         case 3:
         _child = LoginScreen();
-        Navigator.pushNamed(context, LoginScreen.id);
           break;
       }
       _child = AnimatedSwitcher(

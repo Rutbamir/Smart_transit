@@ -9,6 +9,7 @@ import 'screens/home_screen.dart';
 import 'screens/splash_screen.dart';
 import 'screens/welcome_screen.dart';
 import 'animationn.dart';
+import 'package:Smart_transit/widgets/bottom_nav_bar.dart';
 
 void main() => runApp(
       MaterialApp(
