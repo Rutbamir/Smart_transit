@@ -162,6 +162,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
+  fluid_bottom_nav_bar:
+    dependency: "direct main"
+    description:
+      name: fluid_bottom_nav_bar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   flutter:
     dependency: "direct main"
     description: flutter
