@@ -1,5 +1,6 @@
 import 'package:Smart_transit/models/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:async';
 import 'home_screen.dart';
 import 'welcome_screen.dart';
@@ -35,6 +36,14 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.dark,
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarIconBrightness: Brightness.dark,
+        statusBarColor: Colors.white,
+      ),
+    );
     return new Scaffold(
       body: Image.asset('assets/brunch.png'),
     );
