@@ -1,5 +1,6 @@
 import 'package:Smart_transit/get_data.dart';
 import 'package:Smart_transit/constants.dart';
+import 'package:Smart_transit/widgets/bottom_nav_bar.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -117,6 +118,7 @@ class _TicketScreenState extends State<TicketScreen> {
       onWillPop: () async => false,
       child: SafeArea(
         child: Scaffold(
+          bottomNavigationBar: BottomNavBar(),
           backgroundColor: Color.fromRGBO(212, 208, 207, 1),
           appBar: AppBar(
             backgroundColor: Colors.white,
