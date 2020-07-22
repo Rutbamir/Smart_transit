@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Smart_transit/get_data.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -18,21 +17,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  final _auth = FirebaseAuth.instance;
-  FirebaseUser loggedInUser;
-
-  void getCurrentUser() async {
-    try {
-      final user = await _auth.currentUser();
-      if (user != null) {
-        loggedInUser = user;
-        print(loggedInUser.email);
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
 
   CameraPosition _initialLocation =
       CameraPosition(target: LatLng(34.115829, 74.859138));
@@ -64,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _getCurrentLocation();
 
     setCustomMarkers();
-    getCurrentUser();
+    // getCurrentUser();
   }
 
   void setCustomMarkers() async {

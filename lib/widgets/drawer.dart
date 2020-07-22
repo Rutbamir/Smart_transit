@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class MyDrawer extends StatelessWidget {
   final AuthService _auth = AuthService();
 
+  @override
   Widget build(BuildContext context) {
     return Drawer(
         child: ListView(

@@ -1,5 +1,7 @@
+import 'package:Smart_transit/models/auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'home_screen.dart';
 import 'welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -9,14 +11,10 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final AuthService _auth = AuthService();
   @override
   void initState() {
     super.initState();
-    // FirebaseAuth.instance.currentUser().then((currentUser) => {
-    //   if (currentUser == null) {
-    //     Navigator.PushEvent
-    //   }
-    // },
     startTime();
   }
 
@@ -26,7 +24,13 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigationPage() {
-    Navigator.of(context).pushNamed(WelcomeScreen.id);
+    if (_auth.getCurrentUser() != null) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, HomeScreen.id, (route) => false);
+    } else {
+      Navigator.pushNamedAndRemoveUntil(
+          context, WelcomeScreen.id, (route) => false);
+    }
   }
 
   @override

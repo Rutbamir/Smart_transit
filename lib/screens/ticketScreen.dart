@@ -3,7 +3,6 @@ import 'package:Smart_transit/constants.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'bottomSheet.dart';
 import 'dart:core';

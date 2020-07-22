@@ -24,7 +24,7 @@ void main() => runApp(
           ),
         ),
         debugShowCheckedModeBanner: false,
-        initialRoute: WelcomeScreen.id,
+        initialRoute: SplashScreen.id,
         routes: {
           LoginScreen.id: (context) => LoginScreen(),
           SignupScreen.id: (context) => SignupScreen(),
