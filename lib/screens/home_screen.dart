@@ -24,6 +24,11 @@ class _HomeScreenState extends State<HomeScreen> {
   GoogleMapController mapController;
   final Geolocator _geolocator = Geolocator();
 
+  double _startLatitude;
+  double _startLongitude;
+  double _destLat;
+  double _destLong;
+
   Position _currentPosition;
   String _currentAddress;
 
@@ -176,12 +181,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: MyTextWidget(
                           hint: 'Your Current Location',
                           controller: startAddressController,
-                          ontap: () {
-                            showSearch(
+                          ontap: () async {
+                            final List<double> result = await showSearch(
                               context: context,
                               delegate:
                                   PlacesListSearch(startAddressController),
                             );
+                            print('Start coords: $result');
+                            _startLatitude = result[0];
+                            _startLongitude = result[1];
                           },
                           prefixIcon: Icon(
                             Icons.my_location,
@@ -198,13 +206,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         hint: 'Your Destination',
                         controller: destinationAddressController,
                         //add location predictor
-                        ontap: () {
-                          showSearch(
+                        ontap: () async {
+                          final List<double> result = await showSearch(
                             context: context,
                             delegate:
                                 PlacesListSearch(destinationAddressController),
                           );
+                          print('Destination coords: $result');
+                          _destLat = result[0];
+                          _destLong = result[1];
                         },
+
                         prefixIcon: Icon(
                           Icons.flag,
                           color: Colors.black,
@@ -215,9 +227,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             Icons.directions_bus,
                             color: Colors.black,
                           ),
-                          onPressed: () async {
-                            await geocode();
-
+                          onPressed: () {
+                            //await geocode();
+                            setDistanceandCost();
                             //shows bottomsheet
                             setState(() {
                               _scaffoldKey.currentState.showBottomSheet<Null>(
@@ -258,109 +270,43 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         );
       });
-      await _getAddress();
     }).catchError((e) {
       print(e);
     });
   }
 
-  //method for retrieving the address
-  _getAddress() async {
-    try {
-      var address = await _geolocator.placemarkFromCoordinates(
-          _currentPosition.latitude, _currentPosition.longitude);
-
-      var first = address.first;
-
-      setState(() {
-        _currentAddress = "${first.subLocality}, ${first.locality}";
-
-        //startAddressController.text = _currentAddress;
-        _startAddress = _currentAddress;
-
-        GetData.startAddress = _currentAddress;
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
-
   // Getting the placemarks
-  Future<dynamic> geocode() async {
-    try {
-      _destinationAddress = destinationAddressController.text;
-      GetData.destinationAddress = destinationAddressController.text;
-      print(_destinationAddress);
-      List<Placemark> startPlacemark =
-          await _geolocator.placemarkFromAddress(_startAddress);
-      List<Placemark> destinationPlacemark =
-          await _geolocator.placemarkFromAddress(_destinationAddress);
+  geocode() async {
+    // Start Location Marker
+    Marker startMarker = Marker(
+        markerId: MarkerId('$_startCoordinates'),
+        position: LatLng(
+          _startLatitude,
+          _startLongitude,
+        ),
+        infoWindow: InfoWindow(
+          title: 'Start',
+          snippet: _startAddress,
+        ),
+        icon: sourceIcon);
 
-      // Retrieving coordinates
+    // Destination Location Marker
+    Marker destinationMarker = Marker(
+      markerId: MarkerId('$_destinationCoordinates'),
+      position: LatLng(
+        _destLat,
+        _destLong,
+      ),
+      infoWindow: InfoWindow(
+        title: 'Destination',
+        snippet: _destinationAddress,
+      ),
+      icon: destinationIcon,
+    );
 
-      if (startPlacemark != null && destinationPlacemark != null) {
-        // Use the retrieved coordinates of the current position,
-        // instead of the address if the start position is user's
-        // current position, as it results in better accuracy.
-        _startCoordinates = _startAddress == _currentAddress
-            ? Position(
-                latitude: _currentPosition.latitude,
-                longitude: _currentPosition.longitude,
-              )
-            : startPlacemark[0].position;
-        _destinationCoordinates = destinationPlacemark[0].position;
-        print('Start coord: $_startCoordinates');
-        print('Dest coord: $_destinationCoordinates');
-
-        setDistanceandCost();
-
-        // Start Location Marker
-        Marker startMarker = Marker(
-            markerId: MarkerId('$_startCoordinates'),
-            position: LatLng(
-              _startCoordinates.latitude,
-              _startCoordinates.longitude,
-            ),
-            infoWindow: InfoWindow(
-              title: 'Start',
-              snippet: _startAddress,
-            ),
-            icon: sourceIcon);
-
-        // Destination Location Marker
-        Marker destinationMarker = Marker(
-          markerId: MarkerId('$_destinationCoordinates'),
-          position: LatLng(
-            _destinationCoordinates.latitude,
-            _destinationCoordinates.longitude,
-          ),
-          infoWindow: InfoWindow(
-            title: 'Destination',
-            snippet: _destinationAddress,
-          ),
-          icon: destinationIcon,
-        );
-
-        // Add the markers to the list
-        _markers.add(startMarker);
-        _markers.add(destinationMarker);
-
-//IMP DON'T DELETE
-        // Calculating the total distance by adding the distance
-        // between small segments
-        // for (int i = 0; i < polylineCoordinates.length - 1; i++) {
-        //   totalDistance += _coordinateDistance(
-        //     polylineCoordinates[i].latitude,
-        //     polylineCoordinates[i].longitude,
-        //     polylineCoordinates[i + 1].latitude,
-        //     polylineCoordinates[i + 1].longitude,
-        //   );
-        // }
-
-      }
-    } catch (e) {
-      print(e);
-    }
+    // Add the markers to the list
+    _markers.add(startMarker);
+    _markers.add(destinationMarker);
   }
 
   void setDistanceandCost() {
@@ -386,11 +332,12 @@ class _HomeScreenState extends State<HomeScreen> {
       return ans;
     }
 
-    double lat1 = _startCoordinates.latitude / 57.29577951;
-    double lat2 = _destinationCoordinates.latitude / 57.29577951;
+    print('this is start lat $_startLatitude');
+    double lat1 = _startLatitude / 57.29577951;
+    double lat2 = _destLat / 57.29577951;
 
-    double long1 = _startCoordinates.longitude / 57.29577951;
-    double long2 = _destinationCoordinates.longitude / 57.29577951;
+    double long1 = _startLongitude / 57.29577951;
+    double long2 = _destLong / 57.29577951;
 
     totalDistance = _coordinateDistance(lat1, long1, lat2, long2);
 

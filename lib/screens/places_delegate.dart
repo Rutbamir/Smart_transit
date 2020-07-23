@@ -2,8 +2,10 @@ import 'package:Smart_transit/models/fetcher.dart';
 import 'package:Smart_transit/models/loading.dart';
 import 'package:flutter/material.dart';
 
-class PlacesListSearch extends SearchDelegate<Future> {
+class PlacesListSearch extends SearchDelegate<List<double>> {
   final TextEditingController controller;
+  double latitude;
+  double longitude;
   PlacesListSearch(this.controller);
 
   buildPlaces() {
@@ -42,8 +44,12 @@ class PlacesListSearch extends SearchDelegate<Future> {
                       return ListTile(
                         onTap: () {
                           controller.text = filteredList[index]['destination'];
+                          latitude = double.parse(filteredList[index]['lat']);
+                          longitude = double.parse(filteredList[index]['long']);
+                          print('LAT: $latitude');
+                          print('LONG: $longitude');
 
-                          close(context, null);
+                          Navigator.pop(context, [latitude, longitude]);
                         },
                         title: Padding(
                           padding: const EdgeInsets.all(10.0),
