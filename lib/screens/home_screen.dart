@@ -176,20 +176,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: MyTextWidget(
                           hint: 'Your Current Location',
                           controller: startAddressController,
-                          prefixIcon: IconButton(
-                            icon: Icon(
-                              Icons.my_location,
-                              color: Colors.black,
-                            ),
-                            onPressed: () {
-                              setState(
-                                () {
-                                  startAddressController.text = _currentAddress;
-                                  _startAddress = _currentAddress;
-                                  print(_currentAddress);
-                                },
-                              );
-                            },
+                          ontap: () {
+                            showSearch(
+                              context: context,
+                              delegate:
+                                  PlacesListSearch(startAddressController),
+                            );
+                          },
+                          prefixIcon: Icon(
+                            Icons.my_location,
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -279,7 +275,7 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _currentAddress = "${first.subLocality}, ${first.locality}";
 
-        startAddressController.text = _currentAddress;
+        //startAddressController.text = _currentAddress;
         _startAddress = _currentAddress;
 
         GetData.startAddress = _currentAddress;
@@ -313,8 +309,8 @@ class _HomeScreenState extends State<HomeScreen> {
               )
             : startPlacemark[0].position;
         _destinationCoordinates = destinationPlacemark[0].position;
-        print(_startCoordinates);
-        print(_destinationCoordinates);
+        print('Start coord: $_startCoordinates');
+        print('Dest coord: $_destinationCoordinates');
 
         setDistanceandCost();
 
