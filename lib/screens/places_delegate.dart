@@ -1,9 +1,74 @@
+import 'package:Smart_transit/models/fetcher.dart';
+import 'package:Smart_transit/models/loading.dart';
 import 'package:flutter/material.dart';
-import 'list_data.dart';
 
-class PlacesListSearch extends SearchDelegate<PlacesList> {
+class PlacesListSearch extends SearchDelegate<Future> {
   final TextEditingController controller;
   PlacesListSearch(this.controller);
+
+  buildPlaces() {
+    return FutureBuilder(
+        future: getplaces(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Loading();
+          } else {
+            List<Map> myplaces = snapshot.data;
+            List<Map> filteredList = myplaces
+                .where(
+                  (p) => p['destination'].toLowerCase().startsWith(query),
+                )
+                .toList();
+            if (query == null) {
+              filteredList = myplaces;
+            } else {
+              filteredList = filteredList;
+            }
+
+            return filteredList.isEmpty
+                ? Container(
+                    color: Color.fromRGBO(255, 255, 255, 1),
+                    child: Center(
+                      child: Image.asset(
+                        'assets/empty.jpg',
+                        width: 300,
+                        height: 300,
+                      ),
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: filteredList.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        onTap: () {
+                          controller.text = filteredList[index]['destination'];
+
+                          close(context, null);
+                        },
+                        title: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                filteredList[index]['destination'],
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Divider(),
+                            ],
+                          ),
+                        ),
+                      );
+                    });
+          }
+        });
+  }
+
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -46,58 +111,6 @@ class PlacesListSearch extends SearchDelegate<PlacesList> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final myList = query.isEmpty
-        ? loadPlaces()
-        : loadPlaces()
-            .where(
-              (p) => p.locality.toLowerCase().startsWith(query),
-            )
-            .toList();
-    return myList.isEmpty
-        ? Container(
-            color: Color.fromRGBO(255, 255, 255, 1),
-            child: Center(
-              child: Image.asset(
-                'assets/empty.jpg',
-                width: 300,
-                height: 300,
-              ),
-            ),
-          )
-        : ListView.builder(
-            itemCount: myList.length,
-            itemBuilder: (context, index) {
-              final PlacesList listPlaces = myList[index];
-              return ListTile(
-                onTap: () {
-                  controller.text =
-                      "${listPlaces.locality}, ${listPlaces.district}";
-
-                  close(context, null);
-                },
-                title: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        listPlaces.locality,
-                        style: TextStyle(
-                          fontSize: 16.0,
-                        ),
-                      ),
-                      Text(
-                        listPlaces.district,
-                        style: TextStyle(
-                          color: Colors.grey,
-                        ),
-                      ),
-                      Divider(),
-                    ],
-                  ),
-                ),
-              );
-            },
-          );
+    return buildPlaces();
   }
 }
