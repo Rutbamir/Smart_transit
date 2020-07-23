@@ -1,3 +1,4 @@
+import 'package:Smart_transit/get_data.dart';
 import 'package:Smart_transit/models/fetcher.dart';
 import 'package:Smart_transit/models/loading.dart';
 import 'package:flutter/material.dart';
