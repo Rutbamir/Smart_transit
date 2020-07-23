@@ -18,6 +18,8 @@ class AuthService {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
+      FirebaseUser user = result.user;
+      print('USER: $user');
     } catch (error) {
       print(error.toString());
       return null;
@@ -30,7 +32,7 @@ class AuthService {
       AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
-      return user;
+      print('USER: $user');
     } catch (error) {
       print(error.toString());
       return null;
