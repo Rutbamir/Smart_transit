@@ -30,10 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
   double _destLong;
 
   Position _currentPosition;
-  String _currentAddress;
-
-  Position _startCoordinates;
-  Position _destinationCoordinates;
 
   TextEditingController startAddressController = TextEditingController();
   TextEditingController destinationAddressController = TextEditingController();
@@ -53,7 +49,6 @@ class _HomeScreenState extends State<HomeScreen> {
     _getCurrentLocation();
 
     setCustomMarkers();
-    // getCurrentUser();
   }
 
   void setCustomMarkers() async {
@@ -187,6 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               delegate:
                                   PlacesListSearch(startAddressController),
                             );
+                            GetData.startAddress = startAddressController.text;
                             print('Start coords: $result');
                             _startLatitude = result[0];
                             _startLongitude = result[1];
@@ -212,6 +208,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             delegate:
                                 PlacesListSearch(destinationAddressController),
                           );
+                          GetData.destinationAddress =
+                              destinationAddressController.text;
                           print('Destination coords: $result');
                           _destLat = result[0];
                           _destLong = result[1];
@@ -228,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.black,
                           ),
                           onPressed: () {
-                            //await geocode();
+                            getMarkers();
                             setDistanceandCost();
                             //shows bottomsheet
                             setState(() {
@@ -275,11 +273,11 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  // Getting the placemarks
-  geocode() async {
+  //build markers
+  getMarkers() {
     // Start Location Marker
     Marker startMarker = Marker(
-        markerId: MarkerId('$_startCoordinates'),
+        markerId: MarkerId('$_startLatitude, $_startLongitude'),
         position: LatLng(
           _startLatitude,
           _startLongitude,
@@ -292,7 +290,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // Destination Location Marker
     Marker destinationMarker = Marker(
-      markerId: MarkerId('$_destinationCoordinates'),
+      markerId: MarkerId('$_destLat, $_destLong'),
       position: LatLng(
         _destLat,
         _destLong,
