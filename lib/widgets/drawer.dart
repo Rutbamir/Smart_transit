@@ -1,6 +1,7 @@
 import 'package:Smart_transit/models/auth.dart';
 import 'package:Smart_transit/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:Smart_transit/screens/myBookings.dart';
 
 class MyDrawer extends StatelessWidget {
   final AuthService _auth = AuthService();
@@ -32,7 +33,7 @@ class MyDrawer extends StatelessWidget {
             title: Text("My Bookings"),
             leading: Icon(Icons.book),
             onTap: () {
-              print('functionality to be added');
+              Navigator.pushNamed(context, LoadTicket.id);
             }),
         ListTile(
           title: Text("Settings"),
