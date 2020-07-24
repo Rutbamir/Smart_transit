@@ -3,14 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future getCurrentUser() async {
-    try {
-      FirebaseUser user = await _auth.currentUser();
-      print(user);
-      return user;
-    } catch (error) {
-      print(error.toString());
-    }
+  getCurrentUser() async {
+    final FirebaseUser user = await _auth.currentUser();
+    final uid = user.uid;
+    print('USER: $uid');
+    return uid;
   }
 
   // register with email and password
