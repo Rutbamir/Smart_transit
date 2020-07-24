@@ -344,6 +344,7 @@ class _HomeScreenState extends State<HomeScreen> {
       GetData.distance = totalDistance;
       print('DISTANCE: ${GetData.distance} km');
       cost = GetData.distance * 5;
+      GetData.cost = cost;
       print('cost: $cost');
     });
   }
