@@ -5,4 +5,5 @@ class GetData {
   static String destinationAddress = '';
   static double distance;
   static String qrCode;
+  static double cost;
 }
