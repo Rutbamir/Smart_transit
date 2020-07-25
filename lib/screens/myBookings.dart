@@ -1,4 +1,3 @@
-import 'package:Smart_transit/models/loading.dart';
 import 'package:Smart_transit/screens/ticketScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:Smart_transit/models/fetcher.dart';
@@ -35,7 +34,12 @@ class _LoadTicketState extends State<LoadTicket> {
               future: getTickets(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
-                  return Center(child: Loading());
+                  return Center(
+                      child: Text('No Ticket Issued.',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 30.0,
+                          )));
                 } else {
                   final ticketinfo = snapshot.data;
 

@@ -1,5 +1,4 @@
 import 'package:Smart_transit/get_data.dart';
-import 'package:Smart_transit/constants.dart';
 import 'package:Smart_transit/models/auth.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
