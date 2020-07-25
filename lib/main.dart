@@ -2,6 +2,7 @@ import 'package:Smart_transit/animationn.dart';
 import 'package:Smart_transit/screens/myBookings.dart';
 import 'package:Smart_transit/screens/ticketScreen.dart';
 import 'package:Smart_transit/widgets/drawer2.dart';
+import 'package:Smart_transit/widgets/main_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -38,6 +39,7 @@ void main() => runApp(
           WelcomeAnimation.id: (context) => WelcomeAnimation(),
           MyCustomDrawer.id: (context) => MyCustomDrawer(),
           LoadTicket.id: (context) => LoadTicket(),
+          MainPage.id: (context) => MainPage(),
         },
       ),
     );

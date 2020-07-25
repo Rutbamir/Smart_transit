@@ -1,5 +1,6 @@
 import 'package:Smart_transit/models/auth.dart';
 import 'package:Smart_transit/models/loading.dart';
+import 'package:Smart_transit/widgets/main_page.dart';
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import '../Animation/FadeAnimation.dart';
@@ -163,7 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
         print(result);
 
         Navigator.pushNamedAndRemoveUntil(
-            context, HomeScreen.id, (route) => false);
+            context, MainPage.id, (route) => false);
       } catch (e) {
         print(e);
       }

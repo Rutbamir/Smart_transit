@@ -1,5 +1,6 @@
 import 'package:Smart_transit/models/auth.dart';
 import 'package:Smart_transit/models/loading.dart';
+import 'package:Smart_transit/widgets/main_page.dart';
 import 'package:flutter/material.dart';
 import '../Animation/FadeAnimation.dart';
 import 'home_screen.dart';
@@ -182,7 +183,7 @@ class _SignupScreenState extends State<SignupScreen> {
         });
 
         Navigator.pushNamedAndRemoveUntil(
-            context, HomeScreen.id, (route) => false);
+            context, MainPage.id, (route) => false);
       } catch (e) {
         print(e);
       }

@@ -1,3 +1,4 @@
+import 'package:Smart_transit/widgets/main_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -26,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void navigationPage() async {
     if (await _auth.currentUser() != null) {
       Navigator.pushNamedAndRemoveUntil(
-          context, HomeScreen.id, (route) => false);
+          context, MainPage.id, (route) => false);
     } else {
       Navigator.pushNamedAndRemoveUntil(
           context, WelcomeScreen.id, (route) => false);
