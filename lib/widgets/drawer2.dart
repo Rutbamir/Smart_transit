@@ -75,15 +75,15 @@ class _MyCustomDrawerState extends State<MyCustomDrawer>
           padding: const EdgeInsets.all(20.0),
           child: ListView(
             children: [
-              customListTile(
+              CustomListTile(
                 title: 'My Bookings',
                 icon: Icons.book,
               ),
-              customListTile(
+              CustomListTile(
                 title: 'Settings',
                 icon: Icons.settings,
               ),
-              customListTile(
+              CustomListTile(
                 title: 'Logout',
                 icon: Icons.exit_to_app,
               ),
@@ -93,8 +93,8 @@ class _MyCustomDrawerState extends State<MyCustomDrawer>
   }
 }
 
-class customListTile extends StatelessWidget {
-  customListTile({this.title, this.icon});
+class CustomListTile extends StatelessWidget {
+  CustomListTile({this.title, this.icon});
   final title;
   final icon;
   @override
