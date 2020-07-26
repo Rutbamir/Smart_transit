@@ -36,7 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String _startAddress = '';
   String _destinationAddress = '';
-  String _placeDistance;
 
   Set<Marker> _markers = {};
 
@@ -119,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   alignment: Alignment.bottomRight,
                   child: ClipOval(
                     child: Material(
-                      color: Colors.orange[100], // button color
+                      color: Colors.blue[200], // button color
                       child: InkWell(
                         splashColor: Colors.lightBlueAccent, // inkwell color
                         child: SizedBox(
@@ -127,6 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 56,
                           child: Icon(
                             Icons.my_location,
+                            color: Colors.white,
                           ),
                         ),
                         onTap: () {
@@ -263,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
           CameraUpdate.newCameraPosition(
             CameraPosition(
               target: LatLng(position.latitude, position.longitude),
-              zoom: 13.0,
+              zoom: 16.0,
             ),
           ),
         );
@@ -340,7 +340,7 @@ class _HomeScreenState extends State<HomeScreen> {
     totalDistance = _coordinateDistance(lat1, long1, lat2, long2);
 
     setState(() {
-      _placeDistance = totalDistance.toStringAsFixed(2);
+      // _placeDistance = totalDistance.toStringAsFixed(2);
       GetData.distance = totalDistance;
       print('DISTANCE: ${GetData.distance} km');
       cost = GetData.distance * 5;
