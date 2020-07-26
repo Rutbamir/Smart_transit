@@ -1,9 +1,4 @@
 import 'package:Smart_transit/screens/ticketScreen.dart';
-<<<<<<< HEAD
-import 'package:Smart_transit/widgets/drawer2.dart';
-import 'package:Smart_transit/widgets/main_page.dart';
-=======
->>>>>>> acce30c1d80f5b82dac742ae347294a1b63d357a
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -35,13 +30,6 @@ void main() => runApp(
           WelcomeScreen.id: (context) => WelcomeScreen(),
           SplashScreen.id: (context) => SplashScreen(),
           TicketScreen.id: (context) => TicketScreen(),
-<<<<<<< HEAD
-          WelcomeAnimation.id: (context) => WelcomeAnimation(),
-          MyCustomDrawer.id: (context) => MyCustomDrawer(),
-          LoadTicket.id: (context) => LoadTicket(),
-          MainPage.id: (context) => MainPage(),
-=======
->>>>>>> acce30c1d80f5b82dac742ae347294a1b63d357a
         },
       ),
     );
