@@ -1,3 +1,4 @@
+import 'package:Smart_transit/screens/myBookings.dart';
 import 'package:Smart_transit/screens/ticketScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ void main() => runApp(
           HomeScreen.id: (context) => HomeScreen(),
           WelcomeScreen.id: (context) => WelcomeScreen(),
           SplashScreen.id: (context) => SplashScreen(),
+          LoadTicket.id: (context) => LoadTicket(),
           TicketScreen.id: (context) => TicketScreen(),
         },
       ),
