@@ -1,7 +1,4 @@
-import 'package:Smart_transit/animationn.dart';
-import 'package:Smart_transit/screens/myBookings.dart';
 import 'package:Smart_transit/screens/ticketScreen.dart';
-import 'package:Smart_transit/widgets/drawer2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,8 +7,6 @@ import 'screens/signup_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/splash_screen.dart';
 import 'screens/welcome_screen.dart';
-import 'animationn.dart';
-import 'widgets/drawer2.dart';
 
 void main() => runApp(
       MaterialApp(
@@ -35,9 +30,6 @@ void main() => runApp(
           WelcomeScreen.id: (context) => WelcomeScreen(),
           SplashScreen.id: (context) => SplashScreen(),
           TicketScreen.id: (context) => TicketScreen(),
-          WelcomeAnimation.id: (context) => WelcomeAnimation(),
-          MyCustomDrawer.id: (context) => MyCustomDrawer(),
-          LoadTicket.id: (context) => LoadTicket(),
         },
       ),
     );

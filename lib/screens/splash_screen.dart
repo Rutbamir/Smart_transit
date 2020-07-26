@@ -10,16 +10,36 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  AnimationController _controller;
+  Animation<Offset> _offsetAnimation;
+
   @override
   void initState() {
     super.initState();
+    _controller =
+        AnimationController(duration: const Duration(seconds: 3), vsync: this)
+          ..forward();
+    _offsetAnimation = Tween<Offset>(
+      begin: Offset.zero,
+      end: const Offset(1.5, 0.0),
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.elasticIn,
+    ));
     startTime();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
   startTime() async {
-    var _duration = Duration(seconds: 2);
+    var _duration = Duration(seconds: 4);
     return Timer(_duration, navigationPage);
   }
 
@@ -35,8 +55,33 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: Image.asset('assets/brunch.png'),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SlideTransition(
+              position: _offsetAnimation,
+              child: Image.asset(
+                'assets/logo.png',
+                height: 300,
+                width: 300,
+                fit: BoxFit.contain,
+              ),
+            ),
+            Center(
+              child: Text(
+                'omnibus',
+                style: TextStyle(
+                  fontSize: 45.0,
+                  color: Colors.black,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

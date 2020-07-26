@@ -36,7 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String _startAddress = '';
   String _destinationAddress = '';
-  String _placeDistance;
 
   Set<Marker> _markers = {};
 
@@ -340,7 +339,7 @@ class _HomeScreenState extends State<HomeScreen> {
     totalDistance = _coordinateDistance(lat1, long1, lat2, long2);
 
     setState(() {
-      _placeDistance = totalDistance.toStringAsFixed(2);
+      // _placeDistance = totalDistance.toStringAsFixed(2);
       GetData.distance = totalDistance;
       print('DISTANCE: ${GetData.distance} km');
       cost = GetData.distance * 5;

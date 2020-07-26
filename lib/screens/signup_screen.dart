@@ -177,6 +177,7 @@ class _SignupScreenState extends State<SignupScreen> {
       try {
         dynamic result =
             await _auth.registerWithEmailAndPassword(email, password);
+        print(result);
         setState(() {
           loading = false;
         });
