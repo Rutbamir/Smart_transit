@@ -118,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   alignment: Alignment.bottomRight,
                   child: ClipOval(
                     child: Material(
-                      color: Colors.orange[100], // button color
+                      color: Colors.blue[200], // button color
                       child: InkWell(
                         splashColor: Colors.lightBlueAccent, // inkwell color
                         child: SizedBox(
@@ -126,6 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 56,
                           child: Icon(
                             Icons.my_location,
+                            color: Colors.white,
                           ),
                         ),
                         onTap: () {
@@ -262,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
           CameraUpdate.newCameraPosition(
             CameraPosition(
               target: LatLng(position.latitude, position.longitude),
-              zoom: 13.0,
+              zoom: 16.0,
             ),
           ),
         );

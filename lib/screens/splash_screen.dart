@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
     _controller =
-        AnimationController(duration: const Duration(seconds: 3), vsync: this)
+        AnimationController(duration: const Duration(seconds: 2), vsync: this)
           ..forward();
     _offsetAnimation = Tween<Offset>(
       begin: Offset.zero,
@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   startTime() async {
-    var _duration = Duration(seconds: 4);
+    var _duration = Duration(seconds: 3);
     return Timer(_duration, navigationPage);
   }
 
