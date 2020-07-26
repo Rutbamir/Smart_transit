@@ -1,4 +1,5 @@
 import 'package:Smart_transit/screens/ticketScreen.dart';
+import 'package:Smart_transit/widgets/main_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,6 +31,7 @@ void main() => runApp(
           WelcomeScreen.id: (context) => WelcomeScreen(),
           SplashScreen.id: (context) => SplashScreen(),
           TicketScreen.id: (context) => TicketScreen(),
+          MainPage.id: (context) => MainPage(),
         },
       ),
     );
