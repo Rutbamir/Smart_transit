@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:Smart_transit/get_data.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:Smart_transit/widgets/drawer.dart';
 import '../widgets/textFields.dart';
 import 'bottomSheet.dart';
 import 'places_delegate.dart';
@@ -76,7 +74,6 @@ class _HomeScreenState extends State<HomeScreen> {
         width: width,
         child: Scaffold(
           key: _scaffoldKey,
-          drawer: MyDrawer(),
           backgroundColor: Colors.white,
           body: Stack(
             children: <Widget>[
@@ -93,24 +90,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 zoomControlsEnabled: false,
                 initialCameraPosition: _initialLocation,
               ),
-
-              //Drawer icon
-              Padding(
-                padding: const EdgeInsets.only(top: 10, left: 10),
-                child: Container(
-                  alignment: Alignment.topLeft,
-                  child: IconButton(
-                    icon: SvgPicture.asset(
-                      'assets/menu.svg',
-                      color: Colors.black,
-                    ),
-                    onPressed: () {
-                      _scaffoldKey.currentState.openDrawer();
-                    },
-                  ),
-                ),
-              ),
-
               //Current Location
               Padding(
                 padding: const EdgeInsets.only(bottom: 30.0, right: 20.0),

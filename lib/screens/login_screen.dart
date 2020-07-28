@@ -1,7 +1,7 @@
 import 'package:Smart_transit/models/auth.dart';
 import 'package:Smart_transit/models/loading.dart';
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
+import 'package:Smart_transit/widgets/dashboard.dart';
 import '../Animation/FadeAnimation.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -13,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _loginKey = GlobalKey<FormState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final AuthService _auth = AuthService();
   bool _autoValidate = false;
@@ -30,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: loading
           ? Loading()
           : Scaffold(
+              key: _scaffoldKey,
               backgroundColor: Colors.white,
               body: SingleChildScrollView(
                 child: Container(
@@ -147,6 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _validateLoginInput() async {
     final FormState form = _loginKey.currentState;
+    final ScaffoldState scaffold = _scaffoldKey.currentState;
     if (_loginKey.currentState.validate()) {
       setState(() {
         loading = true;
@@ -160,10 +163,10 @@ class _LoginScreenState extends State<LoginScreen> {
         setState(() {
           loading = false;
         });
-        print(result);
-
-        Navigator.pushNamedAndRemoveUntil(
-            context, HomeScreen.id, (route) => false);
+        if (result != null) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, Dashboard.id, (route) => false);
+        } 
       } catch (e) {
         print(e);
       }

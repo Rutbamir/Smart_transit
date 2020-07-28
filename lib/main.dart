@@ -1,5 +1,6 @@
 import 'package:Smart_transit/screens/myBookings.dart';
 import 'package:Smart_transit/screens/ticketScreen.dart';
+import 'package:Smart_transit/widgets/dashboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -32,6 +33,7 @@ void main() => runApp(
           SplashScreen.id: (context) => SplashScreen(),
           LoadTicket.id: (context) => LoadTicket(),
           TicketScreen.id: (context) => TicketScreen(),
+          Dashboard.id: (context) => Dashboard(),
         },
       ),
     );

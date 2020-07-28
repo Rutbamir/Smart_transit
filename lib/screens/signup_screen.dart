@@ -1,8 +1,8 @@
 import 'package:Smart_transit/models/auth.dart';
 import 'package:Smart_transit/models/loading.dart';
+import 'package:Smart_transit/widgets/dashboard.dart';
 import 'package:flutter/material.dart';
 import '../Animation/FadeAnimation.dart';
-import 'home_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   static String id = 'signup_screen';
@@ -181,9 +181,10 @@ class _SignupScreenState extends State<SignupScreen> {
         setState(() {
           loading = false;
         });
-
-        Navigator.pushNamedAndRemoveUntil(
-            context, HomeScreen.id, (route) => false);
+        if (result != null) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, Dashboard.id, (route) => false);
+        }
       } catch (e) {
         print(e);
       }
