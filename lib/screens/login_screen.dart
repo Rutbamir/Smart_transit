@@ -166,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (result != null) {
           Navigator.pushNamedAndRemoveUntil(
               context, Dashboard.id, (route) => false);
-        } 
+        }
       } catch (e) {
         print(e);
       }

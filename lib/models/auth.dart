@@ -17,6 +17,7 @@ class AuthService {
           email: email, password: password);
       FirebaseUser user = result.user;
       print('USER: $user');
+      return user;
     } catch (error) {
       print(error.toString());
       return null;
@@ -30,6 +31,7 @@ class AuthService {
           email: email, password: password);
       FirebaseUser user = result.user;
       print('USER: $user');
+      return user;
     } catch (error) {
       print(error.toString());
       return null;
