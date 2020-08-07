@@ -1,5 +1,6 @@
 import 'package:Smart_transit/models/auth.dart';
 import 'package:Smart_transit/models/loading.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Smart_transit/widgets/dashboard.dart';
 import '../Animation/FadeAnimation.dart';
@@ -13,7 +14,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _loginKey = GlobalKey<FormState>();
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final AuthService _auth = AuthService();
   bool _autoValidate = false;
@@ -21,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String email;
   String password;
+  String errorMessage;
 
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
@@ -47,6 +49,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                 image: AssetImage('assets/bus2.jpg'),
                                 fit: BoxFit.contain),
                           ),
+                        ),
+                        Row(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: Text(
+                                errorMessage != null ? errorMessage : '',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 15,
+                                    color: Colors.red),
+                              ),
+                            ),
+                          ],
                         ),
                         Padding(
                           padding: EdgeInsets.all(30.0),
@@ -149,31 +166,31 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _validateLoginInput() async {
     final FormState form = _loginKey.currentState;
-    final ScaffoldState scaffold = _scaffoldKey.currentState;
-    if (_loginKey.currentState.validate()) {
-      setState(() {
-        loading = true;
-      });
+    form.validate();
+    setState(() {
+      loading = true;
+    });
 
-      form.save();
+    form.save();
 
-      try {
-        dynamic result =
-            await _auth.signInWithEmailAndPassword(email, password);
-        setState(() {
-          loading = false;
-        });
-        if (result != null) {
-          Navigator.pushNamedAndRemoveUntil(
-              context, Dashboard.id, (route) => false);
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
+    try {
+      AuthResult result =
+          await _auth.signInWithEmailAndPassword(email, password);
       setState(() {
-        _autoValidate = true;
+        loading = false;
       });
+      result != null
+          ? Navigator.pushNamedAndRemoveUntil(
+              context, Dashboard.id, (route) => false)
+          : null;
+    } catch (e) {
+      setState(() {
+        loading = false;
+      });
+      setState(() {
+        errorMessage = 'Something went wrong! \n check email and password';
+      });
+      print(e);
     }
   }
 }

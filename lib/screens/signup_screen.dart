@@ -1,6 +1,7 @@
 import 'package:Smart_transit/models/auth.dart';
 import 'package:Smart_transit/models/loading.dart';
 import 'package:Smart_transit/widgets/dashboard.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../Animation/FadeAnimation.dart';
 
@@ -15,8 +16,9 @@ class _SignupScreenState extends State<SignupScreen> {
   final GlobalKey<FormState> _signUpKey = GlobalKey<FormState>();
 
   final AuthService _auth = AuthService();
-  bool _autoValidate = false;
+
   bool loading = false;
+  String errorMessage;
 
   String email;
   String password;
@@ -35,7 +37,6 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: Container(
                     child: Form(
                       key: _signUpKey,
-                      autovalidate: _autoValidate,
                       child: Column(
                         children: <Widget>[
                           Container(
@@ -44,6 +45,21 @@ class _SignupScreenState extends State<SignupScreen> {
                                 image: DecorationImage(
                                     image: AssetImage('assets/bus2.jpg'),
                                     fit: BoxFit.contain)),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(
+                                  errorMessage != null ? errorMessage : '',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 15,
+                                      color: Colors.red),
+                                ),
+                              ),
+                            ],
                           ),
                           Padding(
                             padding: EdgeInsets.all(30.0),
@@ -168,30 +184,31 @@ class _SignupScreenState extends State<SignupScreen> {
 
   void _validatesignUpInput() async {
     final FormState form = _signUpKey.currentState;
-    if (_signUpKey.currentState.validate()) {
-      setState(() {
-        loading = true;
-      });
-      form.save();
+    form.validate();
+    setState(() {
+      loading = true;
+    });
+    form.save();
 
-      try {
-        dynamic result =
-            await _auth.registerWithEmailAndPassword(email, password);
-        print(result);
-        setState(() {
-          loading = false;
-        });
-        if (result != null) {
-          Navigator.pushNamedAndRemoveUntil(
-              context, Dashboard.id, (route) => false);
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
+    try {
+      AuthResult result =
+          await _auth.registerWithEmailAndPassword(email, password);
       setState(() {
-        _autoValidate = true;
+        loading = false;
       });
+      result != null
+          ? Navigator.pushNamedAndRemoveUntil(
+              context, Dashboard.id, (route) => false)
+          : null;
+    } catch (e) {
+      setState(() {
+        loading = false;
+      });
+      setState(() {
+        errorMessage = 'Something went wrong , check email and password';
+      });
+
+      print(e);
     }
   }
 }
