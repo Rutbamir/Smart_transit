@@ -1,5 +1,5 @@
 import 'package:Smart_transit/get_data.dart';
-import 'package:Smart_transit/models/auth.dart';
+import 'package:Smart_transit/fetchers/auth.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +11,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
 
 class TicketScreen extends StatefulWidget {
-  static String id = 'ticket_screen';
-
   @override
   _TicketScreenState createState() => _TicketScreenState();
 }
@@ -70,6 +68,7 @@ class _TicketScreenState extends State<TicketScreen> {
                           'date': finalDate,
                           'uid': uid,
                           'cost': cost,
+                          'status': status,
                         });
                         Navigator.of(context).pop();
                       },
@@ -82,6 +81,7 @@ class _TicketScreenState extends State<TicketScreen> {
 
   String finalDate = '';
   var ticketCode = '';
+  String status = 'Issued';
 
   AuthService _auth = AuthService();
   final _firestore = Firestore.instance;
@@ -137,11 +137,13 @@ class _TicketScreenState extends State<TicketScreen> {
           ),
           body: SingleChildScrollView(
             child: TicketWidget(
-                startPoint: startPoint,
-                destinationPoint: destinationPoint,
-                ticketCode: randomString(6),
-                date: dateMonthYear(),
-                cost: cost),
+              startPoint: startPoint,
+              destinationPoint: destinationPoint,
+              ticketCode: randomString(6),
+              date: dateMonthYear(),
+              cost: cost,
+              status: status,
+            ),
           ),
         ),
       ),
@@ -156,6 +158,7 @@ class TicketWidget extends StatelessWidget {
       @required this.destinationPoint,
       @required this.ticketCode,
       @required this.date,
+      @required this.status,
       @required this.cost})
       : super(key: key);
 
@@ -164,6 +167,7 @@ class TicketWidget extends StatelessWidget {
   final String ticketCode;
   final String date;
   final double cost;
+  final String status;
 
   @override
   Widget build(BuildContext context) {
@@ -279,7 +283,11 @@ class TicketWidget extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  ticketCode,
+                  'Ticket Status: $status',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],

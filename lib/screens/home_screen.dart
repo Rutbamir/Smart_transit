@@ -8,7 +8,6 @@ import 'bottomSheet.dart';
 import 'places_delegate.dart';
 
 class HomeScreen extends StatefulWidget {
-  static String id = 'home_screen';
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }

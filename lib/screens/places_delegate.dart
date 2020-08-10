@@ -1,9 +1,10 @@
-import 'package:Smart_transit/models/fetcher.dart';
-import 'package:Smart_transit/models/loading.dart';
+import 'package:Smart_transit/fetchers/fetcher.dart';
 import 'package:flutter/material.dart';
+import '../UiHelper.dart';
 
 class PlacesListSearch extends SearchDelegate<List<double>> {
   final TextEditingController controller;
+  UiHelper _uiHelper = UiHelper();
   double latitude;
   double longitude;
   PlacesListSearch(this.controller);
@@ -13,7 +14,7 @@ class PlacesListSearch extends SearchDelegate<List<double>> {
         future: getplaces(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Loading();
+            return _uiHelper.getLoading();
           } else {
             List<Map> myplaces = snapshot.data;
             List<Map> filteredList = myplaces

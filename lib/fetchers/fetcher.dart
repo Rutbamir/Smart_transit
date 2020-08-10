@@ -1,4 +1,4 @@
-import 'package:Smart_transit/models/auth.dart';
+import 'package:Smart_transit/fetchers/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 Firestore _firestore = Firestore.instance;

@@ -1,11 +1,10 @@
-import 'package:Smart_transit/widgets/dashboard.dart';
+import 'package:Smart_transit/screens/dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
-  static String id = 'splash_screen';
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -45,11 +44,13 @@ class _SplashScreenState extends State<SplashScreen>
 
   void navigationPage() async {
     if (await _auth.currentUser() != null) {
-      Navigator.pushNamedAndRemoveUntil(
-          context, Dashboard.id, (route) => false);
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return Dashboard();
+      }));
     } else {
-      Navigator.pushNamedAndRemoveUntil(
-          context, WelcomeScreen.id, (route) => false);
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return WelcomeScreen();
+      }));
     }
   }
 

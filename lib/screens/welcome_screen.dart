@@ -4,7 +4,6 @@ import 'login_screen.dart';
 import 'signup_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  static String id = 'welcome_screen';
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
@@ -17,14 +16,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: Colors.white,
-        systemNavigationBarIconBrightness: Brightness.dark,
-        statusBarColor: Colors.white,
-      ),
-    );
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color.fromRGBO(255, 255, 255, 1),
@@ -60,7 +51,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                   child: Text('Login'),
                   onPressed: () {
-                    Navigator.pushNamed(context, LoginScreen.id);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return LoginScreen();
+                    }));
                   },
                 ),
               ),
@@ -78,7 +72,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                   child: Text('Sign Up'),
                   onPressed: () {
-                    Navigator.pushNamed(context, SignupScreen.id);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return SignupScreen();
+                    }));
                   },
                 ),
               ),

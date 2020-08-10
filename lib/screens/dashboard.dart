@@ -1,14 +1,12 @@
-import 'package:Smart_transit/models/auth.dart';
+import 'package:Smart_transit/fetchers/auth.dart';
 import 'package:Smart_transit/screens/home_screen.dart';
 import 'package:Smart_transit/screens/myBookings.dart';
 import 'package:Smart_transit/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
-
 import 'package:flutter_svg/svg.dart';
 
 class Dashboard extends StatefulWidget {
-  static String id = 'dashboard';
   @override
   _DashboardState createState() => _DashboardState();
 }
@@ -88,7 +86,10 @@ class _DashboardState extends State<Dashboard>
                   title: 'My Bookings',
                   icon: Icons.book,
                   onTap: () {
-                    Navigator.pushNamed(context, LoadTicket.id);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return LoadTicket();
+                    }));
                   }),
               CustomListTile(
                 title: 'Settings',
@@ -100,8 +101,9 @@ class _DashboardState extends State<Dashboard>
                 //add logout
                 onTap: () async {
                   await _auth.signOut();
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, WelcomeScreen.id, (route) => false);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return WelcomeScreen();
+                  }));
                 },
               ),
             ],

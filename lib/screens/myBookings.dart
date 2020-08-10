@@ -1,9 +1,8 @@
 import 'package:Smart_transit/screens/ticketScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:Smart_transit/models/fetcher.dart';
+import 'package:Smart_transit/fetchers/fetcher.dart';
 
 class LoadTicket extends StatefulWidget {
-  static String id = 'load_ticket';
   @override
   _LoadTicketState createState() => _LoadTicketState();
 }
@@ -45,11 +44,13 @@ class _LoadTicketState extends State<LoadTicket> {
 
                   return SingleChildScrollView(
                     child: TicketWidget(
-                        startPoint: ticketinfo['start'],
-                        destinationPoint: ticketinfo['destination'],
-                        ticketCode: ticketinfo['qrcode'],
-                        date: ticketinfo['date'],
-                        cost: ticketinfo['cost']),
+                      startPoint: ticketinfo['start'],
+                      destinationPoint: ticketinfo['destination'],
+                      ticketCode: ticketinfo['qrcode'],
+                      date: ticketinfo['date'],
+                      cost: ticketinfo['cost'],
+                      status: ticketinfo['status'],
+                    ),
                   );
                 }
               })),

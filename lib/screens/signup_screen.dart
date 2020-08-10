@@ -1,19 +1,18 @@
-import 'package:Smart_transit/models/auth.dart';
-import 'package:Smart_transit/models/loading.dart';
-import 'package:Smart_transit/widgets/dashboard.dart';
+import 'package:Smart_transit/UiHelper.dart';
+import 'package:Smart_transit/fetchers/auth.dart';
+import 'package:Smart_transit/screens/dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../Animation/FadeAnimation.dart';
 
 class SignupScreen extends StatefulWidget {
-  static String id = 'signup_screen';
-
   @override
   _SignupScreenState createState() => _SignupScreenState();
 }
 
 class _SignupScreenState extends State<SignupScreen> {
   final GlobalKey<FormState> _signUpKey = GlobalKey<FormState>();
+  UiHelper _uiHelper = UiHelper();
 
   final AuthService _auth = AuthService();
 
@@ -30,7 +29,7 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: loading
-            ? Loading()
+            ? _uiHelper.getLoading()
             : Scaffold(
                 backgroundColor: Colors.white,
                 body: SingleChildScrollView(
@@ -197,8 +196,9 @@ class _SignupScreenState extends State<SignupScreen> {
         loading = false;
       });
       result != null
-          ? Navigator.pushNamedAndRemoveUntil(
-              context, Dashboard.id, (route) => false)
+          ? Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return Dashboard();
+            }))
           : null;
     } catch (e) {
       setState(() {

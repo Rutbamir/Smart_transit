@@ -88,10 +88,12 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.pushNamed(
-                          context,
-                          TicketScreen.id,
-                        );
+                        Future.delayed(Duration(seconds: 2), () async {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return TicketScreen();
+                          }));
+                        });
                       },
                     ),
                   ),
