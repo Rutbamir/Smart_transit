@@ -82,22 +82,22 @@ class _DashboardState extends State<Dashboard>
           padding: const EdgeInsets.all(20.0),
           child: ListView(
             children: [
-              CustomListTile(
-                  title: 'My Bookings',
-                  icon: Icons.book,
+              ListTile(
+                  title: Text('My Bookings'),
+                  leading: Icon(Icons.book),
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
                       return LoadTicket();
                     }));
                   }),
-              CustomListTile(
-                title: 'Settings',
-                icon: Icons.settings,
+              ListTile(
+                title: Text('Settings'),
+                leading: Icon(Icons.settings),
               ),
-              CustomListTile(
-                title: 'Logout',
-                icon: Icons.exit_to_app,
+              ListTile(
+                title: Text('Logout'),
+                leading: Icon(Icons.exit_to_app),
                 //add logout
                 onTap: () async {
                   await _auth.signOut();
@@ -109,26 +109,5 @@ class _DashboardState extends State<Dashboard>
             ],
           ),
         ));
-  }
-}
-
-class CustomListTile extends StatelessWidget {
-  CustomListTile({this.title, this.icon, this.onTap});
-  final title;
-  final icon;
-  final onTap;
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(title,
-          style: TextStyle(
-            color: Colors.white,
-          )),
-      leading: Icon(
-        icon,
-        color: Colors.white,
-      ),
-      onTap: onTap,
-    );
   }
 }

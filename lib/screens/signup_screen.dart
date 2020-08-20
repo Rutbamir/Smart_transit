@@ -190,7 +190,7 @@ class _SignupScreenState extends State<SignupScreen> {
     form.save();
 
     try {
-      AuthResult result =
+      FirebaseUser result =
           await _auth.registerWithEmailAndPassword(email, password);
       setState(() {
         loading = false;

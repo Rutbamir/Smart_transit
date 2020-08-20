@@ -39,11 +39,11 @@ class _SplashScreenState extends State<SplashScreen>
 
   startTime() async {
     var _duration = Duration(seconds: 3);
-    return Timer(_duration, navigationPage);
+    return await Timer(_duration, navigationPage);
   }
 
   void navigationPage() async {
-    if (await _auth.currentUser() != null) {
+    if (await FirebaseAuth.instance.currentUser() != null) {
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return Dashboard();
       }));

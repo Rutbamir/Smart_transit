@@ -1,9 +1,10 @@
 import 'dart:math';
+import 'package:Smart_transit/UiHelper.dart';
+import 'package:Smart_transit/fetchers/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Smart_transit/get_data.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
-import '../widgets/textFields.dart';
 import 'bottomSheet.dart';
 import 'places_delegate.dart';
 
@@ -14,12 +15,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  UiHelper _uiHelper = UiHelper();
 
   CameraPosition _initialLocation =
       CameraPosition(target: LatLng(34.115829, 74.859138));
 
   GoogleMapController mapController;
-  final Geolocator _geolocator = Geolocator();
+  Geolocator _geolocator = Geolocator();
 
   double _startLatitude;
   double _startLongitude;
@@ -145,76 +148,90 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   alignment: Alignment.topCenter,
-                  height: 180,
+                  height: 200,
                   width: width * 0.8,
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(top: 16.0),
-                        child: MyTextWidget(
-                          hint: 'Your Current Location',
-                          controller: startAddressController,
-                          ontap: () async {
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16.0),
+                          child: _uiHelper.getTextField(
+                            hint: 'Your Current Location',
+                            controller: startAddressController,
+                            validator: (value) =>
+                                value.isEmpty ? 'Email can\'t be empty' : null,
+                            onTap: () async {
+                              final List<double> result = await showSearch(
+                                context: context,
+                                delegate:
+                                    PlacesListSearch(startAddressController),
+                              );
+
+                              GetData.startAddress =
+                                  startAddressController.text;
+                              print('Start coords: $result');
+                              _startLatitude = result[0];
+                              _startLongitude = result[1];
+                            },
+                            icon: Icon(
+                              Icons.my_location,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        Divider(
+                          indent: 50,
+                          endIndent: 50,
+                          color: Colors.grey[400],
+                        ),
+                        _uiHelper.getTextField(
+                          hint: 'Your Destination',
+                          controller: destinationAddressController,
+                          validator: (value) =>
+                              value == startAddressController.text
+                                  ? 'Start and Dest cannot be same'
+                                  : null,
+
+                          //add location predictor
+                          onTap: () async {
                             final List<double> result = await showSearch(
                               context: context,
-                              delegate:
-                                  PlacesListSearch(startAddressController),
+                              delegate: PlacesListSearch(
+                                  destinationAddressController),
                             );
-                            GetData.startAddress = startAddressController.text;
-                            print('Start coords: $result');
-                            _startLatitude = result[0];
-                            _startLongitude = result[1];
-                          },
-                          prefixIcon: Icon(
-                            Icons.my_location,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      Divider(
-                        indent: 50,
-                        endIndent: 50,
-                        color: Colors.grey[400],
-                      ),
-                      MyTextWidget(
-                        hint: 'Your Destination',
-                        controller: destinationAddressController,
-                        //add location predictor
-                        ontap: () async {
-                          final List<double> result = await showSearch(
-                            context: context,
-                            delegate:
-                                PlacesListSearch(destinationAddressController),
-                          );
-                          GetData.destinationAddress =
-                              destinationAddressController.text;
-                          print('Destination coords: $result');
-                          _destLat = result[0];
-                          _destLong = result[1];
-                        },
+                            GetData.destinationAddress =
+                                destinationAddressController.text;
+                            print('Destination coords: $result');
+                            _destLat = result[0];
 
-                        prefixIcon: Icon(
-                          Icons.flag,
-                          color: Colors.black,
-                        ),
-                      ),
-                      IconButton(
+                            _destLong = result[1];
+                          },
+
                           icon: Icon(
-                            Icons.directions_bus,
+                            Icons.flag,
                             color: Colors.black,
                           ),
-                          onPressed: () {
-                            getMarkers();
-                            setDistanceandCost();
-                            //shows bottomsheet
-                            setState(() {
-                              _scaffoldKey.currentState.showBottomSheet<Null>(
-                                  (BuildContext context) {
-                                return AddBottomSheet();
+                        ),
+                        IconButton(
+                            icon: Icon(
+                              Icons.directions_bus,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {
+                              _formKey.currentState.validate();
+                              getMarkers();
+                              setDistanceandCost();
+                              //shows bottomsheet
+                              setState(() {
+                                _scaffoldKey.currentState.showBottomSheet<Null>(
+                                    (BuildContext context) {
+                                  return AddBottomSheet();
+                                });
                               });
-                            });
-                          }),
-                    ],
+                            }),
+                      ],
+                    ),
                   ),
                 ),
               ),
