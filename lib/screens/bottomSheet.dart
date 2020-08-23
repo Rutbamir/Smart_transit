@@ -1,4 +1,4 @@
-import 'package:Smart_transit/screens/ticketScreen.dart';
+import 'package:Smart_transit/screens/payment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:Smart_transit/get_data.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -91,7 +91,7 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
                         Future.delayed(Duration(seconds: 2), () async {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return TicketScreen();
+                            return PaymentScreen();
                           }));
                         });
                       },

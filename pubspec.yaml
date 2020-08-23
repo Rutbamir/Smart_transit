@@ -34,6 +34,8 @@ dependencies:
   google_fonts: ^1.1.0
   flutter_spinkit: "^4.1.2"
   geolocator: ^5.3.2+2
+  razorpay_flutter: ^1.2.2
+
   
  
 

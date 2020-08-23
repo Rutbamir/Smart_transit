@@ -188,7 +188,7 @@ class TicketWidget extends StatelessWidget {
               bottomRight: Radius.circular(30.0),
             ),
           ),
-          height: 500,
+          height: 600,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -212,6 +212,30 @@ class TicketWidget extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text(
+                      'Payment Id:',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                      ),
+                    ),
+                    Text(
+                      "${GetData.paymentId}",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Divider(
+                color: Colors.grey[400],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
