@@ -1,5 +1,4 @@
 import 'package:Smart_transit/screens/payment_screen.dart';
-import 'package:Smart_transit/screens/ticketScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:Smart_transit/get_data.dart';
 import 'package:flutter_svg/flutter_svg.dart';

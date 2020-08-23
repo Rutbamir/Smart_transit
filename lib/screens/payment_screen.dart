@@ -1,4 +1,7 @@
+import 'package:Smart_transit/get_data.dart';
 import 'package:Smart_transit/screens/bottomSheet.dart';
+import 'package:Smart_transit/screens/ticketScreen.dart';
+import 'package:Smart_transit/widgets/pymnt_dialog_response.dart';
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
@@ -31,12 +34,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
     razorpay.clear();
   }
 
-  void openCheckout() {
+  void openCheckout() async {
+    //amount is in paisa(needs to be multiplied by 100)
+    double x = cost * 100;
+    int tktCost = x.toInt();
     var options = {
       "key": "rzp_test_KtTxqGSjkN2tvf",
-      "amount": 10000,
-      "name": "Sample App",
-      "description": "Payment for the some random product",
+      "amount": tktCost,
+      "name": "Smart Transit",
+      "description": "Payment for your Ride.",
       "prefill": {"contact": "2323232323", "email": "shdjsdh@gmail.com"},
       "external": {
         "wallets": ["paytm"]
@@ -50,15 +56,23 @@ class _PaymentScreenState extends State<PaymentScreen> {
     }
   }
 
-  void handlerPaymentSuccess() {
-    print("payment success");
+  void handlerPaymentSuccess(PaymentSuccessResponse response) {
+    GetData.paymentId = response.paymentId;
+    _showDialog(id: GetData.paymentId);
+    Future.delayed(const Duration(milliseconds: 1500), () {
+      setState(() {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return TicketScreen();
+        }));
+      });
+    });
   }
 
-  void handlerErrorFailure() {
+  void handlerErrorFailure(PaymentFailureResponse response) {
     print("payment Failure");
   }
 
-  void handlerExtenalWallet() {
+  void handlerExtenalWallet(ExternalWalletResponse response) {
     print("External Wallet");
   }
 
@@ -75,7 +89,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('Amount to be paid $cost'),
+              child: Text('Amount to be paid Rs.${cost.toStringAsFixed(2)}.'),
             ),
             Center(
               child: RaisedButton(
@@ -92,6 +106,20 @@ class _PaymentScreenState extends State<PaymentScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  void _showDialog({String id}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return DialogResponses(
+          color: Colors.green[300],
+          icon: Icons.check_circle,
+          message: "Transaction Successfull,\n redirecting to ticket",
+          id: id,
+        );
+      },
     );
   }
 }

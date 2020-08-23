@@ -6,4 +6,5 @@ class GetData {
   static double distance;
   static String qrCode;
   static double cost;
+  static String paymentId = '';
 }
