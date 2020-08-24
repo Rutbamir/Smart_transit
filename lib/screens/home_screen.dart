@@ -77,6 +77,23 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Scaffold(
           key: _scaffoldKey,
           backgroundColor: Colors.white,
+          floatingActionButton: FloatingActionButton(
+            child: Icon(
+              Icons.directions_bus,
+            ),
+            onPressed: () {
+              _formKey.currentState.validate();
+              getMarkers();
+              setDistanceandCost();
+              //shows bottomsheet
+              setState(() {
+                _scaffoldKey.currentState
+                    .showBottomSheet<Null>((BuildContext context) {
+                  return AddBottomSheet();
+                });
+              });
+            },
+          ),
           body: Stack(
             children: <Widget>[
               // the main map
@@ -96,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 30.0, right: 20.0),
                 child: Container(
-                  alignment: Alignment.bottomRight,
+                  alignment: Alignment.centerRight,
                   child: ClipOval(
                     child: Material(
                       color: Colors.blue[200], // button color
@@ -148,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   alignment: Alignment.topCenter,
-                  height: 200,
+                  height: 170,
                   width: width * 0.8,
                   child: Form(
                     key: _formKey,
@@ -213,23 +230,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.black,
                           ),
                         ),
-                        IconButton(
-                            icon: Icon(
-                              Icons.directions_bus,
-                              color: Colors.black,
-                            ),
-                            onPressed: () {
-                              _formKey.currentState.validate();
-                              getMarkers();
-                              setDistanceandCost();
-                              //shows bottomsheet
-                              setState(() {
-                                _scaffoldKey.currentState.showBottomSheet<Null>(
-                                    (BuildContext context) {
-                                  return AddBottomSheet();
-                                });
-                              });
-                            }),
                       ],
                     ),
                   ),

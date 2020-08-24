@@ -28,6 +28,9 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         canvasColor: Colors.white,
         textTheme: GoogleFonts.montserratTextTheme(),
+        appBarTheme: AppBarTheme(
+          elevation: 0,
+        ),
       ),
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
