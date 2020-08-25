@@ -81,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Icon(
               Icons.directions_bus,
             ),
+            backgroundColor: Theme.of(context).accentColor,
             onPressed: () {
               _formKey.currentState.validate();
               getMarkers();
@@ -110,36 +111,39 @@ class _HomeScreenState extends State<HomeScreen> {
                 initialCameraPosition: _initialLocation,
               ),
               //Current Location
-              Padding(
-                padding: const EdgeInsets.only(bottom: 30.0, right: 20.0),
-                child: Container(
-                  alignment: Alignment.centerRight,
-                  child: ClipOval(
-                    child: Material(
-                      color: Colors.blue[200], // button color
-                      child: InkWell(
-                        splashColor: Colors.lightBlueAccent, // inkwell color
-                        child: SizedBox(
-                          width: 56,
-                          height: 56,
-                          child: Icon(
-                            Icons.my_location,
-                            color: Colors.white,
-                          ),
-                        ),
-                        onTap: () {
-                          mapController.animateCamera(
-                            CameraUpdate.newCameraPosition(
-                              CameraPosition(
-                                target: LatLng(
-                                  _currentPosition.latitude,
-                                  _currentPosition.longitude,
-                                ),
-                                zoom: 16.0,
-                              ),
+              Positioned(
+                bottom: 70.0,
+                right: 16.0,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0, left: 20.0),
+                  child: Container(
+                    child: ClipOval(
+                      child: Material(
+                        color: Colors.white, // button color
+                        child: InkWell(
+                          splashColor: Colors.lightBlueAccent, // inkwell color
+                          child: SizedBox(
+                            width: 56,
+                            height: 56,
+                            child: Icon(
+                              Icons.my_location,
+                              color: Colors.black,
                             ),
-                          );
-                        },
+                          ),
+                          onTap: () {
+                            mapController.animateCamera(
+                              CameraUpdate.newCameraPosition(
+                                CameraPosition(
+                                  target: LatLng(
+                                    _currentPosition.latitude,
+                                    _currentPosition.longitude,
+                                  ),
+                                  zoom: 16.0,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
