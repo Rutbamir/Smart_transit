@@ -3,6 +3,7 @@ import 'package:Smart_transit/screens/bottomSheet.dart';
 import 'package:Smart_transit/screens/ticketScreen.dart';
 import 'package:Smart_transit/widgets/pymnt_dialog_response.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 //pwd for razorpay Razorpay@smarttransit1
@@ -80,9 +81,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Payment'),
+        textTheme: GoogleFonts.montserratTextTheme(),
+        title: Text(
+          'Payment',
+          style: TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
         centerTitle: true,
-        backgroundColor: Colors.blue[200],
+        backgroundColor: Colors.white,
       ),
       body: Container(
         child: Column(
