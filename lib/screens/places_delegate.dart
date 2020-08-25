@@ -19,7 +19,7 @@ class PlacesListSearch extends SearchDelegate<List<double>> {
             List<Map> myplaces = snapshot.data;
             List<Map> filteredList = myplaces
                 .where(
-                  (p) => p['destination'].toLowerCase().startsWith(query),
+                  (p) => p['destination'].toLowerCase().startsWith(query.toLowerCase()),
                 )
                 .toList();
             if (query == null) {
