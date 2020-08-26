@@ -1,11 +1,11 @@
 import 'package:Smart_transit/get_data.dart';
 import 'package:Smart_transit/fetchers/auth.dart';
+import 'package:Smart_transit/screens/dashboard.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:core';
-import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -62,13 +62,14 @@ class _TicketScreenState extends State<TicketScreen> {
                         _firestore.collection('tickets').document(uid).setData({
                           'start': startPoint,
                           'destination': destinationPoint,
-                          'qrcode': ticketCode,
+                          'qrcode': paymentId,
                           'current_lat': currentLatitude,
                           'current_long': currentLongitude,
                           'date': finalDate,
                           'uid': uid,
                           'cost': cost,
                           'status': status,
+                          'paymentId': paymentId,
                         });
                         Navigator.of(context).pop();
                       },
@@ -80,7 +81,7 @@ class _TicketScreenState extends State<TicketScreen> {
   }
 
   String finalDate = '';
-  var ticketCode = '';
+ // var ticketCode = '';
   String status = 'Issued';
 
   AuthService _auth = AuthService();
@@ -90,19 +91,20 @@ class _TicketScreenState extends State<TicketScreen> {
   String destinationPoint = GetData.destinationAddress;
   double currentLatitude = GetData.currentLatitude;
   double currentLongitude = GetData.currentLongitude;
+  String paymentId = GetData.paymentId;
   double cost = GetData.cost;
 
   //generates random characters
-  String randomString(int strlen) {
-    Random rnd = new Random(new DateTime.now().millisecondsSinceEpoch);
-    String result = "";
-    for (var i = 0; i < strlen; i++) {
-      result += chars[rnd.nextInt(chars.length)];
-    }
-    ticketCode = result;
-    GetData.qrCode = ticketCode;
-    return result;
-  }
+  // String randomString(int strlen) {
+  //   Random rnd = new Random(new DateTime.now().millisecondsSinceEpoch);
+  //   String result = "";
+  //   for (var i = 0; i < strlen; i++) {
+  //     result += chars[rnd.nextInt(chars.length)];
+  //   }
+  //   ticketCode = result;
+  //   GetData.qrCode = paymentId;
+  //   return result;
+  // }
 
   //date function
   String dateMonthYear() {
@@ -131,15 +133,18 @@ class _TicketScreenState extends State<TicketScreen> {
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                   return Dashboard();
+                }));
               },
             ),
           ),
           body: SingleChildScrollView(
             child: TicketWidget(
+              paymentId: paymentId,
               startPoint: startPoint,
               destinationPoint: destinationPoint,
-              ticketCode: randomString(6),
+              ticketCode: paymentId,
               date: dateMonthYear(),
               cost: cost,
               status: status,
@@ -151,26 +156,15 @@ class _TicketScreenState extends State<TicketScreen> {
   }
 }
 
-class TicketWidget extends StatelessWidget {
-  const TicketWidget(
-      {Key key,
-      @required this.startPoint,
-      @required this.destinationPoint,
-      @required this.ticketCode,
-      @required this.date,
-      @required this.status,
-      @required this.cost})
-      : super(key: key);
 
-  final String startPoint;
-  final String destinationPoint;
-  final String ticketCode;
-  final String date;
-  final double cost;
-  final String status;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget TicketWidget({ 
+      @required startPoint,
+      @required paymentId,
+      @required destinationPoint,
+      @required ticketCode,
+      @required date,
+      @required status,
+      @required cost}){
     return Column(
       children: <Widget>[
         Container(
@@ -188,49 +182,48 @@ class TicketWidget extends StatelessWidget {
               bottomRight: Radius.circular(30.0),
             ),
           ),
-          height: 600,
+          height: 500,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Expanded(
-                flex: 2,
+               flex: 2,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Text(
-                      'Your journey is from',
-                      style: TextStyle(
-                        fontSize: 18.0,
+                    
+                    children: <Widget>[
+                      Text(
+                        'Your journey is from',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                        ),
                       ),
-                    ),
-                    Text(
-                      "$startPoint to $destinationPoint",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20.0,
+                      SizedBox(height:20),
+                      Text(
+                        "$startPoint to $destinationPoint",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20.0,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
               ),
               Expanded(
-                flex: 2,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //  flex: 2,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  
                   children: <Widget>[
                     Text(
-                      'Payment Id:',
+                      'Payment Id: ',
                       style: TextStyle(
                         fontSize: 18.0,
                       ),
                     ),
-                    Text(
-                      "${GetData.paymentId}",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 16.0,
-                      ),
-                    ),
+                    Text('${GetData.paymentId}',
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ), )
                   ],
                 ),
               ),
@@ -301,7 +294,7 @@ class TicketWidget extends StatelessWidget {
                   width: 150.0,
                   height: 150.0,
                   child: QrImage(
-                    data: ticketCode,
+                    data: paymentId,
                   ),
                 ),
               ),
@@ -335,4 +328,4 @@ class TicketWidget extends StatelessWidget {
       ],
     );
   }
-}
+

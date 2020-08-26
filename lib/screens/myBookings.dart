@@ -44,6 +44,7 @@ class _LoadTicketState extends State<LoadTicket> {
 
                   return SingleChildScrollView(
                     child: TicketWidget(
+                      paymentId: ticketinfo['paymentId'],
                       startPoint: ticketinfo['start'],
                       destinationPoint: ticketinfo['destination'],
                       ticketCode: ticketinfo['qrcode'],
