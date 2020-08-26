@@ -1,4 +1,5 @@
 import 'package:Smart_transit/screens/ticketScreen.dart';
+import 'package:Smart_transit/screens/view_ticketscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:Smart_transit/fetchers/fetcher.dart';
 
@@ -19,7 +20,7 @@ class _LoadTicketState extends State<LoadTicket> {
             centerTitle: true,
             textTheme: Theme.of(context).textTheme,
             title: Text(
-              'Ticket',
+              'My Bookings',
               style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
             ),
             leading: IconButton(
@@ -45,64 +46,70 @@ class _LoadTicketState extends State<LoadTicket> {
                   return ListView.builder(
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: (){},
-                        child: Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Container(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'Status: ',
-                                      ),
-                                      Text(
-                                        '${ticketinfo['status']}',
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'Date: ',
-                                      ),
-                                      Text(
-                                        '${ticketinfo['date']}',
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'Cost: ',
-                                      ),
-                                      Text(
-                                        '${ticketinfo['cost'].toStringAsFixed(2)}',
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'From: ',
-                                      ),
-                                      Text(
-                                        '${ticketinfo['start']}',
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'To: ',
-                                      ),
-                                      Text(
-                                        '${ticketinfo['destination']}',
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                        onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return ViewTicket();
+                                },
+                              ),
+                            );
+                        },
+                        child: Container(
+                          height: 150,
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(18.0),
+                              child: Container(
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        BookingCardInfo(
+                                          heading: 'Date: ',
+                                          info: '${ticketinfo['date']}',
+                                        ),
+                                        Spacer(),
+                                        Text(
+                                          '₹ ${ticketinfo['cost'].toStringAsFixed(2)}',
+                                          style: TextStyle(
+                                            fontSize: 25.0,
+                                            fontWeight: FontWeight.w500,
+                                            color:
+                                                Theme.of(context).accentColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    BookingCardInfo(
+                                      heading: 'Status: ',
+                                      info: '${ticketinfo['status']}',
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      // crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        BookingCardInfo(
+                                          heading: 'From: ',
+                                          info: '${ticketinfo['start']}',
+                                        ),
+                                        SizedBox(
+                                          width: 20.0,
+                                        ),
+                                        BookingCardInfo(
+                                          heading: 'To: ',
+                                          info: '${ticketinfo['destination']}',
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -116,14 +123,29 @@ class _LoadTicketState extends State<LoadTicket> {
     );
   }
 }
-// SingleChildScrollView(
-//                     child: TicketWidget(
-//                       paymentId: ticketinfo['paymentId'],
-//                       startPoint: ticketinfo['start'],
-//                       destinationPoint: ticketinfo['destination'],
-//                       ticketCode: ticketinfo['qrcode'],
-//                       date: ticketinfo['date'],
-//                       cost: ticketinfo['cost'],
-//                       status: ticketinfo['status'],
-//                     ),
-//                   );
+
+class BookingCardInfo extends StatelessWidget {
+  const BookingCardInfo({
+    Key key,
+    @required this.heading,
+    @required this.info,
+  }) : super(key: key);
+
+  final heading;
+  final info;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          heading,
+        ),
+        Text(
+          info,
+        ),
+      ],
+    );
+  }
+}
+

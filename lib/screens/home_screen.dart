@@ -176,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       children: <Widget>[
                         _uiHelper.getTextField(
-                          hint: 'Your Current Location',
+                          hint: 'Your Pickup Location',
                           controller: startAddressController,
                           validator: (value) =>
                               value.isEmpty ?  '  Email can\'t be empty' : null,
@@ -207,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           controller: destinationAddressController,
                           validator: (value) =>
                               value == startAddressController.text
-                                  ? '    Start and Dest cannot be same'
+                                  ? '  Start and Dest cannot be same \n'
                                   : null,
 
                           //add location predictor
