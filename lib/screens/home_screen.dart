@@ -83,16 +83,18 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             backgroundColor: Theme.of(context).accentColor,
             onPressed: () {
-              _formKey.currentState.validate();
-              getMarkers();
-              setDistanceandCost();
-              //shows bottomsheet
-              setState(() {
-                _scaffoldKey.currentState
-                    .showBottomSheet<Null>((BuildContext context) {
-                  return AddBottomSheet();
+              bool validation = _formKey.currentState.validate();
+              if (validation == true) {
+                getMarkers();
+                setDistanceandCost();
+                //shows bottomsheet
+                setState(() {
+                  _scaffoldKey.currentState
+                      .showBottomSheet<Null>((BuildContext context) {
+                    return AddBottomSheet();
+                  });
                 });
-              });
+              }
             },
           ),
           body: Stack(
@@ -127,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 56,
                             child: Icon(
                               Icons.my_location,
-                              color: Colors.black,
+                              color: Colors.blue,
                             ),
                           ),
                           onTap: () {
@@ -138,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     _currentPosition.latitude,
                                     _currentPosition.longitude,
                                   ),
-                                  zoom: 16.0,
+                                  zoom: 18.0,
                                 ),
                               ),
                             );
@@ -149,12 +151,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 60.0,
-                  right: 30.0,
-                  left: 30.0,
-                ),
+              Positioned(
+                top: 60,
+                left: 30,
+                right: 30,
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
@@ -168,50 +168,46 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  alignment: Alignment.topCenter,
-                  height: 170,
+
+                  // height: 170,
                   width: width * 0.8,
                   child: Form(
                     key: _formKey,
                     child: Column(
                       children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(top: 16.0),
-                          child: _uiHelper.getTextField(
-                            hint: 'Your Current Location',
-                            controller: startAddressController,
-                            validator: (value) =>
-                                value.isEmpty ? 'Email can\'t be empty' : null,
-                            onTap: () async {
-                              final List<double> result = await showSearch(
-                                context: context,
-                                delegate:
-                                    PlacesListSearch(startAddressController),
-                              );
+                        _uiHelper.getTextField(
+                          hint: 'Your Current Location',
+                          controller: startAddressController,
+                          validator: (value) =>
+                              value.isEmpty ?  '  Email can\'t be empty' : null,
+                          onTap: () async {
+                            final List<double> result = await showSearch(
+                              context: context,
+                              delegate:
+                                  PlacesListSearch(startAddressController),
+                            );
 
-                              GetData.startAddress =
-                                  startAddressController.text;
-                              print('Start coords: $result');
-                              _startLatitude = result[0];
-                              _startLongitude = result[1];
-                            },
-                            icon: Icon(
-                              Icons.my_location,
-                              color: Colors.black,
-                            ),
-                          ),
+                            GetData.startAddress = startAddressController.text;
+                            print('Start coords: $result');
+                            _startLatitude = result[0];
+                            _startLongitude = result[1];
+                          },
+                          // icon: Icon(
+                          //   Icons.my_location,
+                          //   color: Colors.blue,
+                          // ),
                         ),
                         Divider(
-                          indent: 50,
-                          endIndent: 50,
-                          color: Colors.grey[400],
+                          indent: 20,
+                          endIndent: 20,
+                          color: Colors.grey[500],
                         ),
                         _uiHelper.getTextField(
                           hint: 'Your Destination',
                           controller: destinationAddressController,
                           validator: (value) =>
                               value == startAddressController.text
-                                  ? 'Start and Dest cannot be same'
+                                  ? '    Start and Dest cannot be same'
                                   : null,
 
                           //add location predictor
@@ -229,10 +225,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             _destLong = result[1];
                           },
 
-                          icon: Icon(
-                            Icons.flag,
-                            color: Colors.black,
-                          ),
+                          // icon: Icon(
+                          //   Icons.flag,
+                          //   color: Colors.blue,
+                          // ),
                         ),
                       ],
                     ),
@@ -262,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
           CameraUpdate.newCameraPosition(
             CameraPosition(
               target: LatLng(position.latitude, position.longitude),
-              zoom: 16.0,
+              zoom: 18.0,
             ),
           ),
         );
@@ -304,6 +300,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // Add the markers to the list
     _markers.add(startMarker);
     _markers.add(destinationMarker);
+    
   }
 
   void setDistanceandCost() {
