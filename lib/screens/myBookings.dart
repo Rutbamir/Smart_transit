@@ -42,19 +42,88 @@ class _LoadTicketState extends State<LoadTicket> {
                 } else {
                   final ticketinfo = snapshot.data;
 
-                  return SingleChildScrollView(
-                    child: TicketWidget(
-                      paymentId: ticketinfo['paymentId'],
-                      startPoint: ticketinfo['start'],
-                      destinationPoint: ticketinfo['destination'],
-                      ticketCode: ticketinfo['qrcode'],
-                      date: ticketinfo['date'],
-                      cost: ticketinfo['cost'],
-                      status: ticketinfo['status'],
-                    ),
+                  return ListView.builder(
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: (){},
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Container(
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Status: ',
+                                      ),
+                                      Text(
+                                        '${ticketinfo['status']}',
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Date: ',
+                                      ),
+                                      Text(
+                                        '${ticketinfo['date']}',
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Cost: ',
+                                      ),
+                                      Text(
+                                        '${ticketinfo['cost'].toStringAsFixed(2)}',
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'From: ',
+                                      ),
+                                      Text(
+                                        '${ticketinfo['start']}',
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'To: ',
+                                      ),
+                                      Text(
+                                        '${ticketinfo['destination']}',
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    itemCount: 1,
                   );
                 }
               })),
     );
   }
 }
+// SingleChildScrollView(
+//                     child: TicketWidget(
+//                       paymentId: ticketinfo['paymentId'],
+//                       startPoint: ticketinfo['start'],
+//                       destinationPoint: ticketinfo['destination'],
+//                       ticketCode: ticketinfo['qrcode'],
+//                       date: ticketinfo['date'],
+//                       cost: ticketinfo['cost'],
+//                       status: ticketinfo['status'],
+//                     ),
+//                   );
