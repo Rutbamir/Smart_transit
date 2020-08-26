@@ -16,7 +16,6 @@ class UiHelper {
   Widget getTextField(
       {@required Function onTap,
       @required TextEditingController controller,
-      @required Icon icon,
       @required String hint,
       @required Function validator}) {
     return TextFormField(
@@ -26,7 +25,6 @@ class UiHelper {
       controller: controller,
       decoration: InputDecoration(
           border: InputBorder.none,
-          prefixIcon: icon,
           hintText: hint,
           hintStyle: TextStyle(color: Colors.grey[400])),
     );

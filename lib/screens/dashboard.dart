@@ -2,6 +2,7 @@ import 'package:Smart_transit/fetchers/auth.dart';
 import 'package:Smart_transit/screens/home_screen.dart';
 import 'package:Smart_transit/screens/myBookings.dart';
 import 'package:Smart_transit/screens/welcome_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:flutter_svg/svg.dart';
@@ -47,15 +48,17 @@ class _DashboardState extends State<Dashboard>
                     child: Stack(
                       children: [
                         HomeScreen(),
-                        Container(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 10, left: 10),
+                        Positioned(
+                          top: 10,
+                          left: 10,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.grey[300],
                             child: IconButton(
-                                iconSize: 30,
+                                iconSize: 40,
                                 alignment: Alignment.topLeft,
                                 icon: SvgPicture.asset(
                                   'assets/menu.svg',
-                                  color: Colors.black,
+                                  color: Colors.blue[900],
                                 ),
                                 onPressed: () {
                                   if (_drawerAnimationController.isCompleted) {
@@ -79,35 +82,67 @@ class _DashboardState extends State<Dashboard>
     return Scaffold(
         backgroundColor: Colors.blue[600],
         body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: ListView(
-            children: [
-              ListTile(
-                  title: Text('My Bookings'),
-                  leading: Icon(Icons.book),
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return LoadTicket();
-                    }));
-                  }),
-              ListTile(
-                title: Text('Settings'),
-                leading: Icon(Icons.settings),
-              ),
-              ListTile(
-                title: Text('Logout'),
-                leading: Icon(Icons.exit_to_app),
-                //add logout
-                onTap: () async {
-                  await _auth.signOut();
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return WelcomeScreen();
-                  }));
-                },
-              ),
-            ],
-          ),
-        ));
+            padding: const EdgeInsets.all(20.0),
+            child: FutureBuilder(
+                future: FirebaseAuth.instance.currentUser(),
+                builder: (context, AsyncSnapshot<FirebaseUser> user) {
+                  if (user.hasData) {
+                    return ListView(children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20, left: 30),
+                            child: Icon(
+                              Icons.account_circle,
+                              color: Colors.white,
+                              size: 100,
+                            ),
+                          ),
+                         
+                         
+                        ],
+                      ),
+                       SizedBox(height: 15),
+                       Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left:20),
+                                child: Text(user.data.email,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                            ],
+                          ),
+                           SizedBox(height: 15),
+                      Divider(color: Colors.white),
+                      ListTile(
+                          title: Text('My Bookings',
+                              style: TextStyle(color: Colors.white)),
+                          leading: Icon(Icons.book, color: Colors.white),
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return LoadTicket();
+                            }));
+                          }),
+                      ListTile(
+                        title: Text('Logout',
+                            style: TextStyle(color: Colors.white)),
+                        leading: Icon(Icons.exit_to_app, color: Colors.white),
+                        //add logout
+                        onTap: () async {
+                          await _auth.signOut();
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return WelcomeScreen();
+                          }));
+                        },
+                      ),
+                    ]);
+                  }
+                })));
   }
 }
