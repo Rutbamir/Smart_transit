@@ -13,8 +13,18 @@ Future<List<Map>> getplaces() async {
   return myplaces;
 }
 
-Future<DocumentSnapshot> getTickets() async {
+// Future<DocumentSnapshot> getTickets() async {
+//   String uid = await _auth.getCurrentUser();
+//   final tickets = await _firestore.collection('tickets').document('$uid').get();
+//   return tickets;
+// }
+
+Future<List<DocumentSnapshot>> getTickets() async {
   String uid = await _auth.getCurrentUser();
-  final tickets = await _firestore.collection('tickets').document('$uid').get();
-  return tickets;
+  QuerySnapshot tickets = await _firestore
+      .collection('users')
+      .document('$uid')
+      .collection('tickets')
+      .getDocuments();
+  return tickets.documents;
 }

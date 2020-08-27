@@ -1,5 +1,6 @@
 import 'package:Smart_transit/screens/ticketScreen.dart';
 import 'package:Smart_transit/screens/view_ticketscreen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Smart_transit/fetchers/fetcher.dart';
 
@@ -21,7 +22,7 @@ class _LoadTicketState extends State<LoadTicket> {
             textTheme: Theme.of(context).textTheme,
             title: Text(
               'My Bookings',
-              style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
@@ -32,7 +33,8 @@ class _LoadTicketState extends State<LoadTicket> {
           ),
           body: FutureBuilder(
               future: getTickets(),
-              builder: (context, snapshot) {
+              builder:
+                  (context, AsyncSnapshot<List<DocumentSnapshot>> snapshot) {
                 if (!snapshot.hasData) {
                   return Center(
                       child: Text('No Ticket Issued.',
@@ -41,20 +43,18 @@ class _LoadTicketState extends State<LoadTicket> {
                             fontSize: 30.0,
                           )));
                 } else {
-                  final ticketinfo = snapshot.data;
+                  List<DocumentSnapshot> ticketinfo = snapshot.data;
 
                   return ListView.builder(
+                    itemCount: snapshot.data.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return ViewTicket();
-                                },
-                              ),
-                            );
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return ViewTicket(ticket: ticketinfo[index]);
+                            },
+                          ));
                         },
                         child: Container(
                           height: 150,
@@ -72,11 +72,11 @@ class _LoadTicketState extends State<LoadTicket> {
                                       children: [
                                         BookingCardInfo(
                                           heading: 'Date: ',
-                                          info: '${ticketinfo['date']}',
+                                          info: '${ticketinfo[index]['date']}',
                                         ),
                                         Spacer(),
                                         Text(
-                                          '₹ ${ticketinfo['cost'].toStringAsFixed(2)}',
+                                          '₹ ${ticketinfo[index]['cost'].toStringAsFixed(2)}',
                                           style: TextStyle(
                                             fontSize: 25.0,
                                             fontWeight: FontWeight.w500,
@@ -88,25 +88,15 @@ class _LoadTicketState extends State<LoadTicket> {
                                     ),
                                     BookingCardInfo(
                                       heading: 'Status: ',
-                                      info: '${ticketinfo['status']}',
+                                      info: '${ticketinfo[index]['status']}',
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      // crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        BookingCardInfo(
-                                          heading: 'From: ',
-                                          info: '${ticketinfo['start']}',
-                                        ),
-                                        SizedBox(
-                                          width: 20.0,
-                                        ),
-                                        BookingCardInfo(
-                                          heading: 'To: ',
-                                          info: '${ticketinfo['destination']}',
-                                        ),
-                                      ],
+                                      BookingCardInfo(
+                                      heading: 'From: ',
+                                      info: '${ticketinfo[index]['start']}',
+                                    ),
+                                      BookingCardInfo(
+                                      heading: 'To: ',
+                                      info: '${ticketinfo[index]['destination']}',
                                     ),
                                   ],
                                 ),
@@ -116,7 +106,6 @@ class _LoadTicketState extends State<LoadTicket> {
                         ),
                       );
                     },
-                    itemCount: 1,
                   );
                 }
               })),
@@ -143,9 +132,11 @@ class BookingCardInfo extends StatelessWidget {
         ),
         Text(
           info,
+          style: TextStyle(
+           
+            fontWeight: FontWeight.bold)
         ),
       ],
     );
   }
 }
-

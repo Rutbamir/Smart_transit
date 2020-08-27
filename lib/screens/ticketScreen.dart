@@ -59,7 +59,7 @@ class _TicketScreenState extends State<TicketScreen> {
                       onPressed: () async {
                         //send ticket details to firestore
                         String uid = await _auth.getCurrentUser();
-                        _firestore.collection('tickets').document(uid).setData({
+                        _firestore.collection('users').document(uid).collection('tickets').add({
                           'start': startPoint,
                           'destination': destinationPoint,
                           'qrcode': paymentId,
@@ -219,7 +219,7 @@ class _TicketScreenState extends State<TicketScreen> {
                         fontSize: 18.0,
                       ),
                     ),
-                    Text('${GetData.paymentId}',
+                    Text(paymentId,
                     style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,

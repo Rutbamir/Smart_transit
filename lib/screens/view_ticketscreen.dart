@@ -1,35 +1,41 @@
-import 'package:Smart_transit/fetchers/fetcher.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'ticketScreen.dart';
 
-class ViewTicket extends StatefulWidget {
-  @override
-  _ViewTicketState createState() => _ViewTicketState();
-}
+class ViewTicket extends StatelessWidget {
+  DocumentSnapshot ticket;
+  ViewTicket({@required this.ticket});
 
-class _ViewTicketState extends State<ViewTicket> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: FutureBuilder(
-          future: getTickets(),
-          builder: (context, snapshot) {
-              final ticketinfo = snapshot.data;
-              return SingleChildScrollView(
-                child: TicketWidget(
-                  paymentId: ticketinfo['paymentId'],
-                  startPoint: ticketinfo['start'],
-                  destinationPoint: ticketinfo['destination'],
-                  ticketCode: ticketinfo['qrcode'],
-                  date: ticketinfo['date'],
-                  cost: ticketinfo['cost'],
-                  status: ticketinfo['status'],
-                ),
-              );
-            }
+    return Scaffold(
+        backgroundColor: Color.fromRGBO(212, 208, 207, 1),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          textTheme: Theme.of(context).textTheme,
+          title: Text(
+            'Ticket',
+            style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+          ),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
-      ),
-    );
-  }
-}
+        body: 
+
+                 TicketWidget(
+                  paymentId: ticket['paymentId'],
+                  startPoint: ticket['start'],
+                  destinationPoint: ticket['destination'],
+                  ticketCode: ticket['qrcode'],
+                  date: ticket['date'],
+                  cost: ticket['cost'],
+                  status: ticket['status'],
+                )
+                );
+              }
+            }
