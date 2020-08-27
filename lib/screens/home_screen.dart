@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:Smart_transit/UiHelper.dart';
-import 'package:Smart_transit/fetchers/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Smart_transit/get_data.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -179,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           hint: 'Your Pickup Location',
                           controller: startAddressController,
                           validator: (value) =>
-                              value.isEmpty ?  '  Email can\'t be empty' : null,
+                              value.isEmpty ? '  Email can\'t be empty' : null,
                           onTap: () async {
                             final List<double> result = await showSearch(
                               context: context,
@@ -270,9 +269,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   //build markers
   getMarkers() {
+     Marker marker = _markers.firstWhere(
+        (p) => p.markerId == MarkerId('Mark1'),
+        orElse: () => null);
+
+    _markers.remove(marker);
+     Marker marker2 = _markers.firstWhere(
+        (p) => p.markerId == MarkerId('Mark2'),
+        orElse: () => null);
+
+    _markers.remove(marker2);
     // Start Location Marker
     Marker startMarker = Marker(
-        markerId: MarkerId('$_startLatitude, $_startLongitude'),
+        markerId: MarkerId('Mark1'),
         position: LatLng(
           _startLatitude,
           _startLongitude,
@@ -285,7 +294,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // Destination Location Marker
     Marker destinationMarker = Marker(
-      markerId: MarkerId('$_destLat, $_destLong'),
+      markerId: MarkerId('Mark2'),
       position: LatLng(
         _destLat,
         _destLong,
@@ -300,7 +309,36 @@ class _HomeScreenState extends State<HomeScreen> {
     // Add the markers to the list
     _markers.add(startMarker);
     _markers.add(destinationMarker);
-    
+
+    // Define two position variables
+    // Position _northeastCoordinates;
+    // Position _southwestCoordinates;
+
+    // if (_startLatitude <= _destLat) {
+    //   _southwestCoordinates =
+    //       Position(latitude: _startLatitude, longitude: _startLongitude);
+    //   _northeastCoordinates =
+    //       Position(latitude: _destLat, longitude: _destLong);
+    // } else {
+    //   _southwestCoordinates =
+    //       Position(latitude: _destLat, longitude: _destLong);
+    //   _northeastCoordinates =
+    //       Position(latitude: _startLatitude, longitude: _startLongitude);
+    // }
+
+    // mapController.animateCamera(CameraUpdate.newLatLngBounds(
+    //   LatLngBounds(
+    //     northeast: LatLng(
+    //       _northeastCoordinates.latitude,
+    //       _northeastCoordinates.longitude,
+    //     ),
+    //     southwest: LatLng(
+    //       _southwestCoordinates.latitude,
+    //       _southwestCoordinates.longitude,
+    //     ),
+    //   ),
+    //   50.0, // padding
+    // ));
   }
 
   void setDistanceandCost() {
