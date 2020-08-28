@@ -11,7 +11,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   AnimationController _controller;
   Animation<Offset> _offsetAnimation;
 
@@ -28,7 +27,12 @@ class _SplashScreenState extends State<SplashScreen>
       parent: _controller,
       curve: Curves.elasticIn,
     ));
-    startTime();
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        print('Animation completed');
+        startTime();
+      }
+    });
   }
 
   @override
@@ -37,9 +41,9 @@ class _SplashScreenState extends State<SplashScreen>
     _controller.dispose();
   }
 
-  startTime() async {
-    var _duration = Duration(seconds: 3);
-    return await Timer(_duration, navigationPage);
+  startTime() {
+    var _duration = Duration(milliseconds: 1);
+    return Timer(_duration, navigationPage);
   }
 
   void navigationPage() async {
