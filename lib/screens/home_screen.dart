@@ -54,13 +54,13 @@ class _HomeScreenState extends State<HomeScreen> {
       ImageConfiguration(
         devicePixelRatio: 2.5,
       ),
-      'assets/marker.png',
+      'assets/blackicon.png',
     );
     destinationIcon = await BitmapDescriptor.fromAssetImage(
       ImageConfiguration(
         devicePixelRatio: 2.5,
       ),
-      'assets/marker.png',
+      'assets/blackicon.png',
     );
   }
 
@@ -310,35 +310,45 @@ class _HomeScreenState extends State<HomeScreen> {
     _markers.add(startMarker);
     _markers.add(destinationMarker);
 
-    // Define two position variables
-    // Position _northeastCoordinates;
-    // Position _southwestCoordinates;
+   
+    Position _northeastCoordinates;
+    Position _southwestCoordinates;
 
-    // if (_startLatitude <= _destLat) {
-    //   _southwestCoordinates =
-    //       Position(latitude: _startLatitude, longitude: _startLongitude);
-    //   _northeastCoordinates =
-    //       Position(latitude: _destLat, longitude: _destLong);
-    // } else {
-    //   _southwestCoordinates =
-    //       Position(latitude: _destLat, longitude: _destLong);
-    //   _northeastCoordinates =
-    //       Position(latitude: _startLatitude, longitude: _startLongitude);
-    // }
+    if (_startLatitude > _destLat && _startLongitude > _destLong) {
+      _southwestCoordinates =
+      Position(latitude: _destLat, longitude: _destLong);  
+      _northeastCoordinates =
+           Position(latitude: _startLatitude, longitude: _startLongitude);
+    } else if(_startLongitude > _destLong) {
+      _southwestCoordinates =
+          Position(latitude: _startLatitude, longitude: _destLong);
+      _northeastCoordinates =
+          Position(latitude: _destLat, longitude: _startLongitude);
+    }else if (_startLatitude > _destLat) {
+      _southwestCoordinates =
+          Position(latitude: _destLat, longitude: _startLongitude);
+      _northeastCoordinates =
+          Position(latitude: _startLatitude, longitude: _destLong);
+  } else {
+    _southwestCoordinates =
+          Position(latitude: _startLatitude, longitude: _startLongitude);
+      _northeastCoordinates =
+          Position(latitude: _destLat, longitude: _destLong);
+  }
 
-    // mapController.animateCamera(CameraUpdate.newLatLngBounds(
-    //   LatLngBounds(
-    //     northeast: LatLng(
-    //       _northeastCoordinates.latitude,
-    //       _northeastCoordinates.longitude,
-    //     ),
-    //     southwest: LatLng(
-    //       _southwestCoordinates.latitude,
-    //       _southwestCoordinates.longitude,
-    //     ),
-    //   ),
-    //   50.0, // padding
-    // ));
+    mapController.animateCamera(CameraUpdate.newLatLngBounds(
+      LatLngBounds(
+        northeast: LatLng(
+          _northeastCoordinates.latitude,
+          _northeastCoordinates.longitude,
+        ),
+        southwest: LatLng(
+          _southwestCoordinates.latitude,
+          _southwestCoordinates.longitude,
+        ),
+      ),
+      100.0, // padding
+    ));
   }
 
   void setDistanceandCost() {
