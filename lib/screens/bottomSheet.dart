@@ -13,94 +13,87 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 10,
+            color: Colors.grey[400],
+            spreadRadius: 5,
+          ),
+        ],
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(25.0),
+          topRight: Radius.circular(25.0),
+        ),
+      ),
       width: double.infinity,
-      height: 180,
-      child: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 10,
-              color: Colors.grey[400],
-              spreadRadius: 5,
+      height: 140,
+      child: Padding(
+        padding: const EdgeInsets.only(right: 15, left: 15, bottom: 8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SvgPicture.asset(
+              'assets/minus-sign.svg',
+              color: Colors.grey[300],
+              height: 30,
+              width: 30,
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Row(children: [
+              Text(
+                'Distace: ${GetData.distance.toStringAsFixed(2)} km',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.grey[600],
+                ),
+              ),
+              Spacer(),
+              RichText(
+                text: TextSpan(
+                    text: 'Cost: ',
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 20.0,
+                    ),
+                    children: [
+                      TextSpan(
+                          text: 'Rs ${cost.toStringAsFixed(2)}/-',
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 20.0,
+                          )),
+                    ]),
+              )
+            ]),
+            SizedBox(height: 25),
+            Container(
+              height: 40,
+              width: double.infinity,
+              child: RaisedButton(
+                elevation: 5.0,
+                child: Text(
+                  'Book your ride',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.white,
+                  ),
+                ),
+                onPressed: () {
+                
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return PaymentScreen();
+                    }));
+                  
+                },
+              ),
             ),
           ],
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 18.0,
-            top: 10.0,
-            bottom: 18.0,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            // crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                flex: 3,
-                child: SvgPicture.asset(
-                  'assets/minus-sign.svg',
-                  color: Colors.grey[300],
-                ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              Expanded(
-                flex: 3,
-                child: Text(
-                  'Distace: ${GetData.distance.toStringAsFixed(2)} km',
-                  style: TextStyle(
-                    fontSize: 15.0,
-                    color: Colors.grey[600],
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 3,
-                child: Text(
-                  'Cost: Rs ${cost.toStringAsFixed(2)}/-',
-                  style: TextStyle(
-                    fontSize: 25.0,
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 6,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    width: 250,
-                    child: RaisedButton(
-                      elevation: 2.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        'Book your ride',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                      onPressed: () {
-                        Future.delayed(Duration(seconds: 2), () async {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return PaymentScreen();
-                          }));
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
