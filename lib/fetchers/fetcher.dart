@@ -13,12 +13,6 @@ Future<List<Map>> getplaces() async {
   return myplaces;
 }
 
-// Future<DocumentSnapshot> getTickets() async {
-//   String uid = await _auth.getCurrentUser();
-//   final tickets = await _firestore.collection('tickets').document('$uid').get();
-//   return tickets;
-// }
-
 Future<List<DocumentSnapshot>> getTickets() async {
   String uid = await _auth.getCurrentUser();
   QuerySnapshot tickets = await _firestore

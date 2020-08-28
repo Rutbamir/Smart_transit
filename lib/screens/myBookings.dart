@@ -1,3 +1,4 @@
+import 'package:Smart_transit/UiHelper.dart';
 import 'package:Smart_transit/screens/ticketScreen.dart';
 import 'package:Smart_transit/screens/view_ticketscreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,6 +11,7 @@ class LoadTicket extends StatefulWidget {
 }
 
 class _LoadTicketState extends State<LoadTicket> {
+  UiHelper _uiHelper = UiHelper();
   @override
   @override
   Widget build(BuildContext context) {
@@ -35,13 +37,17 @@ class _LoadTicketState extends State<LoadTicket> {
               future: getTickets(),
               builder:
                   (context, AsyncSnapshot<List<DocumentSnapshot>> snapshot) {
-                if (!snapshot.hasData) {
+                if (snapshot.connectionState == ConnectionState.done &&
+                    !snapshot.hasData) {
                   return Center(
                       child: Text('No Ticket Issued.',
                           style: TextStyle(
                             color: Colors.grey,
                             fontSize: 30.0,
                           )));
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return _uiHelper.getLoading();
                 } else {
                   List<DocumentSnapshot> ticketinfo = snapshot.data;
 
@@ -90,13 +96,14 @@ class _LoadTicketState extends State<LoadTicket> {
                                       heading: 'Status: ',
                                       info: '${ticketinfo[index]['status']}',
                                     ),
-                                      BookingCardInfo(
+                                    BookingCardInfo(
                                       heading: 'From: ',
                                       info: '${ticketinfo[index]['start']}',
                                     ),
-                                      BookingCardInfo(
+                                    BookingCardInfo(
                                       heading: 'To: ',
-                                      info: '${ticketinfo[index]['destination']}',
+                                      info:
+                                          '${ticketinfo[index]['destination']}',
                                     ),
                                   ],
                                 ),
@@ -130,12 +137,7 @@ class BookingCardInfo extends StatelessWidget {
         Text(
           heading,
         ),
-        Text(
-          info,
-          style: TextStyle(
-           
-            fontWeight: FontWeight.bold)
-        ),
+        Text(info, style: TextStyle(fontWeight: FontWeight.bold)),
       ],
     );
   }

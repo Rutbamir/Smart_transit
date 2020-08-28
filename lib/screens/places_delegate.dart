@@ -82,7 +82,7 @@ class PlacesListSearch extends SearchDelegate<List<double>> {
       IconButton(
         icon: Icon(
           Icons.clear,
-          color: Colors.deepOrangeAccent,
+          color: Colors.lightBlueAccent,
         ),
         onPressed: () {
           query = '';
@@ -96,7 +96,7 @@ class PlacesListSearch extends SearchDelegate<List<double>> {
     return IconButton(
       icon: Icon(
         Icons.arrow_back,
-        color: Colors.deepOrangeAccent,
+        color: Colors.lightBlueAccent,
       ),
       onPressed: () {
         close(context, null);

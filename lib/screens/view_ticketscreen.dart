@@ -1,8 +1,10 @@
+import 'package:Smart_transit/UiHelper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'ticketScreen.dart';
 
 class ViewTicket extends StatelessWidget {
+   UiHelper _uiHelper = UiHelper();
   DocumentSnapshot ticket;
   ViewTicket({@required this.ticket});
 
@@ -27,7 +29,7 @@ class ViewTicket extends StatelessWidget {
         ),
         body: 
 
-                 TicketWidget(
+                 _uiHelper.TicketWidget(
                   paymentId: ticket['paymentId'],
                   startPoint: ticket['start'],
                   destinationPoint: ticket['destination'],
