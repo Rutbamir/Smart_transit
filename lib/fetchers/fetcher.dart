@@ -19,6 +19,7 @@ Future<List<DocumentSnapshot>> getTickets() async {
       .collection('users')
       .document('$uid')
       .collection('tickets')
+      .orderBy('id', descending: true)
       .getDocuments();
   return tickets.documents;
 }

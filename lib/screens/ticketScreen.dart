@@ -16,11 +16,10 @@ class TicketScreen extends StatefulWidget {
 }
 
 class _TicketScreenState extends State<TicketScreen> {
-   UiHelper _uiHelper = UiHelper();
+  UiHelper _uiHelper = UiHelper();
   @override
   void initState() {
     super.initState();
-   
 
     //shows success alert dialog
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -51,7 +50,6 @@ class _TicketScreenState extends State<TicketScreen> {
                               'assets/success.flr',
                               alignment: Alignment.center,
                               animation: "Untitled",
-                              
                             ),
                           ),
                         ],
@@ -66,7 +64,21 @@ class _TicketScreenState extends State<TicketScreen> {
                             .collection('users')
                             .document(uid)
                             .collection('tickets')
-                            .add({
+                            .document(paymentId).setData(
+                        {
+                          'start': startPoint,
+                          'destination': destinationPoint,
+                          'qrcode': paymentId,
+                          'current_lat': currentLatitude,
+                          'current_long': currentLongitude,
+                          'date': finalDate,
+                          'uid': uid,
+                          'cost': cost,
+                          'status': status,
+                          'paymentId': paymentId,
+                        });
+                        await _firestore.collection('tickets').document(paymentId).setData(
+                        {
                           'start': startPoint,
                           'destination': destinationPoint,
                           'qrcode': paymentId,
