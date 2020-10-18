@@ -2,11 +2,12 @@ import 'package:Smart_transit/fetchers/fetcher.dart';
 import 'package:flutter/material.dart';
 import '../UiHelper.dart';
 
-class PlacesListSearch extends SearchDelegate<List<double>> {
+class PlacesListSearch extends SearchDelegate<List<String>> {
   final TextEditingController controller;
   UiHelper _uiHelper = UiHelper();
-  double latitude;
-  double longitude;
+  String latitude;
+  String longitude;
+  String place_id;
   PlacesListSearch(this.controller);
 
   buildPlaces() {
@@ -19,7 +20,9 @@ class PlacesListSearch extends SearchDelegate<List<double>> {
             List<Map> myplaces = snapshot.data;
             List<Map> filteredList = myplaces
                 .where(
-                  (p) => p['destination'].toLowerCase().startsWith(query.toLowerCase()),
+                  (p) => p['destination']
+                      .toLowerCase()
+                      .startsWith(query.toLowerCase()),
                 )
                 .toList();
             if (query == null) {
@@ -45,12 +48,14 @@ class PlacesListSearch extends SearchDelegate<List<double>> {
                       return ListTile(
                         onTap: () {
                           controller.text = filteredList[index]['destination'];
-                          latitude = double.parse(filteredList[index]['lat']);
-                          longitude = double.parse(filteredList[index]['long']);
+                          latitude = filteredList[index]['lat'];
+                          longitude = filteredList[index]['long'];
+                          place_id = filteredList[index]["id"];
                           print('LAT: $latitude');
                           print('LONG: $longitude');
+                          print("LOC ID: $place_id");
 
-                          Navigator.pop(context, [latitude, longitude]);
+                          Navigator.pop(context, [latitude, longitude, place_id]);
                         },
                         title: Padding(
                           padding: const EdgeInsets.all(10.0),

@@ -99,24 +99,22 @@ class _DashboardState extends State<Dashboard>
                               size: 100,
                             ),
                           ),
-                         
-                         
                         ],
                       ),
-                       SizedBox(height: 15),
-                       Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left:20),
-                                child: Text(user.data.email,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold)),
-                              ),
-                            ],
+                      SizedBox(height: 15),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Text(user.data.email,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold)),
                           ),
-                           SizedBox(height: 15),
+                        ],
+                      ),
+                      SizedBox(height: 15),
                       Divider(color: Colors.white),
                       ListTile(
                           title: Text('My Bookings',
@@ -135,6 +133,7 @@ class _DashboardState extends State<Dashboard>
                         //add logout
                         onTap: () async {
                           await _auth.signOut();
+                          Navigator.pop(context);
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
                             return WelcomeScreen();

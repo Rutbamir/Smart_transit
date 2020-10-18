@@ -21,7 +21,7 @@ class _LoadTicketState extends State<LoadTicket> {
           appBar: AppBar(
             backgroundColor: Colors.white,
             centerTitle: true,
-            textTheme: Theme.of(context).textTheme,
+            // textTheme: Theme.of(context).textTheme,
             title: Text(
               'My Bookings',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -38,7 +38,7 @@ class _LoadTicketState extends State<LoadTicket> {
               builder:
                   (context, AsyncSnapshot<List<DocumentSnapshot>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.done &&
-                    !snapshot.hasData) {
+                    snapshot.data.length == 0) {
                   return Center(
                       child: Text('No Ticket Issued.',
                           style: TextStyle(

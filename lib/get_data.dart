@@ -7,4 +7,5 @@ class GetData {
   static String qrCode;
   static double cost;
   static String paymentId = '';
+  static String driver_uid = '';
 }

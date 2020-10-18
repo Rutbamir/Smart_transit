@@ -48,10 +48,12 @@ class _SplashScreenState extends State<SplashScreen>
 
   void navigationPage() async {
     if (await FirebaseAuth.instance.currentUser() != null) {
+      Navigator.pop(context);
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return Dashboard();
       }));
     } else {
+      Navigator.pop(context);
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return WelcomeScreen();
       }));

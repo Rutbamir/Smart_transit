@@ -37,15 +37,13 @@ class _TicketScreenState extends State<TicketScreen> {
                       width: 300,
                       child: Column(
                         children: <Widget>[
+                          Text('Ride Booked. Enjoy!',
+                              style: TextStyle(
+                                fontSize: 25.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                              )),
                           Expanded(
-                            flex: 3,
-                            child: Text('Ride Booked. Enjoy!',
-                                style: TextStyle(
-                                  fontSize: 25.0,
-                                )),
-                          ),
-                          Expanded(
-                            flex: 7,
                             child: FlareActor(
                               'assets/success.flr',
                               alignment: Alignment.center,
@@ -56,7 +54,7 @@ class _TicketScreenState extends State<TicketScreen> {
                       )),
                   actions: <Widget>[
                     FlatButton(
-                      child: Text("View"),
+                      child: Text("View", style: TextStyle(fontWeight: FontWeight.bold)),
                       onPressed: () async {
                         //send ticket details to firestore
                         String uid = await _auth.getCurrentUser();
@@ -64,31 +62,35 @@ class _TicketScreenState extends State<TicketScreen> {
                             .collection('users')
                             .document(uid)
                             .collection('tickets')
-                            .document(paymentId).setData(
-                        {
-                          'start': startPoint,
-                          'destination': destinationPoint,
-                          'qrcode': paymentId,
-                          'current_lat': currentLatitude,
-                          'current_long': currentLongitude,
+                            .document(GetData.paymentId)
+                            .setData({
+                          'start': GetData.startAddress,
+                          'destination': GetData.destinationAddress,
+                          'qrcode': GetData.paymentId,
+                          'current_lat': GetData.currentLatitude,
+                          'current_long': GetData.currentLongitude,
                           'date': finalDate,
                           'uid': uid,
-                          'cost': cost,
+                          'cost': GetData.cost,
                           'status': status,
-                          'paymentId': paymentId,
+                          'paymentId': GetData.paymentId,
+                          'driver_id': GetData.driver_uid,
                         });
-                        await _firestore.collection('tickets').document(paymentId).setData(
-                        {
-                          'start': startPoint,
-                          'destination': destinationPoint,
-                          'qrcode': paymentId,
-                          'current_lat': currentLatitude,
-                          'current_long': currentLongitude,
+                        await _firestore
+                            .collection('tickets')
+                            .document(GetData.paymentId)
+                            .setData({
+                          'start': GetData.startAddress,
+                          'destination': GetData.destinationAddress,
+                          'qrcode': GetData.paymentId,
+                          'current_lat': GetData.currentLatitude,
+                          'current_long': GetData.currentLongitude,
                           'date': finalDate,
                           'uid': uid,
-                          'cost': cost,
+                          'cost': GetData.cost,
                           'status': status,
-                          'paymentId': paymentId,
+                          'paymentId': GetData.paymentId,
+                          'driver_id': GetData.driver_uid,
                         });
                         Navigator.of(context).pop();
                       },
@@ -105,13 +107,6 @@ class _TicketScreenState extends State<TicketScreen> {
 
   AuthService _auth = AuthService();
   final _firestore = Firestore.instance;
-
-  String startPoint = GetData.startAddress;
-  String destinationPoint = GetData.destinationAddress;
-  double currentLatitude = GetData.currentLatitude;
-  double currentLongitude = GetData.currentLongitude;
-  String paymentId = GetData.paymentId;
-  double cost = GetData.cost;
 
   //generates random characters
   // String randomString(int strlen) {
@@ -160,12 +155,12 @@ class _TicketScreenState extends State<TicketScreen> {
           ),
           body: SingleChildScrollView(
             child: _uiHelper.TicketWidget(
-              paymentId: paymentId,
-              startPoint: startPoint,
-              destinationPoint: destinationPoint,
-              ticketCode: paymentId,
+              paymentId: GetData.paymentId,
+              startPoint: GetData.startAddress,
+              destinationPoint: GetData.destinationAddress,
+              ticketCode: GetData.paymentId,
               date: dateMonthYear(),
-              cost: cost,
+              cost: GetData.cost,
               status: status,
             ),
           ),

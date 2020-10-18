@@ -6,6 +6,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 double cost;
 
 class AddBottomSheet extends StatefulWidget {
+  VoidCallback callback;
+
+  AddBottomSheet({this.callback});
+
   _AddBottomSheetState createState() => _AddBottomSheetState();
 }
 
@@ -74,23 +78,42 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
             Container(
               height: 40,
               width: double.infinity,
-              child: RaisedButton(
-                elevation: 5.0,
-                child: Text(
-                  'Book your ride',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  RaisedButton(
+                    elevation: 5.0,
+                    child: Text(
+                      'Book your ride',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return PaymentScreen();
+                      }));
+                    },
                   ),
-                ),
-                onPressed: () {
-                
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return PaymentScreen();
-                    }));
-                  
-                },
+                  SizedBox(width: 20),
+                  RaisedButton(
+                    color: Colors.red[400],
+                    elevation: 5.0,
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                    onPressed: () {
+                      widget.callback();
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
               ),
             ),
           ],

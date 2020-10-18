@@ -19,7 +19,17 @@ Future<List<DocumentSnapshot>> getTickets() async {
       .collection('users')
       .document('$uid')
       .collection('tickets')
-      .orderBy('id', descending: true)
+      .orderBy("paymentId", descending: true)
       .getDocuments();
+  print(tickets.documents);
   return tickets.documents;
+}
+
+Future<List<DocumentSnapshot>> getDrivers(String currentLocation) async {
+  QuerySnapshot snap = await _firestore
+      .collection("drivers")
+      .where("current_location", isEqualTo: currentLocation)
+      .where("in_transit", isEqualTo: false)
+      .getDocuments();
+  return snap.documents;
 }

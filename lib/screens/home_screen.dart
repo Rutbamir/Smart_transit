@@ -1,5 +1,7 @@
 import 'dart:math';
 import 'package:Smart_transit/UiHelper.dart';
+import 'package:Smart_transit/fetchers/fetcher.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Smart_transit/get_data.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -27,14 +29,12 @@ class _HomeScreenState extends State<HomeScreen> {
   double _startLongitude;
   double _destLat;
   double _destLong;
+  String _locID;
 
   Position _currentPosition;
 
   TextEditingController startAddressController = TextEditingController();
   TextEditingController destinationAddressController = TextEditingController();
-
-  String _startAddress = '';
-  String _destinationAddress = '';
 
   Set<Marker> _markers = {};
 
@@ -77,25 +77,27 @@ class _HomeScreenState extends State<HomeScreen> {
           key: _scaffoldKey,
           backgroundColor: Colors.white,
           floatingActionButton: FloatingActionButton(
-            child: Icon(
-              Icons.directions_bus,
-            ),
-            backgroundColor: Theme.of(context).accentColor,
-            onPressed: () {
-              bool validation = _formKey.currentState.validate();
-              if (validation == true) {
-                getMarkers();
-                setDistanceandCost();
-                //shows bottomsheet
-                setState(() {
-                  _scaffoldKey.currentState
-                      .showBottomSheet<Null>((BuildContext context) {
-                    return AddBottomSheet();
+              child: Icon(
+                Icons.directions_bus,
+              ),
+              backgroundColor: Theme.of(context).accentColor,
+              onPressed: () {
+                bool validation = _formKey.currentState.validate();
+                if (validation == true) {
+                  setState(() {
+                    getMarkers();
+                    setDistanceandCost();
                   });
-                });
-              }
-            },
-          ),
+                  getMarkers();
+                  setDistanceandCost();
+
+                  showBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return checkForDriver();
+                      });
+                }
+              }),
           body: Stack(
             children: <Widget>[
               // the main map
@@ -150,6 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
+
               Positioned(
                 top: 60,
                 left: 30,
@@ -178,9 +181,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           hint: 'Your Pickup Location',
                           controller: startAddressController,
                           validator: (value) =>
-                              value.isEmpty ? '  Email can\'t be empty' : null,
+                              value.isEmpty ? '  This can\'t be empty' : null,
                           onTap: () async {
-                            final List<double> result = await showSearch(
+                             List<String> result = await showSearch(
                               context: context,
                               delegate:
                                   PlacesListSearch(startAddressController),
@@ -188,8 +191,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
                             GetData.startAddress = startAddressController.text;
                             print('Start coords: $result');
-                            _startLatitude = result[0];
-                            _startLongitude = result[1];
+                            _startLatitude = double.parse(result[0]);
+                            _startLongitude = double.parse(result[1]);
+                            _locID = result[2];
+                            print(_locID);
                           },
                           // icon: Icon(
                           //   Icons.my_location,
@@ -211,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                           //add location predictor
                           onTap: () async {
-                            final List<double> result = await showSearch(
+                            final List<String> result = await showSearch(
                               context: context,
                               delegate: PlacesListSearch(
                                   destinationAddressController),
@@ -219,9 +224,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             GetData.destinationAddress =
                                 destinationAddressController.text;
                             print('Destination coords: $result');
-                            _destLat = result[0];
+                            _destLat = double.parse(result[0]);
 
-                            _destLong = result[1];
+                            _destLong = double.parse(result[1]);
                           },
 
                           // icon: Icon(
@@ -233,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-              ),
+              )
             ],
           ),
         ),
@@ -269,13 +274,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   //build markers
   getMarkers() {
-     Marker marker = _markers.firstWhere(
-        (p) => p.markerId == MarkerId('Mark1'),
+    Marker marker = _markers.firstWhere((p) => p.markerId == MarkerId('Mark1'),
         orElse: () => null);
 
     _markers.remove(marker);
-     Marker marker2 = _markers.firstWhere(
-        (p) => p.markerId == MarkerId('Mark2'),
+    Marker marker2 = _markers.firstWhere((p) => p.markerId == MarkerId('Mark2'),
         orElse: () => null);
 
     _markers.remove(marker2);
@@ -288,7 +291,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         infoWindow: InfoWindow(
           title: 'Start',
-          snippet: _startAddress,
         ),
         icon: sourceIcon);
 
@@ -301,7 +303,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       infoWindow: InfoWindow(
         title: 'Destination',
-        snippet: _destinationAddress,
       ),
       icon: destinationIcon,
     );
@@ -310,31 +311,30 @@ class _HomeScreenState extends State<HomeScreen> {
     _markers.add(startMarker);
     _markers.add(destinationMarker);
 
-   
     Position _northeastCoordinates;
     Position _southwestCoordinates;
 
     if (_startLatitude > _destLat && _startLongitude > _destLong) {
       _southwestCoordinates =
-      Position(latitude: _destLat, longitude: _destLong);  
+          Position(latitude: _destLat, longitude: _destLong);
       _northeastCoordinates =
-           Position(latitude: _startLatitude, longitude: _startLongitude);
-    } else if(_startLongitude > _destLong) {
+          Position(latitude: _startLatitude, longitude: _startLongitude);
+    } else if (_startLongitude > _destLong) {
       _southwestCoordinates =
           Position(latitude: _startLatitude, longitude: _destLong);
       _northeastCoordinates =
           Position(latitude: _destLat, longitude: _startLongitude);
-    }else if (_startLatitude > _destLat) {
+    } else if (_startLatitude > _destLat) {
       _southwestCoordinates =
           Position(latitude: _destLat, longitude: _startLongitude);
       _northeastCoordinates =
           Position(latitude: _startLatitude, longitude: _destLong);
-  } else {
-    _southwestCoordinates =
+    } else {
+      _southwestCoordinates =
           Position(latitude: _startLatitude, longitude: _startLongitude);
       _northeastCoordinates =
           Position(latitude: _destLat, longitude: _destLong);
-  }
+    }
 
     mapController.animateCamera(CameraUpdate.newLatLngBounds(
       LatLngBounds(
@@ -391,5 +391,101 @@ class _HomeScreenState extends State<HomeScreen> {
       GetData.cost = cost;
       print('cost: $cost');
     });
+  }
+
+  Widget checkForDriver() {
+    return Container(
+      height: 250,
+      child: FutureBuilder(
+          future: getDrivers(_locID),
+          builder: (context, AsyncSnapshot<List<DocumentSnapshot>> snapshot) {
+            if (snapshot.hasData && snapshot.data.length > 0) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Text("Drivers Available:",
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey)),
+                    Divider(thickness: 1),
+                    Expanded(
+                      child: ListView.builder(
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, int index) {
+                            print(snapshot.data[index].data);
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 8),
+                              child: Card(
+                                elevation: 2,
+                                child: ListTile(
+                                  title: Row(
+                                    children: [
+                                      Text(snapshot.data[index]["name"],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500)),
+                                      Spacer(),
+                                      Text("Rating:")
+                                    ],
+                                  ),
+                                  trailing: SizedBox(
+                                    width: 40,
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                            snapshot.data[index]["rating"]
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold)),
+                                        SizedBox(width: 5),
+                                        Icon(Icons.star,
+                                            color: Colors.yellow[700]),
+                                      ],
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    GetData.driver_uid =
+                                        snapshot.data[index]["uid"];
+                                    Navigator.pop(context);
+                                    //shows bottomsheet
+                                    setState(() {
+                                      _scaffoldKey.currentState
+                                          .showBottomSheet<Null>(
+                                              (BuildContext context) {
+                                        return AddBottomSheet(
+                                          callback: () {
+                                            setState(() {
+                                              startAddressController.clear();
+                                              destinationAddressController
+                                                  .clear();
+                                              _markers.clear();
+                                            });
+                                          },
+                                        );
+                                      });
+                                    });
+                                  },
+                                ),
+                              ),
+                            );
+                          }),
+                    ),
+                  ],
+                ),
+              );
+            } else if (snapshot.connectionState == ConnectionState.done &&
+                snapshot.data.isEmpty) {
+              return Center(
+                  child: Text('Sorry! No Rides Available.',
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey)));
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          }),
+    );
   }
 }
