@@ -46,7 +46,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                   child: Text('Login'),
                   onPressed: () {
-                    Navigator.push(context,
+                    Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) {
                       return LoginScreen();
                     }));
@@ -67,7 +67,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                   child: Text('Sign Up'),
                   onPressed: () {
-                    Navigator.push(context,
+                    Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) {
                       return SignupScreen();
                     }));

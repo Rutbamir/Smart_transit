@@ -155,7 +155,7 @@ class _SignupScreenState extends State<SignupScreen> {
         String user = result.uid;
         print(user);
         Navigator.of(context).pop();
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
           return Dashboard();
         }));
       } catch (e) {
