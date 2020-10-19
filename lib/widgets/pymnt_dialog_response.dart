@@ -18,7 +18,7 @@ class _DialogResponsesState extends State<DialogResponses> {
       backgroundColor: Colors.transparent, //this right here
       child: Container(
         height: 200,
-        width: MediaQuery.of(context).size.width * 0.55,
+        width: 350,
         decoration: BoxDecoration(
           color: Colors.transparent,
           borderRadius: BorderRadius.all(
@@ -31,7 +31,7 @@ class _DialogResponsesState extends State<DialogResponses> {
               alignment: Alignment(0, 1),
               child: Container(
                 height: 160,
-                width: MediaQuery.of(context).size.width * 0.55,
+                width: 350,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(
                     Radius.circular(30),

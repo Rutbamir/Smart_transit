@@ -88,9 +88,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     getMarkers();
                     setDistanceandCost();
                   });
-                  getMarkers();
-                  setDistanceandCost();
-
                   showBottomSheet(
                       context: context,
                       builder: (context) {
@@ -205,29 +202,28 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.grey[500],
                         ),
                         _uiHelper.getTextField(
-                          hint: 'Your Destination',
-                          controller: destinationAddressController,
-                          validator: (value) =>
-                              value == startAddressController.text
-                                  ? '  Start and Dest cannot be same \n'
-                                  : null,
+                            hint: 'Your Destination',
+                            controller: destinationAddressController,
+                            validator: (value) =>
+                                value == startAddressController.text
+                                    ? '  Start and Dest cannot be same \n'
+                                    : null,
 
-                          //add location predictor
-                          onTap: () async {
-                            List<String> result = await showSearch(
-                              context: context,
-                              delegate: PlacesListSearch(
-                                  destinationAddressController),
-                            );
-                            if (result != null) {
-                              GetData.destinationAddress =
-                                  destinationAddressController.text;
-                              print('Destination coords: $result');
-                              _destLat = double.parse(result[0]);
-                              _destLong = double.parse(result[1]);
-                            }
-                          }
-                        ),
+                            //add location predictor
+                            onTap: () async {
+                              List<String> result = await showSearch(
+                                context: context,
+                                delegate: PlacesListSearch(
+                                    destinationAddressController),
+                              );
+                              if (result != null) {
+                                GetData.destinationAddress =
+                                    destinationAddressController.text;
+                                print('Destination coords: $result');
+                                _destLat = double.parse(result[0]);
+                                _destLong = double.parse(result[1]);
+                              }
+                            }),
                       ],
                     ),
                   ),
