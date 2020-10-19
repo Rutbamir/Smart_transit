@@ -183,23 +183,21 @@ class _HomeScreenState extends State<HomeScreen> {
                           validator: (value) =>
                               value.isEmpty ? '  This can\'t be empty' : null,
                           onTap: () async {
-                             List<String> result = await showSearch(
+                            List<String> result = await showSearch(
                               context: context,
                               delegate:
                                   PlacesListSearch(startAddressController),
                             );
-
-                            GetData.startAddress = startAddressController.text;
-                            print('Start coords: $result');
-                            _startLatitude = double.parse(result[0]);
-                            _startLongitude = double.parse(result[1]);
-                            _locID = result[2];
-                            print(_locID);
+                            if (result != null) {
+                              GetData.startAddress =
+                                  startAddressController.text;
+                              print('Start coords: $result');
+                              _startLatitude = double.parse(result[0]);
+                              _startLongitude = double.parse(result[1]);
+                              _locID = result[2];
+                              print(_locID);
+                            }
                           },
-                          // icon: Icon(
-                          //   Icons.my_location,
-                          //   color: Colors.blue,
-                          // ),
                         ),
                         Divider(
                           indent: 20,
@@ -216,23 +214,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
                           //add location predictor
                           onTap: () async {
-                            final List<String> result = await showSearch(
+                            List<String> result = await showSearch(
                               context: context,
                               delegate: PlacesListSearch(
                                   destinationAddressController),
                             );
-                            GetData.destinationAddress =
-                                destinationAddressController.text;
-                            print('Destination coords: $result');
-                            _destLat = double.parse(result[0]);
-
-                            _destLong = double.parse(result[1]);
-                          },
-
-                          // icon: Icon(
-                          //   Icons.flag,
-                          //   color: Colors.blue,
-                          // ),
+                            if (result != null) {
+                              GetData.destinationAddress =
+                                  destinationAddressController.text;
+                              print('Destination coords: $result');
+                              _destLat = double.parse(result[0]);
+                              _destLong = double.parse(result[1]);
+                            }
+                          }
                         ),
                       ],
                     ),

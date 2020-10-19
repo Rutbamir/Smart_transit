@@ -19,6 +19,5 @@ String krandomNumber() {
   for (var i = 0; i < strlen; i++) {
     result += chars[rnd.nextInt(chars.length)];
   }
-
   return result;
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -201,5 +202,55 @@ class UiHelper {
         ),
       ],
     );
+  }
+   Widget tryAgainDialog(context) {
+    showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          return Center(
+            child: Container(
+              height: 90,
+              width: 180,
+              child: Card(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Icon(
+                      Icons.error,
+                      color: Colors.red,
+                    ),
+                    Text("Please Try Again")
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+
+    Future.delayed(Duration(seconds: 2), () {
+      Navigator.of(context).pop();
+    });
+  }
+   Widget showLoading(context) {
+    showCupertinoDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return Center(
+            child: Container(
+              height: 90,
+              width: 180,
+              child: Card(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    CircularProgressIndicator(),
+                    Text("Please wait...")
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
 }

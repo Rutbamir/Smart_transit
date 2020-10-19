@@ -1,7 +1,7 @@
 import 'package:Smart_transit/UiHelper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'ticketScreen.dart';
+
 
 class ViewTicket extends StatelessWidget {
    UiHelper _uiHelper = UiHelper();

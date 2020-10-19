@@ -11,11 +11,10 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  final GlobalKey<FormState> _signUpKey = GlobalKey<FormState>();
-  UiHelper _uiHelper = UiHelper();
+  GlobalKey<FormState> _signUpKey = GlobalKey<FormState>();
 
   AuthService _auth = AuthService();
-  String errorMessage;
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
@@ -37,21 +36,6 @@ class _SignupScreenState extends State<SignupScreen> {
                             image: DecorationImage(
                                 image: AssetImage('assets/bus2.jpg'),
                                 fit: BoxFit.contain)),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              errorMessage != null ? errorMessage : '',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w300,
-                                  fontSize: 15,
-                                  color: Colors.red),
-                            ),
-                          )
-                        ],
                       ),
                       Padding(
                         padding: EdgeInsets.all(30.0),
@@ -161,37 +145,24 @@ class _SignupScreenState extends State<SignupScreen> {
             )));
   }
 
-  void _validatesignUpInput() async {
-    final FormState form = _signUpKey.currentState;
-    if (form.validate()) {
-      showDialog(
-          barrierDismissible: false,
-          context: context,
-          builder: (context) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          });
+  _validatesignUpInput() async {
+    if (_signUpKey.currentState.validate()) {
+      UiHelper().showLoading(context);
       try {
         FirebaseUser result = await _auth.registerWithEmailAndPassword(
             emailController.text, passwordController.text);
 
-        result != null
-            ? Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return Dashboard();
-              }))
-            : null;
+        String user = result.uid;
+        print(user);
+        Navigator.of(context).pop();
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return Dashboard();
+        }));
       } catch (e) {
+        Navigator.of(context).pop();
+        UiHelper().tryAgainDialog(context);
         print(e);
-        Navigator.pop(context);
-        setState(() {
-        errorMessage = 'Check email and password';
-      });
       }
-    } else {
-      setState(() {
-        errorMessage = 'Check email and password';
-      });
     }
   }
 }

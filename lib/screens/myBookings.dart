@@ -1,5 +1,4 @@
 import 'package:Smart_transit/UiHelper.dart';
-import 'package:Smart_transit/screens/ticketScreen.dart';
 import 'package:Smart_transit/screens/view_ticketscreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +20,6 @@ class _LoadTicketState extends State<LoadTicket> {
           appBar: AppBar(
             backgroundColor: Colors.white,
             centerTitle: true,
-            // textTheme: Theme.of(context).textTheme,
             title: Text(
               'My Bookings',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
