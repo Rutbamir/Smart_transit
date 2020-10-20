@@ -25,10 +25,11 @@ Future<List<DocumentSnapshot>> getTickets() async {
   return tickets.documents;
 }
 
-Future<List<DocumentSnapshot>> getDrivers(String currentLocation) async {
+Future<List<DocumentSnapshot>> getDrivers(String currentLocation, String destination) async {
   QuerySnapshot snap = await _firestore
       .collection("drivers")
       .where("current_location", isEqualTo: currentLocation)
+      .where("current_destination", isEqualTo: destination)
       .where("in_transit", isEqualTo: false)
       .getDocuments();
   return snap.documents;

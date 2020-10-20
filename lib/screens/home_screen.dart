@@ -29,7 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
   double _startLongitude;
   double _destLat;
   double _destLong;
-  String _locID;
+  String _startlocID;
+  String _destLocID;
 
   Position _currentPosition;
 
@@ -191,8 +192,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               print('Start coords: $result');
                               _startLatitude = double.parse(result[0]);
                               _startLongitude = double.parse(result[1]);
-                              _locID = result[2];
-                              print(_locID);
+                              _startlocID = result[2];
+                              print(_startlocID);
                             }
                           },
                         ),
@@ -222,6 +223,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 print('Destination coords: $result');
                                 _destLat = double.parse(result[0]);
                                 _destLong = double.parse(result[1]);
+                                 _destLocID = result[2];
+                              print(_destLocID);
                               }
                             }),
                       ],
@@ -387,7 +390,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       height: 250,
       child: FutureBuilder(
-          future: getDrivers(_locID),
+          future: getDrivers(_startlocID, _destLocID),
           builder: (context, AsyncSnapshot<List<DocumentSnapshot>> snapshot) {
             if (snapshot.hasData && snapshot.data.length > 0) {
               return Padding(
